@@ -1,0 +1,5 @@
+Employee {
+	id : id ;
+	fisrtName : string ;
+	birthDate : date ;
+}
