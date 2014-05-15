@@ -43,9 +43,9 @@ public class FileParser {
     }
 
     /**
-     * @param str
-     * @param filename
-     * @return
+     * @param str The string extract from the file entity
+     * @param filename The filename to check the content
+     * @return A table wich contain the name of the entity, and all its fields
      */
     public Table checkSyntax(String str, String filename) {
 
@@ -53,27 +53,33 @@ public class FileParser {
         int bodyStart = str.indexOf("{");
         int bodyEnd = str.lastIndexOf("}");
 
-        // simple check
+        // name required before body
         if (bodyStart < 0)
             throw new EntityParserException("There's something wrong with the beginning of the body");
 
+        // end of body required
         if (bodyEnd < 1)
             throw new EntityParserException("There's something wrong with the end of the body");
 
+        // body required
         if (bodyEnd - bodyStart == 1)
             throw new EntityParserException("A field is required");
 
         String entityName = str.substring(0, bodyStart).trim();
 
+        // the closing bracket must be at the end
         if (bodyEnd == str.length())
             throw new EntityParserException("There's something wrong with the end of the body");
 
+        // the filename must de equal to entity name
         if (!entityName.equals(filename))
             throw new EntityParserException("The name of the file does not match with the entity name");
 
+        // the first later of an entity must be upper case
         if (!Character.isUpperCase(str.charAt(0)))
             throw new EntityParserException("The name of the entity must start with an upper case");
 
+        // only simple chars are allowed
         if (!entityName.matches("^[A-Z][\\w]*$"))
             throw new EntityParserException("The name must not contains special char" + entityName);
 
@@ -86,11 +92,12 @@ public class FileParser {
             throw new EntityParserException("A semilicon is missing ");
 
         String[] fieldList = body.split(";");
-        System.out.println(str);
+        // at least 1 field is required
         if (fieldList.length < 1) {
             throw new EntityParserException("This entity must contains at least one field");
         }
 
+        // extract fields
         for (String field : fieldList) {
             Field f = this.checkFields(field);
             table.addField(f);
@@ -104,10 +111,12 @@ public class FileParser {
      */
     private Field checkFields(String fieldInfo) {
         String name = fieldInfo.substring(0, fieldInfo.indexOf(":")).trim();
+        String infos = fieldInfo.substring(fieldInfo.indexOf(":")).trim();
         if (!name.matches("^[\\w]*$"))
             throw new EntityParserException("The name of the fields must not contains special char " + name);
 
         Field field = new Field(name);
+
         return field;
     }
 }
