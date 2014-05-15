@@ -9,7 +9,7 @@ import java.io.InputStream;
  * 
  * First entry point for the telosys entity parser
  * 
- * @author Jonathan Goncalvez, Mathieu Herbert, Thomas Legendre
+ * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
  * @date 2014-05-13
  * @version 1.0
  */
@@ -48,7 +48,7 @@ public class EntityParser {
 	public void parse(File file) {
 		try {
 			InputStream io = new FileInputStream(file);
-			this.parse(file);
+			this.parse(io);
 		} catch (FileNotFoundException e) {
 			throw new EntityParserException("File Not found : "
 					+ file.getAbsolutePath());
