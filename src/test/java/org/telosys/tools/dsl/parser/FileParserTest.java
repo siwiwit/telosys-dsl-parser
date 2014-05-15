@@ -2,6 +2,7 @@ package org.telosys.tools.dsl.parser;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.telosys.tools.dsl.parser.model.Table;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,9 +24,7 @@ public class FileParserTest extends TestCase {
     public void testParseFile() throws FileNotFoundException {
         FileParser fileParser = new FileParser();
         InputStream inputStream = new FileInputStream(new File("entity_test/Employee.entity"));
-
-
-        String file = fileParser.checkSyntax(fileParser.readStream(inputStream), "Employee");
+        Table file = fileParser.checkSyntax(fileParser.readStream(inputStream), "Employee");
         System.out.println(file);
     }
 
