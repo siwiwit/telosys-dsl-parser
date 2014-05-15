@@ -1,4 +1,5 @@
 package org.telosys.tools.dsl.parser;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,10 +16,20 @@ import java.io.InputStream;
 public class EntityParser {
 
 	/**
-	 * 
+	 * Call parser from cli
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// check argument exist
+		if (args == null)
+			throw new EntityParserException("No file given");
+
+		if (args.length != 1)
+			throw new EntityParserException("A single parameter is required");
+
+		// call parser tool
+		EntityParser ep = new EntityParser();
+		ep.parse(args[0]);
 
 	}
 
@@ -39,10 +50,10 @@ public class EntityParser {
 			InputStream io = new FileInputStream(file);
 			this.parse(file);
 		} catch (FileNotFoundException e) {
-			throw new EntityParserException("File Not found : "+file.getAbsolutePath());
+			throw new EntityParserException("File Not found : "
+					+ file.getAbsolutePath());
 		}
-		
-		
+
 	}
 
 	/**
