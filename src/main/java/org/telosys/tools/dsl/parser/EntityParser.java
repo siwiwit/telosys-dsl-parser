@@ -37,7 +37,7 @@ public class EntityParser {
 	public void parse(File file) {
 		try {
 			InputStream io = new FileInputStream(file);
-			this.parse(file);
+			this.parse(io);
 		} catch (FileNotFoundException e) {
 			throw new EntityParserException("File Not found : "+file.getAbsolutePath());
 		}
