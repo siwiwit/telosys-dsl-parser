@@ -18,4 +18,14 @@ public class FileParserTest extends TestCase {
         String file = fileParser.readStream(inputStream);
         System.out.println(file);
     }
+    
+    @Test
+    public void testParseFile() throws FileNotFoundException {
+        FileParser fileParser = new FileParser();
+        InputStream inputStream = new FileInputStream(new File("entity_test/Employee.entity"));
+
+
+        String file = fileParser.checkSyntax(fileParser.readStream(inputStream), "Employee");
+        System.out.println(file);
+    }
 }
