@@ -47,6 +47,9 @@ public class EntityParser {
 	 */
 	public void parse(File file) {
 		try {
+			if(!file.exists()){
+				throw new FileNotFoundException();
+			}
 			InputStream io = new FileInputStream(file);
 			this.parse(io);
 		} catch (FileNotFoundException e) {
