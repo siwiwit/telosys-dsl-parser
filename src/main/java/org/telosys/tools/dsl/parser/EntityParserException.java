@@ -1,3 +1,4 @@
+package org.telosys.tools.dsl.parser;
 
 public class EntityParserException extends RuntimeException {
 
