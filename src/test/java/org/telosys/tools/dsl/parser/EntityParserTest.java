@@ -10,12 +10,12 @@ import org.junit.Test;
 public class EntityParserTest {
 	@Before
 	public void setUp() throws Exception {
-		
+
 	}
 
 	@Test
 	public void testParseString() {
-		
+
 		EntityParser parser = new EntityParser();
 		parser.parse("entity_test/Employee.entity");
 	}
@@ -26,20 +26,20 @@ public class EntityParserTest {
 		EntityParser parser = new EntityParser();
 		parser.parse(file);
 	}
-	
+
 	@Test
 	public void testParseInputStream() throws FileNotFoundException {
-		FileInputStream file = new FileInputStream(new File("entity_test/Employee.entity"));
+		File file =new File("entity_test/Employee.entity");
+		FileInputStream fileIS = new FileInputStream(file);
 		EntityParser parser = new EntityParser();
-		parser.parse(file);
+		parser.parse(fileIS, file.getAbsolutePath());
 	}
-	
-	@Test(expected=EntityParserException.class)
-	public void testParseFileWithAFileWichDontExist(){
+
+	@Test(expected = EntityParserException.class)
+	public void testParseFileWithAFileWichDontExist() {
 		File file = new File("entity_test/nul.entity");
 		EntityParser parser = new EntityParser();
 		parser.parse(file);
 	}
-
 
 }

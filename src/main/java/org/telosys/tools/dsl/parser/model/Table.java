@@ -27,6 +27,6 @@ public class Table {
         String fieldRet = "";
         for (Field f : this.fields)
             fieldRet += f.toString() + " | ";
-        return this.name + " [" + "]";
+        return this.name + " [" + fieldRet+ "]";
     }
 }

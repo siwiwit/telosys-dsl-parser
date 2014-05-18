@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import org.telosys.tools.dsl.parser.model.Table;
+
 /**
  * 
  * First entry point for the telosys entity parser
@@ -51,7 +53,7 @@ public class EntityParser {
 				throw new FileNotFoundException();
 			}
 			InputStream io = new FileInputStream(file);
-			this.parse(io);
+			this.parse(io, file.getAbsolutePath());
 		} catch (FileNotFoundException e) {
 			throw new EntityParserException("File Not found : "
 					+ file.getAbsolutePath());
@@ -63,8 +65,11 @@ public class EntityParser {
 	 * 
 	 * @param is
 	 */
-	public void parse(InputStream is) {
-
+	public void parse(InputStream is, String path) {
+		FileParser parser = new FileParser();
+		File file = new File(path);
+		Table res = parser.checkSyntax(parser.readStream(is), file.getName().substring(0,file.getName().lastIndexOf(".")));
+		System.out.println(res.toString());
 	}
 
 }

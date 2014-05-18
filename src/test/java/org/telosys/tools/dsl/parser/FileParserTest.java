@@ -13,19 +13,20 @@ public class FileParserTest extends TestCase {
     @Test
     public void testReadStream() throws FileNotFoundException {
         FileParser fileParser = new FileParser();
-        InputStream inputStream = new FileInputStream(new File("entity_test/Employee.entity"));
+        File file = new File("entity_test/Employee.entity");
+        InputStream inputStream = new FileInputStream(file);
 
 
-        String file = fileParser.readStream(inputStream);
-        System.out.println(file);
+        String res = fileParser.readStream(inputStream);
+//        System.out.println(res);
     }
     
     @Test
     public void testParseFile() throws FileNotFoundException {
         FileParser fileParser = new FileParser();
-        InputStream inputStream = new FileInputStream(new File("entity_test/Employee.entity"));
-        Table file = fileParser.checkSyntax(fileParser.readStream(inputStream), "Employee");
-        System.out.println(file);
+        File file = new File("entity_test/Employee.entity");
+        InputStream inputStream = new FileInputStream(file);
+        Table res = fileParser.checkSyntax(fileParser.readStream(inputStream), file.getName().substring(0,file.getName().lastIndexOf(".")));
     }
 
     @Test
@@ -38,7 +39,6 @@ public class FileParserTest extends TestCase {
         String testEntityFieldIllegalCharacters = "Entity{ié#_:int;}";
         String testMissingSemiColumn = "Entity{id:int;name:string}";
         String testMissingLastBracket = "Entity{id:int;";
-
         FileParser fileParser = new FileParser();
         fileParser.checkSyntax(testValid, "Entity");
 

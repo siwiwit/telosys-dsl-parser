@@ -1,12 +1,13 @@
 package org.telosys.tools.dsl.parser;
 
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.Table;
-
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.Table;
 
 public class FileParser {
     /**
@@ -38,7 +39,7 @@ public class FileParser {
                 throw new EntityParserException("Error while closing the stream : " + e.getMessage());
             }
         }
-
+      
         return stringBuilder.toString();
     }
 
@@ -53,13 +54,7 @@ public class FileParser {
         int bodyStart = str.indexOf("{");
         int bodyEnd = str.lastIndexOf("}");
 
-        // name required before body
-        if (bodyStart < 0)
-            throw new EntityParserException("There's something wrong with the beginning of the body");
-
-        // end of body required
-        if (bodyEnd < 1)
-            throw new EntityParserException("There's something wrong with the end of the body");
+        checkStructure(bodyStart, bodyEnd);
 
         // body required
         if (bodyEnd - bodyStart == 1)
@@ -105,6 +100,16 @@ public class FileParser {
         return table;
     }
 
+	private void checkStructure(int bodyStart, int bodyEnd) {
+		// name required before body
+        if (bodyStart < 0)
+            throw new EntityParserException("There's something wrong with the beginning of the body");
+
+        // end of body required
+        if (bodyEnd < 1)
+            throw new EntityParserException("There's something wrong with the end of the body");
+	}
+
     /**
      * @param fieldInfo
      * @return
@@ -115,7 +120,7 @@ public class FileParser {
         if (!name.matches("^[\\w]*$"))
             throw new EntityParserException("The name of the fields must not contains special char " + name);
 
-        Field field = new Field(name);
+        Field field = new Field(fieldInfo);
 
         return field;
     }
