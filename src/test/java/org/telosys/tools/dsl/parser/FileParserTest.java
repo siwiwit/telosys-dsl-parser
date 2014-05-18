@@ -31,7 +31,7 @@ public class FileParserTest extends TestCase {
 
     @Test
     public void testParsingRules() {
-        String testValid = "Entity{id:int;}";
+        String testValid = "Entity{id:int {@test};}";
         String testMissingBracket = "Entityid:int;";
         String testMultipleEntities = "Entity{id:int;}Entity2{id:int;}";
         String testEntityWithoutField = "Entity{}";

@@ -1,5 +1,5 @@
 Employee {
-	id : id ;
+	id : id {@test};
 	fisrtName : string ;
 	birthDate : date ;
 }
