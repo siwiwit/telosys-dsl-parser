@@ -116,7 +116,6 @@ public class FileParser {
      */
     private Field checkFields(String fieldInfo) {
         String name = fieldInfo.substring(0, fieldInfo.indexOf(":")).trim();
-        String infos = fieldInfo.substring(fieldInfo.indexOf(":")).trim();
         if (!name.matches("^[\\w]*$"))
             throw new EntityParserException("The name of the fields must not contains special char " + name);
 
