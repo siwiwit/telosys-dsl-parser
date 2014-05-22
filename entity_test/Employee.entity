@@ -1,5 +1,5 @@
 Employee {
 	id : id {@test};
-	fisrtName : string ;
+	firstName : string ;
 	birthDate : date ;
 }
