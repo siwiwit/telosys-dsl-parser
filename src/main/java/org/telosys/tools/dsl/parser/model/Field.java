@@ -15,7 +15,7 @@ public class Field {
     
     @Override
     public String toString() {
-    	return name;
+    	return name +" : "+ properties;
     }
     
     
