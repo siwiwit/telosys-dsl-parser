@@ -93,9 +93,9 @@ public class EntityParser {
 	
 	
     /**
-     * @param str The string extract from the file entity
+     *
      * @param filename The filename to check the content
-     * @return A table wich contain the name of the entity, and all its fields
+     * @return An entity wich contain the name of the entity, and all its fields
      */
     public Entity parseFlattenContent(String filename) {
 
