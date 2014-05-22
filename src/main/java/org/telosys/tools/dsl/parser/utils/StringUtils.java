@@ -14,13 +14,11 @@ public class StringUtils {
      * @return
      */
     public static String readStream(InputStream inputStream) {
-        StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         StringBuilder ret = new StringBuilder();
+
         try {
-            
-        	
         	while ((line = bufferedReader.readLine()) != null) {
                 ret.append(line+ "\n");
             }
@@ -34,6 +32,6 @@ public class StringUtils {
             }
         }
       
-        return stringBuilder.toString();
+        return ret.toString();
     }
 }

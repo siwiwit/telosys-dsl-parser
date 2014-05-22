@@ -16,7 +16,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.telosys.tools.dsl.parser.EntityParser</mainClass>
+							<mainClass>org.telosys.tools.dsl.parser.Application</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

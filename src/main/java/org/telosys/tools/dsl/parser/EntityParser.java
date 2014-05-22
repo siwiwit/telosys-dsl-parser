@@ -31,6 +31,16 @@ public class EntityParser {
 	 */
 	private String flattenContent;
 
+    public EntityParser() {
+        this.formattedContent = "";
+        this.flattenContent = "";
+    }
+
+    public EntityParser(String formattedContent) {
+        this.formattedContent = formattedContent;
+        this.flattenContent = "";
+    }
+
 	/**
 	 *
 	 * @param fileName
@@ -73,11 +83,10 @@ public class EntityParser {
 	}
 
 	public String computeFlattenContent() {
-
-		StringTokenizer content = new StringTokenizer(formattedContent);
+		StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
 		StringBuilder stringBuilder = new StringBuilder();
 		while (content.hasMoreElements()) {
-			String line = content.nextElement().toString();
+			String line = content.nextElement().toString().trim();
 
 			if (line.contains(Utils.getProperty("start_comment"))) {
 				line = line.substring(0,
@@ -93,7 +102,6 @@ public class EntityParser {
 
 
     /**
-     *
      * @param filename The filename to check the content
      * @return An entity wich contain the name of the entity, and all its fields
      */
@@ -159,4 +167,16 @@ public class EntityParser {
         if (bodyEnd < 1)
             throw new EntityParserException("There's something wrong with the end of the body");
 	}
+
+    public String getFormattedContent() {
+        return formattedContent;
+    }
+
+    public String getFlattenContent() {
+        return flattenContent;
+    }
+
+    public void setFlattenContent(String flattenContent) {
+        this.flattenContent = flattenContent;
+    }
 }
