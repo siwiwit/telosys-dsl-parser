@@ -3,10 +3,13 @@ package org.telosys.tools.dsl.parser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Field;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityParserTest {
 	@Before
@@ -101,18 +104,19 @@ public class EntityParserTest {
 
     @Test()
     public void testParseValid() {
-        String testValid = "Entity{id:int;}";
+        String testValid = "Entity{id:int{@Id,@Max(3)};}";
 
         EntityParser parser = new EntityParser();
         parser.setFlattenContent(testValid);
         Entity entity = parser.parseFlattenContent("Entity");
 
         Entity toCompare = new Entity("Entity");
-        Field fieldId = new Field("id", "id:int");
+        Field fieldId = new Field("id", "int");
+        List<Annotation> annotationList = new ArrayList<Annotation>();
+        annotationList.add(new Annotation("Id"));
+        annotationList.add(new Annotation("Max", "3"));
+        fieldId.setAnnotationList(annotationList);
         toCompare.addField(fieldId);
-
-        System.out.println(entity);
-        System.out.println(toCompare);
 
         Assert.assertEquals(toCompare, entity);
     }

@@ -14,7 +14,8 @@ public class Annotation {
 
     public Annotation(String name){
         this.name = name;
-        this.hasParameter = true;
+        this.parameter = "";
+        this.hasParameter = false;
     }
 
     public Annotation(String name, String param){
@@ -34,4 +35,24 @@ public class Annotation {
         return parameter;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Annotation that = (Annotation) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (parameter != null ? !parameter.equals(that.parameter) : that.parameter != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "@{" +
+                "name='" + name + '\'' +
+                ", parameter='" + parameter + '\'' +
+                '}';
+    }
 }

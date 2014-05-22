@@ -1,5 +1,6 @@
 package org.telosys.tools.dsl.parser;
 
+import com.sun.jmx.snmp.internal.SnmpSubSystem;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
@@ -35,10 +36,10 @@ public class AnnotationParser {
             return list;
         }
 
-        fieldInfo = fieldInfo.substring(bodyStart, bodyEnd);
+        fieldInfo = fieldInfo.substring(bodyStart+1, bodyEnd);
 
         // list of annotation found
-        String[] annotationList = fieldInfo.split(";");
+        String[] annotationList = fieldInfo.split(",");
         // at least 1 annotation is required, if there are brackets
         if (annotationList.length < 1) {
             throw new EntityParserException("There is no annotation in the given information");
@@ -58,9 +59,8 @@ public class AnnotationParser {
      * @return Annotation created by the parser
      */
     private Annotation parseSingleAnnotation(String annotationString) {
-
         // start with a @
-        if (!annotationString.substring(0, 1).equals("@")) {
+        if (annotationString.charAt(0) != '@') {
             throw new EntityParserException("An annotation must start with a '@' ");
         }
 
@@ -72,7 +72,7 @@ public class AnnotationParser {
         String param = "";
         if (annotationString.contains("(")) {
             end = annotationString.indexOf("(");
-            param = annotationString.substring(end, annotationString.length() - 1);
+            param = annotationString.substring(end+1, annotationString.length() - 1);
             containsParam = true;
         }
 
@@ -81,7 +81,7 @@ public class AnnotationParser {
 
         // check annotation exist
         String annotationAllowed = Utils.getProperty("annotations");
-        String[] listAllowed = annotationAllowed.split(";");
+        String[] listAllowed = annotationAllowed.split(",");
 
         // find annotation
         for (String allowed : listAllowed) {
