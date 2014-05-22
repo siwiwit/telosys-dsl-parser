@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * Created by Thomas on 15/05/14.
  */
-public class Table {
+public class Entity {
 
     private String name;
     private ArrayList<Field> fields;
 
-    public Table(String name) {
+    public Entity(String name) {
         this.name = name;
         this.fields = new ArrayList<Field>();
     }

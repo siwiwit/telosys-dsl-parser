@@ -2,7 +2,7 @@ package org.telosys.tools.dsl.parser;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Table;
+import org.telosys.tools.dsl.parser.model.Entity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +26,7 @@ public class FileParserTest extends TestCase {
         FileParser fileParser = new FileParser();
         File file = new File("entity_test/Employee.entity");
         InputStream inputStream = new FileInputStream(file);
-        Table res = fileParser.checkSyntax(fileParser.readStream(inputStream), file.getName().substring(0,file.getName().lastIndexOf(".")));
+        Entity res = fileParser.checkSyntax(fileParser.readStream(inputStream), file.getName().substring(0,file.getName().lastIndexOf(".")));
     }
 
     @Test

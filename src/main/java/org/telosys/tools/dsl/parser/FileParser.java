@@ -1,13 +1,13 @@
 package org.telosys.tools.dsl.parser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.Table;
+import org.telosys.tools.dsl.parser.utils.Utils;
 
 public class FileParser {
     /**
@@ -48,7 +48,7 @@ public class FileParser {
      * @param filename The filename to check the content
      * @return A table wich contain the name of the entity, and all its fields
      */
-    public Table checkSyntax(String str, String filename) {
+    public Entity checkSyntax(String str, String filename) {
 
         // get index of first and last open brackets
         int bodyStart = str.indexOf("{");
@@ -79,7 +79,7 @@ public class FileParser {
             throw new EntityParserException("The name must not contains special char" + entityName);
 
         // create object
-        Table table = new Table(entityName);
+        Entity table = new Entity(entityName);
 
         // find all fields
         String body = str.substring(bodyStart + 1, bodyEnd).trim();

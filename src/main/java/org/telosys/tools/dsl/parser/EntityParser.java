@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.telosys.tools.dsl.parser.model.Table;
+import org.telosys.tools.dsl.parser.model.Entity;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class EntityParser {
 	public void parse(InputStream is, String path) {
 		FileParser parser = new FileParser();
 		File file = new File(path);
-		Table res = parser.checkSyntax(parser.readStream(is), file.getName().substring(0,file.getName().lastIndexOf(".")));
+		Entity res = parser.checkSyntax(parser.readStream(is), file.getName().substring(0,file.getName().lastIndexOf(".")));
 		System.out.println(res.toString());
 	}
 

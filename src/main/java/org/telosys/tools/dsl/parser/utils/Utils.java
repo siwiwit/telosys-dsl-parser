@@ -1,6 +1,7 @@
-package org.telosys.tools.dsl.parser;
+package org.telosys.tools.dsl.parser.utils;
 
-import java.io.FileInputStream;
+import org.telosys.tools.dsl.parser.EntityParserException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
