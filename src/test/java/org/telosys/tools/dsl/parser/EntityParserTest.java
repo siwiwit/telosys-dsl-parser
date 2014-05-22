@@ -36,7 +36,7 @@ public class EntityParserTest {
 	}
 
 	@Test(expected = EntityParserException.class)
-	public void testParseFileWithAFileWichDontExist() {
+	public void testParseFileWithAFileWhichDontExist() {
 		File file = new File("entity_test/nul.entity");
 		EntityParser parser = new EntityParser();
 		parser.parse(file);
