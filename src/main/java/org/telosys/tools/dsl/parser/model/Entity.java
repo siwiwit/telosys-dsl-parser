@@ -1,14 +1,17 @@
 package org.telosys.tools.dsl.parser.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Thomas on 15/05/14.
+ * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
+ * @date 2014-05-13
+ * @version 1.0
  */
 public class Entity {
 
     private String name;
-    private ArrayList<Field> fields;
+    private List<Field> fields;
 
     public Entity(String name) {
         this.name = name;
@@ -19,7 +22,7 @@ public class Entity {
         this.fields.add(field);
     }
 
-    public ArrayList<Field> getFields() {
+    public List<Field> getFields() {
         return this.fields;
     }
 
@@ -27,6 +30,6 @@ public class Entity {
         String fieldRet = "";
         for (Field f : this.fields)
             fieldRet += f.toString() + " | ";
-        return this.name + " [" + fieldRet+ "]";
+        return this.name + " [" + fieldRet + "]";
     }
 }
