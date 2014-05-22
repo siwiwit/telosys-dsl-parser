@@ -6,9 +6,11 @@ package org.telosys.tools.dsl.parser.model;
 public class Field {
 
     private String name ;
+    private String properties ;
 
-    public Field(String name){
+    public Field(String name, String properties){
         this.name = name;
+        this.properties = properties;
     }
     
     @Override
