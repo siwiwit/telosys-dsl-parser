@@ -8,7 +8,7 @@ import java.util.List;
  * @date 2014-05-13
  * @version 1.0
  */
-public class Entity {
+public class Entity{
 
     private String name;
     private List<Field> fields;
@@ -32,4 +32,19 @@ public class Entity {
             fieldRet += f.toString() + " | ";
         return this.name + " [" + fieldRet + "]";
     }
+    
+    @Override
+    public boolean equals(Object other) {
+    	if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Entity))return false;
+        Entity otherEntity = (Entity)other;
+        if(!otherEntity.name.equals(name)) return false;
+        if(otherEntity.fields.size() != fields.size()) return false;
+        for (int i = 0; i < fields.size(); i++) {
+			if(!otherEntity.fields.get(i).equals(fields.get(i))) return false;
+		}
+    	return true;
+    }
+    
 }

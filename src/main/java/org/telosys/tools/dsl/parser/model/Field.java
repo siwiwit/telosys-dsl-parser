@@ -17,4 +17,17 @@ public class Field {
     public String toString() {
     	return name;
     }
+    
+    
+    @Override
+    public boolean equals(Object other){
+    	if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Field))return false;
+        Field otherField= (Field)other;
+        if(!otherField.name.equals(name)) return false;
+        if(!otherField.properties.equals(properties)) return false;
+        
+        return true;
+    }
 }
