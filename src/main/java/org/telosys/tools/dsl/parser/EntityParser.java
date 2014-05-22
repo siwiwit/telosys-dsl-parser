@@ -93,7 +93,6 @@ public class EntityParser {
 	
 	
     /**
-     *
      * @param filename The filename to check the content
      * @return An entity wich contain the name of the entity, and all its fields
      */
