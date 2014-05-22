@@ -13,7 +13,7 @@ public class FieldParser {
      * @param fieldInfo
      * @return
      */
-    private Field checkField(String fieldInfo) {
+     Field parseField(String fieldInfo) {
         String name = fieldInfo.substring(0, fieldInfo.indexOf(":")).trim();
         if (!name.matches("^[\\w]*$"))
             throw new EntityParserException("The name of the fields must not contains special char " + name);
