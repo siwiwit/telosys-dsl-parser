@@ -12,9 +12,9 @@ import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
 /**
- * 
+ *
  * First entry point for the telosys entity parser
- * 
+ *
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
  * @date 2014-05-13
  * @version 1.0
@@ -32,7 +32,7 @@ public class EntityParser {
 	private String flattenContent;
 
 	/**
-	 * 
+	 *
 	 * @param fileName
 	 */
 	public void parse(String fileName) {
@@ -40,7 +40,7 @@ public class EntityParser {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param file
 	 */
 	public void parse(File file) {
@@ -58,7 +58,7 @@ public class EntityParser {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param is
 	 */
 	public void parse(InputStream is, String path) {
@@ -90,8 +90,8 @@ public class EntityParser {
 		}
 	 return stringBuilder.toString();
 	}
-	
-	
+
+
     /**
      *
      * @param filename The filename to check the content

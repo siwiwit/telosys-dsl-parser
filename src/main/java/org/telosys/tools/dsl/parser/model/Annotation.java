@@ -8,4 +8,30 @@ package org.telosys.tools.dsl.parser.model;
  */
 public class Annotation {
 
+    private String name;
+    private String parameter;
+    private boolean hasParameter;
+
+    public Annotation(String name){
+        this.name = name;
+        this.hasParameter = true;
+    }
+
+    public Annotation(String name, String param){
+        this.name = name;
+        this.parameter = param;
+        this.hasParameter = true;
+    }
+
+    boolean hasParameter() {return this.hasParameter;}
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
 }
