@@ -26,6 +26,9 @@ public class FieldParser {
         String name = fieldInfo.substring(0, startDescription);
         if (!name.matches("^[\\w]*$"))
             throw new EntityParserException("The name of the fields must not contains special char " + name);
+        if (name.length() == 0) {
+            throw new EntityParserException("The name of the field is missing");
+        }
 
         int end;
         if (fieldInfo.contains("{")) {
@@ -34,7 +37,12 @@ public class FieldParser {
             end = fieldInfo.length();
         }
 
-        Field field = new Field(name, fieldInfo.substring(startDescription+1, end));
+        String type = fieldInfo.substring(startDescription+1, end);
+        if (type.length() == 0) {
+            throw new EntityParserException("The type of the field is missing");
+        }
+
+        Field field = new Field(name, type);
         List<Annotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
         field.setAnnotationList(annotations);
 
