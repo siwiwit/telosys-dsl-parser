@@ -73,6 +73,9 @@ public class AnnotationParser {
         if (annotationString.contains("(")) {
             end = annotationString.indexOf("(");
             param = annotationString.substring(end+1, annotationString.length() - 1);
+            if (param.equals("")) {
+                throw new EntityParserException("A parameter is required for this annotation : " + annotationString);
+            }
             containsParam = true;
         }
 
