@@ -4,50 +4,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.StringTokenizer;
 
 import org.telosys.tools.dsl.parser.model.Entity;
+import org.telosys.tools.dsl.parser.model.Enumeration;
+import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.Field;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
-/**
- *
- * First entry point for the telosys entity parser
- *
- * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
- * @date 2014-05-13
- * @version 1.0
- */
-public class EntityParser {
-
+public class EnumerationParser {
 	/**
 	 * Content of the File
 	 */
 	private String formattedContent;
-
+	
 	/**
 	 * Flatten Content of the File
 	 */
 	private String flattenContent;
 	
-	/**
-	 * fieldParser used to parse fields
-	 */
-	private FieldParser fieldParser;
-
-    public EntityParser() {
-        this.formattedContent = "";
-        this.flattenContent = "";
-        fieldParser = new FieldParser();
-    }
-
-    public EntityParser(String formattedContent) {
-        this.formattedContent = formattedContent;
-        this.flattenContent = "";
-        fieldParser = new FieldParser();
-    }
-
 	/**
 	 *
 	 * @param fileName
@@ -74,6 +52,7 @@ public class EntityParser {
 
 	}
 
+	
 	/**
 	 *
 	 * @param is
@@ -83,12 +62,96 @@ public class EntityParser {
 
 		formattedContent = StringUtils.readStream(is);
 		flattenContent = computeFlattenContent();
-		Entity res = parseFlattenContent(file.getName()
+		Enumeration res = parseFlattenContent(file.getName()
 				.substring(0, file.getName().lastIndexOf(".")));
 
 		System.out.println(res.toString());
 	}
+	
+	public Enumeration parseFlattenContent(String filename) {
+        // get index of first and last open brackets
+        int bodyStart = flattenContent.indexOf("{");
+        int bodyEnd = flattenContent.lastIndexOf("}");
 
+        checkStructure(bodyStart, bodyEnd);
+
+        // body required
+        if (bodyEnd - bodyStart == 1)
+            throw new EntityParserException("A field is required");
+
+        String enumName = flattenContent.substring(0, bodyStart).trim();
+        TypeEnum type = TypeEnum.INTEGER;
+        
+        String[] split = enumName.split(":"); 
+        if(split.length==2){
+        	enumName = split[0];
+        	if(type.equals("int")){
+        		type = TypeEnum.INTEGER;
+        	}else if (type.equals("string")){
+        		type = TypeEnum.STRING;
+        	}else if (type.equals("decimal")){
+        		type = TypeEnum.DECIMAL;
+        	}else {
+        		throw new EntityParserException("The type of the Enum have to be int, string or decimal and nothing else");
+        	}
+        } else {
+        	throw new EntityParserException("There is something wrong with the head of the enum");
+        }
+        
+        // the closing bracket must be at the end
+//        if (bodyEnd == flattenContent.length())
+//            throw new EntityParserException("There's something wrong with the end of the body");
+
+        // the filename must de equal to entity name
+        if (!enumName.equals(filename))
+            throw new EntityParserException("The name of the file does not match with the enum name");
+
+        // the first later of an entity must be upper case
+        if (!Character.isUpperCase(flattenContent.charAt(0)))
+            throw new EntityParserException("The name of the entity must start with an upper case");
+
+        // only simple chars are allowed
+        if (!enumName.matches("^[A-Z][\\w]*$"))
+            throw new EntityParserException("The name must not contains special char" + enumName);
+
+        // create object
+        Enumeration enumeration = null;
+        if(type == TypeEnum.INTEGER){
+        	enumeration = new Enumeration<BigInteger>(enumName, type);
+        }else if(type == TypeEnum.STRING){
+        	enumeration = new Enumeration<String>(enumName, type);
+        } else if(type == TypeEnum.DECIMAL){
+        	enumeration = new Enumeration<BigDecimal>(enumName, type);
+        }  
+
+        // find all fields
+        String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
+        if (body.lastIndexOf(";") != body.length()-1  )
+            throw new EntityParserException("A semilicon is missing ");
+
+        String[] fieldEnumList = body.split(";");
+        // at least 1 field is required
+        if (fieldEnumList.length < 1) {
+            throw new EntityParserException("This enum must contains at least one field");
+        }
+
+        // extract fields
+        for (String field : fieldEnumList) {
+            //Field f = fieldEnumList.parseField(field);
+            //table.addField(f);
+        }
+        return enumeration;
+	}
+
+	private void checkStructure(int bodyStart, int bodyEnd) {
+		// name required before body
+        if (bodyStart < 0)
+            throw new EntityParserException("There's something wrong with the beginning of the body");
+
+        // end of body required
+        if (bodyEnd < 1)
+            throw new EntityParserException("There's something wrong with the end of the body");
+	}
 	public String computeFlattenContent() {
 		StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
 		StringBuilder stringBuilder = new StringBuilder();
@@ -106,83 +169,4 @@ public class EntityParser {
 		}
 	 return stringBuilder.toString();
 	}
-
-
-    /**
-     * @param filename The filename to check the content
-     * @return An entity wich contain the name of the entity, and all its fields
-     */
-    public Entity parseFlattenContent(String filename) {
-
-        // get index of first and last open brackets
-        int bodyStart = flattenContent.indexOf("{");
-        int bodyEnd = flattenContent.lastIndexOf("}");
-
-        checkStructure(bodyStart, bodyEnd);
-
-        // body required
-        if (bodyEnd - bodyStart == 1)
-            throw new EntityParserException("A field is required");
-
-        String entityName = flattenContent.substring(0, bodyStart).trim();
-
-//        // the closing bracket must be at the end
-//        if (bodyEnd == flattenContent.length())
-//            throw new EntityParserException("There's something wrong with the end of the body");
-
-        // the filename must de equal to entity name
-        if (!entityName.equals(filename))
-            throw new EntityParserException("The name of the file does not match with the entity name");
-
-        // the first later of an entity must be upper case
-        if (!Character.isUpperCase(flattenContent.charAt(0)))
-            throw new EntityParserException("The name of the entity must start with an upper case");
-
-        // only simple chars are allowed
-        if (!entityName.matches("^[A-Z][\\w]*$"))
-            throw new EntityParserException("The name must not contains special char" + entityName);
-
-        // create object
-        Entity table = new Entity(entityName);
-
-        // find all fields
-        String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-        if (body.lastIndexOf(";") != body.length()-1  )
-            throw new EntityParserException("A semilicon is missing ");
-
-        String[] fieldList = body.split(";");
-        // at least 1 field is required
-        if (fieldList.length < 1) {
-            throw new EntityParserException("This entity must contains at least one field");
-        }
-
-        // extract fields
-        for (String field : fieldList) {
-            Field f = fieldParser.parseField(field);
-            table.addField(f);
-        }
-        return table;
-    }
-
-	private void checkStructure(int bodyStart, int bodyEnd) {
-		// name required before body
-        if (bodyStart < 0)
-            throw new EntityParserException("There's something wrong with the beginning of the body");
-
-        // end of body required
-        if (bodyEnd < 1)
-            throw new EntityParserException("There's something wrong with the end of the body");
-	}
-
-    public String getFormattedContent() {
-        return formattedContent;
-    }
-
-    public String getFlattenContent() {
-        return flattenContent;
-    }
-
-    public void setFlattenContent(String flattenContent) {
-        this.flattenContent = flattenContent;
-    }
 }
