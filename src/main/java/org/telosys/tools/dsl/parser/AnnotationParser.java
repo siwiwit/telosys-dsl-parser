@@ -1,6 +1,5 @@
 package org.telosys.tools.dsl.parser;
 
-import com.sun.jmx.snmp.internal.SnmpSubSystem;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
