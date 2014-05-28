@@ -1,40 +1,39 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.parser.model.Entity;
+import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.utils.StringUtils;
+import org.telosys.tools.dsl.parser.utils.Utils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-import org.telosys.tools.dsl.parser.model.Entity;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.utils.StringUtils;
-import org.telosys.tools.dsl.parser.utils.Utils;
-
 /**
- *
  * First entry point for the telosys entity parser
  *
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
- * @date 2014-05-13
  * @version 1.0
+ * @date 2014-05-13
  */
 public class EntityParser {
 
-	/**
-	 * Content of the File
-	 */
-	private String formattedContent;
+    /**
+     * Content of the File
+     */
+    private String formattedContent;
 
-	/**
-	 * Flatten Content of the File
-	 */
-	private String flattenContent;
-	
-	/**
-	 * fieldParser used to parse fields
-	 */
-	private FieldParser fieldParser;
+    /**
+     * Flatten Content of the File
+     */
+    private String flattenContent;
+
+    /**
+     * fieldParser used to parse fields
+     */
+    private FieldParser fieldParser;
 
     public EntityParser() {
         this.formattedContent = "";
@@ -48,64 +47,64 @@ public class EntityParser {
         fieldParser = new FieldParser();
     }
 
-	/**
-	 *
-	 * @param fileName
-	 */
-	public void parse(String fileName) {
-		this.parse(new File(fileName));
-	}
+    /**
+     * @param fileName
+     */
+    public void parse(String fileName) {
+        this.parse(new File(fileName));
+    }
 
-	/**
-	 *
-	 * @param file
-	 */
-	public void parse(File file) {
-		try {
-			if (!file.exists()) {
-				throw new FileNotFoundException();
-			}
-			InputStream io = new FileInputStream(file);
-			this.parse(io, file.getAbsolutePath());
-		} catch (FileNotFoundException e) {
-			throw new EntityParserException("File Not found : "
-					+ file.getAbsolutePath());
-		}
+    /**
+     * @param file
+     */
+    public void parse(File file) {
+        try {
+            if (!file.exists()) {
+                throw new FileNotFoundException();
+            }
+            InputStream io = new FileInputStream(file);
+            this.parse(io, file.getAbsolutePath());
+        } catch (FileNotFoundException e) {
+            throw new EntityParserException("File Not found : "
+                    + file.getAbsolutePath());
+        }
 
-	}
+    }
 
-	/**
-	 *
-	 * @param is
-	 */
-	public void parse(InputStream is, String path) {
-		File file = new File(path);
+    /**
+     * @param is
+     */
+    public void parse(InputStream is, String path) {
+        File file = new File(path);
 
-		formattedContent = StringUtils.readStream(is);
-		flattenContent = computeFlattenContent();
-		Entity res = parseFlattenContent(file.getName()
-				.substring(0, file.getName().lastIndexOf(".")));
+        formattedContent = StringUtils.readStream(is);
+        flattenContent = computeFlattenContent();
+        int indexPoint = file.getName().lastIndexOf(".");
+        if (indexPoint >= 0) {
+            Entity res = parseFlattenContent(file.getName().substring(0, indexPoint));
+            System.out.println(res.toString());
+        }else{
+            throw new EntityParserException("The filename has no extension");
+        }
+    }
 
-		System.out.println(res.toString());
-	}
+    public String computeFlattenContent() {
+        StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
+        StringBuilder stringBuilder = new StringBuilder();
+        while (content.hasMoreElements()) {
+            String line = content.nextElement().toString().trim();
 
-	public String computeFlattenContent() {
-		StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
-		StringBuilder stringBuilder = new StringBuilder();
-		while (content.hasMoreElements()) {
-			String line = content.nextElement().toString().trim();
+            if (line.contains(Utils.getProperty("start_comment"))) {
+                line = line.substring(0,
+                        line.indexOf(Utils.getProperty("start_comment")));
+            }
 
-			if (line.contains(Utils.getProperty("start_comment"))) {
-				line = line.substring(0,
-						line.indexOf(Utils.getProperty("start_comment")));
-			}
-
-			if (line.length() > 0) {
-				stringBuilder.append(line.replace(" ", ""));
-			}
-		}
-	 return stringBuilder.toString();
-	}
+            if (line.length() > 0) {
+                stringBuilder.append(line.replace(" ", ""));
+            }
+        }
+        return stringBuilder.toString();
+    }
 
 
     /**
@@ -147,7 +146,7 @@ public class EntityParser {
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-        if (body.lastIndexOf(";") != body.length()-1  )
+        if (body.lastIndexOf(";") != body.length() - 1)
             throw new EntityParserException("A semilicon is missing ");
 
         String[] fieldList = body.split(";");
@@ -164,15 +163,15 @@ public class EntityParser {
         return table;
     }
 
-	private void checkStructure(int bodyStart, int bodyEnd) {
-		// name required before body
+    private void checkStructure(int bodyStart, int bodyEnd) {
+        // name required before body
         if (bodyStart < 0)
             throw new EntityParserException("There's something wrong with the beginning of the body");
 
         // end of body required
         if (bodyEnd < 1)
             throw new EntityParserException("There's something wrong with the end of the body");
-	}
+    }
 
     public String getFormattedContent() {
         return formattedContent;
