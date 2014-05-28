@@ -3,7 +3,7 @@ package org.telosys.tools.dsl.parser.model;
 import java.util.List;
 
 
-public class Enumeration<T> {
+public class Enumeration<T> implements Type{
 	public enum TypeEnum { INTEGER, STRING, DECIMAL};
 	private TypeEnum type;
 	
