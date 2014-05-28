@@ -43,4 +43,12 @@ public class Field {
         
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (annotationList != null ? annotationList.hashCode() : 0);
+        return result;
+    }
 }

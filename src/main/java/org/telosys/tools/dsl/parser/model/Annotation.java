@@ -49,6 +49,14 @@ public class Annotation {
     }
 
     @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (parameter != null ? parameter.hashCode() : 0);
+        result = 31 * result + (hasParameter ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "@{" +
                 "name='" + name + '\'' +
