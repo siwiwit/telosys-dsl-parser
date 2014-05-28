@@ -125,9 +125,9 @@ public class EntityParser {
 
         String entityName = flattenContent.substring(0, bodyStart).trim();
 
-        // the closing bracket must be at the end
-        if (bodyEnd == flattenContent.length())
-            throw new EntityParserException("There's something wrong with the end of the body");
+//        // the closing bracket must be at the end
+//        if (bodyEnd == flattenContent.length())
+//            throw new EntityParserException("There's something wrong with the end of the body");
 
         // the filename must de equal to entity name
         if (!entityName.equals(filename))

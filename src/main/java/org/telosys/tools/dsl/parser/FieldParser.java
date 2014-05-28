@@ -2,6 +2,8 @@ package org.telosys.tools.dsl.parser;
 
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.NeutralType;
+import org.telosys.tools.dsl.parser.model.Type;
 
 import java.util.List;
 
@@ -37,9 +39,16 @@ public class FieldParser {
             end = fieldInfo.length();
         }
 
-        String type = fieldInfo.substring(startDescription+1, end);
-        if (type.length() == 0) {
+        String typeName = fieldInfo.substring(startDescription+1, end);
+        if (typeName.length() == 0) {
             throw new EntityParserException("The type of the field is missing");
+        }
+
+        Type type;
+        if (this.isTypeEnum(typeName)) {
+            type = new NeutralType("Enum=" + typeName);
+        } else {
+            type = new NeutralType(typeName);
         }
 
         Field field = new Field(name, type);
@@ -47,5 +56,9 @@ public class FieldParser {
         field.setAnnotationList(annotations);
 
         return field;
+    }
+
+    private boolean isTypeEnum(String type) {
+        return type.startsWith("#");
     }
 }
