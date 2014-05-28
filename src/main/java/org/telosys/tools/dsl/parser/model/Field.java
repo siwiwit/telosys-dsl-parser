@@ -3,16 +3,13 @@ package org.telosys.tools.dsl.parser.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Thomas on 15/05/14.
- */
 public class Field {
 
     private String name ;
-    private String type ;
+    private Type type ;
     private List<Annotation> annotationList;
 
-    public Field(String name, String type){
+    public Field(String name, Type type){
         this.name = name;
         this.type = type;
         this.annotationList = new ArrayList<Annotation>();
@@ -32,15 +29,16 @@ public class Field {
     }
 
     @Override
-    public boolean equals(Object other){
-    	if (other == null) return false;
-        if (other == this) return true;
-        if (!(other instanceof Field))return false;
-        Field otherField= (Field)other;
-        if(!otherField.name.equals(name)) return false;
-        if(!otherField.type.equals(type)) return false;
-        if(!otherField.annotationList.equals(annotationList)) return false;
-        
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Field field = (Field) o;
+
+        if (!annotationList.equals(field.annotationList)) return false;
+        if (!name.equals(field.name)) return false;
+        if (!type.equals(field.type)) return false;
+
         return true;
     }
 

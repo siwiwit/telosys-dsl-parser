@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.NeutralType;
 
 public class EntityParserTest {
 	@Before
@@ -110,7 +111,7 @@ public class EntityParserTest {
         
         FieldParser mockFieldParser = EasyMock.createMock(FieldParser.class);
         //Field
-        Field fieldId = new Field("id", "int");
+        Field fieldId = new Field("id", new NeutralType("int"));
         List<Annotation> annotationList = new ArrayList<Annotation>();
         annotationList.add(new Annotation("Id"));
         annotationList.add(new Annotation("Max", "3"));

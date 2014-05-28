@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.NeutralType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class FieldParserTest {
     public void testParseFieldValid() throws Exception {
         String fieldInfo = "id:int";
 
-        Field compareTo = new Field("id", "int");
+        Field compareTo = new Field("id", new NeutralType("int"));
 
         FieldParser fieldParser = new FieldParser();
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
@@ -39,7 +40,7 @@ public class FieldParserTest {
     @Test()
     public void testParseFieldWithAnnotation() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         String fieldInfo = "id:int{@Id}";
-        Field compareTo = new Field("id", "int");
+        Field compareTo = new Field("id", new NeutralType("int"));
         List<Annotation> annotationList = new ArrayList<Annotation>();
         annotationList.add(new Annotation("Id"));
         compareTo.setAnnotationList(annotationList);
@@ -56,5 +57,17 @@ public class FieldParserTest {
           
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
         EasyMock.verify(mockAnnotationParser);
+    }
+
+    @Test
+    public void testParseFieldWithEnum() {
+        String fieldInfo = "id:#Gender";
+
+        Field compareTo = new Field("id", new NeutralType("Enum=#Gender"));
+
+        FieldParser fieldParser = new FieldParser();
+        Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+
+        System.out.println(fieldParser.parseField(fieldInfo));
     }
 }
