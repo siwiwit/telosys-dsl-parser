@@ -10,7 +10,7 @@ import java.io.InputStream;
 public class StringUtilsTest {
     @Test
     public void testReadStream() throws Exception {
-        File file = new File("entity_test/Employee.entity");
+        File file = new File("entity_test/valid/Employee.entity");
         InputStream inputStream = new FileInputStream(file);
 
         String formattedContent = StringUtils.readStream(inputStream);

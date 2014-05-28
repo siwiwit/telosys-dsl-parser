@@ -1,0 +1,6 @@
+Employee2{
+    id : int {@Id};
+}
+Employee3{
+    id : int {@Id};
+}

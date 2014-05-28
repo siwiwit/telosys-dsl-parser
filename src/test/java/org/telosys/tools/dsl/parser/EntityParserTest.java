@@ -14,11 +14,10 @@ import org.telosys.tools.dsl.parser.model.Field;
 
 public class EntityParserTest {
 	@Before
-	public void setUp() throws Exception {
-	}
+	public void setUp() throws Exception {}
 
 	@Test(expected = EntityParserException.class)
-	public void testParseFileWithAFileWhichDontExist() {
+	public void testParseFileWithAFileWhichDoesntExist() {
 		File file = new File("entity_test/nul.entity");
 		EntityParser parser = new EntityParser();
 		parser.parse(file);
