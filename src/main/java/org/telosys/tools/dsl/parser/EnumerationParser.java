@@ -12,10 +12,12 @@ import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Enumeration;
 import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.FieldEnum;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
 public class EnumerationParser {
+
 	/**
 	 * Content of the File
 	 */
@@ -26,6 +28,14 @@ public class EnumerationParser {
 	 */
 	private String flattenContent;
 	
+	/**
+	 * Field Enummeration Parser
+	 */
+	private FieldEnumParser fieldEnumParser;
+	
+	public EnumerationParser(){
+		this.fieldEnumParser = new FieldEnumParser();
+	}
 	/**
 	 *
 	 * @param fileName
@@ -85,11 +95,12 @@ public class EnumerationParser {
         String[] split = enumName.split(":"); 
         if(split.length==2){
         	enumName = split[0];
-        	if(type.equals("int")){
+        	String enumType = split[1];
+        	if(enumType.equals("int")){
         		type = TypeEnum.INTEGER;
-        	}else if (type.equals("string")){
+        	}else if (enumType.equals("string")){
         		type = TypeEnum.STRING;
-        	}else if (type.equals("decimal")){
+        	}else if (enumType.equals("decimal")){
         		type = TypeEnum.DECIMAL;
         	}else {
         		throw new EntityParserException("The type of the Enum have to be int, string or decimal and nothing else");
@@ -103,6 +114,8 @@ public class EnumerationParser {
 //            throw new EntityParserException("There's something wrong with the end of the body");
 
         // the filename must de equal to entity name
+        System.out.println(enumName);
+        System.out.println(filename);
         if (!enumName.equals(filename))
             throw new EntityParserException("The name of the file does not match with the enum name");
 
@@ -126,10 +139,10 @@ public class EnumerationParser {
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-        if (body.lastIndexOf(";") != body.length()-1  )
-            throw new EntityParserException("A semilicon is missing ");
+//        if (body.lastIndexOf(";") != body.length()-1  )
+//            throw new EntityParserException("A semilicon is missing ");
 
-        String[] fieldEnumList = body.split(";");
+        String[] fieldEnumList = body.split(",");
         // at least 1 field is required
         if (fieldEnumList.length < 1) {
             throw new EntityParserException("This enum must contains at least one field");
@@ -137,8 +150,8 @@ public class EnumerationParser {
 
         // extract fields
         for (String field : fieldEnumList) {
-            //Field f = fieldEnumList.parseField(field);
-            //table.addField(f);
+            FieldEnum f = fieldEnumParser.parseField(field, type);
+            enumeration.addField(f);
         }
         return enumeration;
 	}
@@ -168,5 +181,13 @@ public class EnumerationParser {
 			}
 		}
 	 return stringBuilder.toString();
+	}
+	
+	
+	public String getFlattenContent() {
+		return flattenContent;
+	}
+	public void setFlattenContent(String flattenContent) {
+		this.flattenContent = flattenContent;
 	}
 }
