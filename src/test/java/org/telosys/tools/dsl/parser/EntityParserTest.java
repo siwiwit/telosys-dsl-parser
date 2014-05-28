@@ -1,5 +1,10 @@
 package org.telosys.tools.dsl.parser;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,14 +12,9 @@ import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Field;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 public class EntityParserTest {
 	@Before
 	public void setUp() throws Exception {
-
 	}
 
 	@Test(expected = EntityParserException.class)
@@ -31,7 +31,7 @@ public class EntityParserTest {
                 "\tfirstName : string ;\n" +
                 "\tbirthDate : date ;\n" +
                 "}\n";
-
+        
         EntityParser parser = new EntityParser(formattedContent);
         String flattenContent = parser.computeFlattenContent();
 
@@ -103,21 +103,34 @@ public class EntityParserTest {
     }
 
     @Test()
-    public void testParseValid() {
+    public void testParseValid() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         String testValid = "Entity{id:int{@Id,@Max(3)};}";
-
+        
         EntityParser parser = new EntityParser();
         parser.setFlattenContent(testValid);
-        Entity entity = parser.parseFlattenContent("Entity");
-
-        Entity toCompare = new Entity("Entity");
+        
+        FieldParser mockFieldParser = EasyMock.createMock(FieldParser.class);
+        //Field
         Field fieldId = new Field("id", "int");
         List<Annotation> annotationList = new ArrayList<Annotation>();
         annotationList.add(new Annotation("Id"));
         annotationList.add(new Annotation("Max", "3"));
         fieldId.setAnnotationList(annotationList);
+        
+        //mock fieldParser
+        EasyMock.expect(mockFieldParser.parseField("id:int{@Id,@Max(3)}")).andReturn(fieldId);
+        java.lang.reflect.Field field = parser.getClass().getDeclaredField("fieldParser");
+        field.setAccessible(true);
+        field.set(parser, mockFieldParser);
+        EasyMock.replay(mockFieldParser);
+        
+        Entity entity = parser.parseFlattenContent("Entity");
+
+        Entity toCompare = new Entity("Entity");
+        EasyMock.verify(mockFieldParser);
         toCompare.addField(fieldId);
 
         Assert.assertEquals(toCompare, entity);
+        
     }
 }

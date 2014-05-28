@@ -1,5 +1,6 @@
 package org.telosys.tools.dsl.parser;
 
+import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.Annotation;
@@ -36,15 +37,24 @@ public class FieldParserTest {
     }
 
     @Test()
-    public void testParseFieldWithAnnotation() throws Exception {
+    public void testParseFieldWithAnnotation() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         String fieldInfo = "id:int{@Id}";
-
         Field compareTo = new Field("id", "int");
         List<Annotation> annotationList = new ArrayList<Annotation>();
         annotationList.add(new Annotation("Id"));
         compareTo.setAnnotationList(annotationList);
 
         FieldParser fieldParser = new FieldParser();
+        
+        //mock annotationParser
+        AnnotationParser mockAnnotationParser = EasyMock.createMock(AnnotationParser.class);
+        EasyMock.expect(mockAnnotationParser.parseAnnotations("id:int{@Id}")).andReturn(annotationList);
+        java.lang.reflect.Field field = fieldParser.getClass().getDeclaredField("annotationParser");
+        field.setAccessible(true);
+        field.set(fieldParser, mockAnnotationParser);
+        EasyMock.replay(mockAnnotationParser);
+          
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+        EasyMock.verify(mockAnnotationParser);
     }
 }

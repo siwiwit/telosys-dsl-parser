@@ -30,15 +30,22 @@ public class EntityParser {
 	 * Flatten Content of the File
 	 */
 	private String flattenContent;
+	
+	/**
+	 * fieldParser used to parse fields
+	 */
+	private FieldParser fieldParser;
 
     public EntityParser() {
         this.formattedContent = "";
         this.flattenContent = "";
+        fieldParser = new FieldParser();
     }
 
     public EntityParser(String formattedContent) {
         this.formattedContent = formattedContent;
         this.flattenContent = "";
+        fieldParser = new FieldParser();
     }
 
 	/**
@@ -149,7 +156,6 @@ public class EntityParser {
             throw new EntityParserException("This entity must contains at least one field");
         }
 
-        FieldParser fieldParser = new FieldParser();
         // extract fields
         for (String field : fieldList) {
             Field f = fieldParser.parseField(field);
