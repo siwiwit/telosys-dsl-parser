@@ -69,5 +69,12 @@ public class FieldEnumParserTest {
         FieldEnumParser parser = new FieldEnumParser();
         parser.parseField(testValid, TypeEnum.STRING);
 	}
+	
+	@Test(expected=EntityParserException.class)
+	public void testParseWithoutQuoteString() {
+        String testValid = "TEST=3";
+        FieldEnumParser parser = new FieldEnumParser();
+        parser.parseField(testValid, TypeEnum.STRING);
+	}
 
 }

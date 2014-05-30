@@ -67,7 +67,7 @@ public class FieldEnumParser {
 
 		case STRING:
 
-			if (value.charAt(0) == '"' & value.charAt(1) != '"'
+			if (value.charAt(0) == '"' && value.charAt(1) != '"'
 					&& value.charAt(value.length() - 1) == '"') {
 				return value.substring(1, value.length() - 1);
 			} else {
