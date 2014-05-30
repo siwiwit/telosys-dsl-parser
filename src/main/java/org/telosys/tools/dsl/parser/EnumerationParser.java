@@ -72,13 +72,13 @@ public class EnumerationParser {
 
 		formattedContent = StringUtils.readStream(is);
 		flattenContent = computeFlattenContent();
-		Enumeration res = parseFlattenContent(file.getName()
+		Enumeration<?> res = parseFlattenContent(file.getName()
 				.substring(0, file.getName().lastIndexOf(".")));
 
 		System.out.println(res.toString());
 	}
 	
-	public Enumeration parseFlattenContent(String filename) {
+	public Enumeration<?> parseFlattenContent(String filename) {
         // get index of first and last open brackets
         int bodyStart = flattenContent.indexOf("{");
         int bodyEnd = flattenContent.lastIndexOf("}");
@@ -125,7 +125,7 @@ public class EnumerationParser {
             throw new EntityParserException("The name must not contains special char" + enumName);
 
         // create object
-        Enumeration enumeration = null;
+        Enumeration<?> enumeration = null;
         if(type == TypeEnum.INTEGER){
         	enumeration = new Enumeration<BigInteger>(enumName, type);
         }else if(type == TypeEnum.STRING){
