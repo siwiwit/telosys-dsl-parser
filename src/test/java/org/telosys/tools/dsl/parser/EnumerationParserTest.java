@@ -98,25 +98,25 @@ public class EnumerationParserTest {
     
     @Test(expected = EntityParserException.class)
     public void testParseInValidInt() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String testValid = "EnumTest:int{TEST=3.4,TESTBIS=4}";
+        String testInvalid = "EnumTest:int{TEST=3.4,TESTBIS=4}";
         EnumerationParser parser = new EnumerationParser();
-        parser.setFlattenContent(testValid);
+        parser.setFlattenContent(testInvalid);
         parser.parseFlattenContent("EnumTest");
     }
     
     @Test(expected = EntityParserException.class)
     public void testParseInValidDecimal() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String testValid = "EnumTest:decimal{TEST=\"String1\",TESTBIS=4.5}";
+        String testInvalid = "EnumTest:decimal{TEST=\"String1\",TESTBIS=4.5}";
         EnumerationParser parser = new EnumerationParser();
-        parser.setFlattenContent(testValid);
+        parser.setFlattenContent(testInvalid);
         parser.parseFlattenContent("EnumTest");
     }
     
     @Test(expected = EntityParserException.class)
-    public void testParseInValidString() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String testValid = "EnumTest:string{TEST=3,TESTBIS=\"string2\"}";
+    public void testParseInvalidString() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        String testInvalid = "EnumTest:string{TEST=3,TESTBIS=\"string2\"}";
         EnumerationParser parser = new EnumerationParser();
-        parser.setFlattenContent(testValid);
+        parser.setFlattenContent(testInvalid);
         parser.parseFlattenContent("EnumTest");
     }
 }

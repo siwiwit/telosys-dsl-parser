@@ -44,37 +44,37 @@ public class FieldEnumParserTest {
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithAnEmptyName() {
-        String testValid = "=4";
+        String testInvalid = "=4";
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testValid, TypeEnum.INTEGER);
+        parser.parseField(testInvalid, TypeEnum.INTEGER);
 	}
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithAnEmptyValue() {
-        String testValid = "TEST=";
+        String testInvalid = "TEST=";
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testValid, TypeEnum.INTEGER);
+        parser.parseField(testInvalid, TypeEnum.INTEGER);
 	}
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithAnEmptyValueString() {
-        String testValid = "TEST=\"\"";
+        String testInvalid = "TEST=\"\"";
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testValid, TypeEnum.STRING);
+        parser.parseField(testInvalid, TypeEnum.STRING);
 	}
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithSimpleQuoteString() {
-        String testValid = "TEST=\'abc\'";
+        String testInvalid = "TEST=\'abc\'";
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testValid, TypeEnum.STRING);
+        parser.parseField(testInvalid, TypeEnum.STRING);
 	}
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithoutQuoteString() {
-        String testValid = "TEST=3";
+        String testInvalid = "TEST=3";
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testValid, TypeEnum.STRING);
+        parser.parseField(testInvalid, TypeEnum.STRING);
 	}
 
 }
