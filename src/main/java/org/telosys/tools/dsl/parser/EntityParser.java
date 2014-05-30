@@ -1,5 +1,7 @@
 package org.telosys.tools.dsl.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model.Field;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
@@ -35,16 +37,20 @@ public class EntityParser {
      */
     private FieldParser fieldParser;
 
+    private Logger logger;
+
     public EntityParser() {
         this.formattedContent = "";
         this.flattenContent = "";
-        fieldParser = new FieldParser();
+        this.fieldParser = new FieldParser();
+        this.logger = LoggerFactory.getLogger(EntityParser.class);
     }
 
     public EntityParser(String formattedContent) {
         this.formattedContent = formattedContent;
         this.flattenContent = "";
-        fieldParser = new FieldParser();
+        this.fieldParser = new FieldParser();
+        this.logger = LoggerFactory.getLogger(EntityParser.class);
     }
 
     /**
@@ -82,8 +88,7 @@ public class EntityParser {
         int indexPoint = file.getName().lastIndexOf(".");
         if (indexPoint >= 0) {
             Entity res = parseFlattenContent(file.getName().substring(0, indexPoint));
-            System.out.println(res.toString());
-        }else{
+        } else {
             throw new EntityParserException("The filename has no extension");
         }
     }
@@ -112,6 +117,7 @@ public class EntityParser {
      * @return An entity wich contain the name of the entity, and all its fields
      */
     public Entity parseFlattenContent(String filename) {
+        this.logger.info("Parsing of the file " + filename);
 
         // get index of first and last open brackets
         int bodyStart = flattenContent.indexOf("{");
@@ -120,39 +126,52 @@ public class EntityParser {
         checkStructure(bodyStart, bodyEnd);
 
         // body required
-        if (bodyEnd - bodyStart == 1)
-            throw new EntityParserException("A field is required");
+        if (bodyEnd - bodyStart == 1) {
+            String errorMessage = "A field is required";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         String entityName = flattenContent.substring(0, bodyStart).trim();
 
-//        // the closing bracket must be at the end
-//        if (bodyEnd == flattenContent.length())
-//            throw new EntityParserException("There's something wrong with the end of the body");
-
         // the filename must de equal to entity name
-        if (!entityName.equals(filename))
-            throw new EntityParserException("The name of the file does not match with the entity name");
+        if (!entityName.equals(filename)) {
+            String errorMessage = "The name of the file does not match with the entity name";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         // the first later of an entity must be upper case
-        if (!Character.isUpperCase(flattenContent.charAt(0)))
-            throw new EntityParserException("The name of the entity must start with an upper case");
+        if (!Character.isUpperCase(flattenContent.charAt(0))) {
+            String errorMessage = "The name of the entity must start with an upper case";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         // only simple chars are allowed
-        if (!entityName.matches("^[A-Z][\\w]*$"))
-            throw new EntityParserException("The name must not contains special char" + entityName);
+        if (!entityName.matches("^[A-Z][\\w]*$")) {
+            String errorMessage = "The name must not contains special char " + entityName;
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         // create object
         Entity table = new Entity(entityName);
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-        if (body.lastIndexOf(";") != body.length() - 1)
-            throw new EntityParserException("A semilicon is missing ");
+        if (body.lastIndexOf(";") != body.length() - 1) {
+            String errorMessage = "A semilicon is missing";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         String[] fieldList = body.split(";");
         // at least 1 field is required
         if (fieldList.length < 1) {
-            throw new EntityParserException("This entity must contains at least one field");
+            String errorMessage = "This entity must contains at least one field";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         // extract fields
@@ -165,12 +184,18 @@ public class EntityParser {
 
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
-        if (bodyStart < 0)
-            throw new EntityParserException("There's something wrong with the beginning of the body");
+        if (bodyStart < 0) {
+            String errorMessage = "There's something wrong with the beginning of the body";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
 
         // end of body required
-        if (bodyEnd < 1)
-            throw new EntityParserException("There's something wrong with the end of the body");
+        if (bodyEnd < 1) {
+            String errorMessage = "There's something wrong with the end of the body";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
     }
 
     public String getFormattedContent() {

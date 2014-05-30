@@ -1,5 +1,7 @@
 package org.telosys.tools.dsl.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.model.Field;
 import org.telosys.tools.dsl.parser.model.NeutralType;
@@ -15,8 +17,11 @@ import java.util.List;
 public class FieldParser {
     private AnnotationParser annotationParser;
 
+    private Logger logger;
+
     public FieldParser() {
         this.annotationParser = new AnnotationParser();
+        this.logger = LoggerFactory.getLogger(FieldParser.class);
     }
 
     /**
@@ -26,10 +31,15 @@ public class FieldParser {
     Field parseField(String fieldInfo) {
         int startDescription = fieldInfo.indexOf(":");
         String name = fieldInfo.substring(0, startDescription);
-        if (!name.matches("^[\\w]*$"))
-            throw new EntityParserException("The name of the fields must not contains special char " + name);
+        if (!name.matches("^[\\w]*$")) {
+            String errorMessage = "The name of the fields must not contains special char " + name;
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
         if (name.length() == 0) {
-            throw new EntityParserException("The name of the field is missing");
+            String errorMessage = "The name of the field is missing";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         int end;
@@ -41,7 +51,9 @@ public class FieldParser {
 
         String typeName = fieldInfo.substring(startDescription+1, end);
         if (typeName.length() == 0) {
-            throw new EntityParserException("The type of the field is missing");
+            String errorMessage = "The type of the field is missing";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         Type type;

@@ -67,7 +67,5 @@ public class FieldParserTest {
 
         FieldParser fieldParser = new FieldParser();
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
-
-        System.out.println(fieldParser.parseField(fieldInfo));
     }
 }

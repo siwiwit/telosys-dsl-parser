@@ -1,5 +1,7 @@
 package org.telosys.tools.dsl.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.Annotation;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
@@ -11,6 +13,11 @@ import java.util.List;
  * @version 1.0
  */
 public class AnnotationParser {
+    private Logger logger;
+
+    public AnnotationParser() {
+        this.logger = LoggerFactory.getLogger(AnnotationParser.class);
+    }
 
     /**
      * Parse content of brackets for annotations
@@ -28,7 +35,9 @@ public class AnnotationParser {
 
         // no annotation found
         if ((bodyEnd < 0 && bodyStart >= 0) || (bodyEnd >= 0 && bodyStart < 0)) {
-            throw new EntityParserException("There is a problem with the bracket. There's one missing");
+            String errorMessage = "There is a problem with the bracket. There's one missing";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         if (bodyEnd < 0 && bodyStart < 0) {
@@ -41,7 +50,9 @@ public class AnnotationParser {
         String[] annotationList = fieldInfo.split(",");
         // at least 1 annotation is required, if there are brackets
         if (annotationList.length < 1) {
-            throw new EntityParserException("There is no annotation in the given information");
+            String errorMessage = "There is no annotation in the given information";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         // extract annotations
@@ -60,7 +71,9 @@ public class AnnotationParser {
     private Annotation parseSingleAnnotation(String annotationString) {
         // start with a @
         if (annotationString.charAt(0) != '@') {
-            throw new EntityParserException("An annotation must start with a '@' ");
+            String errorMessage = "An annotation must start with a '@' ";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
         }
 
         // find the name of the annotation
@@ -73,7 +86,9 @@ public class AnnotationParser {
             end = annotationString.indexOf("(");
             param = annotationString.substring(end+1, annotationString.length() - 1);
             if (param.equals("")) {
-                throw new EntityParserException("A parameter is required for this annotation : " + annotationString);
+                String errorMessage = "A parameter is required for this annotation : " + annotationString;
+                this.logger.error(errorMessage);
+                throw new EntityParserException(errorMessage);
             }
             containsParam = true;
         }
@@ -89,10 +104,14 @@ public class AnnotationParser {
         for (String allowed : listAllowed) {
             if (allowed.contains(givenAnnotation)) {
                 if (allowed.contains("#") && !containsParam) {
-                    throw new EntityParserException("A parameter is required for this annotation : " + givenAnnotation);
+                    String errorMessage = "A parameter is required for this annotation : " + givenAnnotation;
+                    this.logger.error(errorMessage);
+                    throw new EntityParserException(errorMessage);
                 }
                 if (!allowed.contains("#") && containsParam) {
-                    throw new EntityParserException("There is a not required parameter for this annotation : " + annotationString);
+                    String errorMessage = "There is a not required parameter for this annotation : " + annotationString;
+                    this.logger.error(errorMessage);
+                    throw new EntityParserException(errorMessage);
                 }
 
                 if (containsParam) {
@@ -103,6 +122,8 @@ public class AnnotationParser {
             }
         }
 
-        throw new EntityParserException("No annotation has been configured yet " );
+        String errorMessage = "No annotation has been configured yet ";
+        this.logger.error(errorMessage);
+        throw new EntityParserException(errorMessage);
     }
 }
