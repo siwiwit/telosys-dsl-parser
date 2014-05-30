@@ -11,14 +11,17 @@ import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.FieldEnum;
 
 public class EnumerationParserTest {
+    @Test(expected = EntityParserException.class)
+    public void testParseMissingBrackets() {
+        String testMissingBracket = "EnumTEST=3";
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(testMissingBracket);
+        parser.parseFlattenContent("Enum");
+    }
     @Test(expected = EntityParserException.class)
     public void testParseMissingBracket() {
-        String testMissingBracket = "EnumTEST=3";
+        String testMissingBracket = "Enum{TEST=3";
 
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(testMissingBracket);
@@ -116,5 +119,4 @@ public class EnumerationParserTest {
         parser.setFlattenContent(testValid);
         parser.parseFlattenContent("EnumTest");
     }
-
 }

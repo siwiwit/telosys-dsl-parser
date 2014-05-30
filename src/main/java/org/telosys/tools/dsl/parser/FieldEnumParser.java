@@ -29,14 +29,17 @@ public class FieldEnumParser {
 		if (value.length() == 0) {
 			throw new EntityParserException("The value of the field is missing");
 		}
-		
+
 		FieldEnum<? extends Object> field = null;
-		if(type == TypeEnum.INTEGER){
-			field = new FieldEnum<BigInteger>(name, (BigInteger) getValue(value, TypeEnum.INTEGER));
-		} else if(type == TypeEnum.DECIMAL){
-			field = new FieldEnum<BigDecimal>(name, (BigDecimal) getValue(value, TypeEnum.DECIMAL));
-		} else if(type == TypeEnum.STRING){
-			field = new FieldEnum<String>(name, (String) getValue(value, TypeEnum.STRING));
+		if (type == TypeEnum.INTEGER) {
+			field = new FieldEnum<BigInteger>(name, (BigInteger) getValue(
+					value, TypeEnum.INTEGER));
+		} else if (type == TypeEnum.DECIMAL) {
+			field = new FieldEnum<BigDecimal>(name, (BigDecimal) getValue(
+					value, TypeEnum.DECIMAL));
+		} else if (type == TypeEnum.STRING) {
+			field = new FieldEnum<String>(name, (String) getValue(value,
+					TypeEnum.STRING));
 		}
 		return field;
 	}
@@ -52,7 +55,7 @@ public class FieldEnumParser {
 				throw new EntityParserException("the value : " + value
 						+ " must be a Big Integer");
 			}
-			
+
 		case DECIMAL:
 			try {
 				BigDecimal decimal = new BigDecimal(value);
@@ -61,10 +64,10 @@ public class FieldEnumParser {
 				throw new EntityParserException("the value : " + value
 						+ " must be a Big Decimal");
 			}
-			
+
 		case STRING:
 
-			if (value.charAt(0) == '"'
+			if (value.charAt(0) == '"' & value.charAt(1) != '"'
 					&& value.charAt(value.length() - 1) == '"') {
 				return value.substring(1, value.length() - 1);
 			} else {
@@ -73,7 +76,7 @@ public class FieldEnumParser {
 			}
 
 		}
-		//unreachable code
+		// unreachable code
 		return null;
 	}
 }
