@@ -113,9 +113,6 @@ public class EnumerationParser {
 //        if (bodyEnd == flattenContent.length())
 //            throw new EntityParserException("There's something wrong with the end of the body");
 
-        // the filename must de equal to entity name
-        System.out.println(enumName);
-        System.out.println(filename);
         if (!enumName.equals(filename))
             throw new EntityParserException("The name of the file does not match with the enum name");
 
