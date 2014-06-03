@@ -1,17 +1,17 @@
 package org.telosys.tools.dsl.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model.Entity;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.utils.StringUtils;
-import org.telosys.tools.dsl.parser.utils.Utils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.tools.dsl.parser.model2.DomainEntity;
+import org.telosys.tools.dsl.parser.model2.DomainEntityField;
+import org.telosys.tools.dsl.parser.utils.StringUtils;
+import org.telosys.tools.dsl.parser.utils.Utils;
 
 /**
  * First entry point for the telosys entity parser
@@ -87,7 +87,7 @@ public class EntityParser {
         flattenContent = computeFlattenContent();
         int indexPoint = file.getName().lastIndexOf(".");
         if (indexPoint >= 0) {
-            Entity res = parseFlattenContent(file.getName().substring(0, indexPoint));
+            DomainEntity res = parseFlattenContent(file.getName().substring(0, indexPoint));
         } else {
             throw new EntityParserException("The filename has no extension");
         }
@@ -116,7 +116,7 @@ public class EntityParser {
      * @param filename The filename to check the content
      * @return An entity wich contain the name of the entity, and all its fields
      */
-    public Entity parseFlattenContent(String filename) {
+    public DomainEntity parseFlattenContent(String filename) {
         this.logger.info("Parsing of the file " + filename);
 
         // get index of first and last open brackets
@@ -156,7 +156,7 @@ public class EntityParser {
         }
 
         // create object
-        Entity table = new Entity(entityName);
+        DomainEntity table = new DomainEntity(entityName);
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
@@ -176,7 +176,7 @@ public class EntityParser {
 
         // extract fields
         for (String field : fieldList) {
-            Field f = fieldParser.parseField(field);
+            DomainEntityField f = fieldParser.parseField(field);
             table.addField(f);
         }
         return table;

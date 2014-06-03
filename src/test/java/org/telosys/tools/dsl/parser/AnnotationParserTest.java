@@ -3,6 +3,8 @@ package org.telosys.tools.dsl.parser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.Annotation;
+import org.telosys.tools.dsl.parser.model2.DomainEntityField;
+import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,10 @@ public class AnnotationParserTest {
     public void testParseAnnotationsValid() throws Exception {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Id};";
+        String field = "id:integer{@Id};";
 
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Id"));
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        annotationList.add(new DomainEntityFieldAnnotation("Id"));
 
         Assert.assertEquals(annotationList, annotationParser.parseAnnotations(field));
     }
@@ -24,7 +26,7 @@ public class AnnotationParserTest {
     public void testParseWithoutAnotation() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int;";
+        String field = "id:integer;";
 
         List<Annotation> annotationList = new ArrayList<Annotation>();
 
@@ -35,7 +37,7 @@ public class AnnotationParserTest {
     public void testParseUnknownAnnotation() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@FalseAnnotation};";
+        String field = "id:integer{@FalseAnnotation};";
         annotationParser.parseAnnotations(field);
     }
 
@@ -43,10 +45,10 @@ public class AnnotationParserTest {
     public void testParseAnnotationWithParam() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Max(3)};";
+        String field = "id:integer{@Max(3)};";
 
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Max", "3"));
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        annotationList.add(new DomainEntityFieldAnnotation("Max", "3"));
 
         Assert.assertEquals(annotationList, annotationParser.parseAnnotations(field));
     }
@@ -55,11 +57,11 @@ public class AnnotationParserTest {
     public void testParseMultipleAnnotations() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Id,@Max(3)};";
+        String field = "id:integer{@Id,@Max(3)};";
 
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Id"));
-        annotationList.add(new Annotation("Max", "3"));
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        annotationList.add(new DomainEntityFieldAnnotation("Id"));
+        annotationList.add(new DomainEntityFieldAnnotation("Max", "3"));
 
         Assert.assertEquals(annotationList, annotationParser.parseAnnotations(field));
     }
@@ -68,7 +70,7 @@ public class AnnotationParserTest {
     public void testParseMultipleAnnotationsWithWrongSyntax() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Id;@Max(3)};";
+        String field = "id:integer{@Id;@Max(3)};";
 
         List<Annotation> annotationList = new ArrayList<Annotation>();
         annotationList.add(new Annotation("Id"));
@@ -81,7 +83,7 @@ public class AnnotationParserTest {
     public void testParseAnnotationWithMissingParameter() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Max};";
+        String field = "id:integer{@Max};";
 
         annotationParser.parseAnnotations(field);
     }
@@ -90,7 +92,7 @@ public class AnnotationParserTest {
     public void testParseAnnotationWithEmptyParameter() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Max()};";
+        String field = "id:integer{@Max()};";
 
         annotationParser.parseAnnotations(field);
     }
@@ -99,7 +101,7 @@ public class AnnotationParserTest {
     public void testParseParameteredAnnotationWithWrongSyntax() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Max(3};";
+        String field = "id:integer{@Max(3};";
 
         annotationParser.parseAnnotations(field);
     }
@@ -108,7 +110,7 @@ public class AnnotationParserTest {
     public void testParseAnnotationWithMissingBracket() {
         AnnotationParser annotationParser = new AnnotationParser();
 
-        String field = "id:int{@Id;";
+        String field = "id:integer{@Id;";
 
         annotationParser.parseAnnotations(field);
     }

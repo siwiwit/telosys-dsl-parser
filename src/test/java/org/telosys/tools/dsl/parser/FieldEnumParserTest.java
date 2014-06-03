@@ -1,16 +1,14 @@
 package org.telosys.tools.dsl.parser;
 
-import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Enumeration;
-import org.telosys.tools.dsl.parser.model.FieldEnum;
 import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
+import org.telosys.tools.dsl.parser.model.FieldEnum;
 
 public class FieldEnumParserTest {
 

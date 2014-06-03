@@ -1,13 +1,13 @@
 package org.telosys.tools.dsl.parser;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.NeutralType;
-import org.telosys.tools.dsl.parser.model.Type;
-
-import java.util.List;
+import org.telosys.tools.dsl.parser.model2.DomainEntityField;
+import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
+import org.telosys.tools.dsl.parser.model2.DomainType;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -28,7 +28,7 @@ public class FieldParser {
      * @param fieldInfo
      * @return
      */
-    Field parseField(String fieldInfo) {
+    DomainEntityField parseField(String fieldInfo) {
         int startDescription = fieldInfo.indexOf(":");
         String name = fieldInfo.substring(0, startDescription);
         if (!name.matches("^[\\w]*$")) {
@@ -56,15 +56,21 @@ public class FieldParser {
             throw new EntityParserException(errorMessage);
         }
 
-        Type type;
+        DomainType type;
         if (this.isTypeEnum(typeName)) {
-            type = new NeutralType("Enum=" + typeName);
+        	//TODO
+        	throw new EntityParserException("Not implemented yet!");
+//            type = new NeutralType("Enum=" + typeName);
+        } else if(DomainNeutralTypes.exists(typeName)){
+            type = DomainNeutralTypes.getType(typeName);
         } else {
-            type = new NeutralType(typeName);
+        	String errorMessage = "The type of the field is incorrect";
+        	this.logger.error(errorMessage);
+        	throw new EntityParserException(errorMessage);
         }
 
-        Field field = new Field(name, type);
-        List<Annotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
+        DomainEntityField field = new DomainEntityField(name, type);
+        List<DomainEntityFieldAnnotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
         field.setAnnotationList(annotations);
 
         return field;

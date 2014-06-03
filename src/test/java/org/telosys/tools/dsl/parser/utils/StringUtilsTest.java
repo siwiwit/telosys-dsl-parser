@@ -16,7 +16,7 @@ public class StringUtilsTest {
         String formattedContent = StringUtils.readStream(inputStream);
 
         String compareTo = "Employee {\n" +
-                "\tid : int {@Id}; // the id\n" +
+                "\tid : integer {@Id}; // the id\n" +
                 "\tfirstName : string ;\n" +
                 "\tbirthDate : date ;\n" +
                 "}\n";

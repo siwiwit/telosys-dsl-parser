@@ -1,21 +1,24 @@
 package org.telosys.tools.dsl.parser;
 
-import org.easymock.EasyMock;
-import org.junit.Assert;
-import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.NeutralType;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.easymock.EasyMock;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.telosys.tools.dsl.parser.model.Field;
+import org.telosys.tools.dsl.parser.model.NeutralType;
+import org.telosys.tools.dsl.parser.model2.DomainEntityField;
+import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
 
 public class FieldParserTest {
     @Test
     public void testParseFieldValid() throws Exception {
-        String fieldInfo = "id:int";
+        String fieldInfo = "id:integer";
 
-        Field compareTo = new Field("id", new NeutralType("int"));
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
 
         FieldParser fieldParser = new FieldParser();
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
@@ -31,7 +34,7 @@ public class FieldParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseFieldWithoutName() throws Exception {
-        String fieldInfo = ":int";
+        String fieldInfo = ":integer";
 
         FieldParser fieldParser = new FieldParser();
         fieldParser.parseField(fieldInfo);
@@ -39,17 +42,17 @@ public class FieldParserTest {
 
     @Test()
     public void testParseFieldWithAnnotation() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String fieldInfo = "id:int{@Id}";
-        Field compareTo = new Field("id", new NeutralType("int"));
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Id"));
+        String fieldInfo = "id:integer{@Id}";
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        annotationList.add(new DomainEntityFieldAnnotation("Id"));
         compareTo.setAnnotationList(annotationList);
 
         FieldParser fieldParser = new FieldParser();
         
         //mock annotationParser
         AnnotationParser mockAnnotationParser = EasyMock.createMock(AnnotationParser.class);
-        EasyMock.expect(mockAnnotationParser.parseAnnotations("id:int{@Id}")).andReturn(annotationList);
+        EasyMock.expect(mockAnnotationParser.parseAnnotations("id:integer{@Id}")).andReturn(annotationList);
         java.lang.reflect.Field field = fieldParser.getClass().getDeclaredField("annotationParser");
         field.setAccessible(true);
         field.set(fieldParser, mockAnnotationParser);
@@ -58,7 +61,8 @@ public class FieldParserTest {
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
         EasyMock.verify(mockAnnotationParser);
     }
-
+    //TODO
+    @Ignore
     @Test
     public void testParseFieldWithEnum() {
         String fieldInfo = "id:#Gender";
