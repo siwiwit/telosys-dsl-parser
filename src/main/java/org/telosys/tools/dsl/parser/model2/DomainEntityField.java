@@ -7,6 +7,8 @@ public class DomainEntityField {
 
     private final String     name ;
     private final DomainType type ;
+    
+    // TODO : Hashtable (each annotation is unique for a field)
     private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
 
     public DomainEntityField(String name, DomainType type){

@@ -1,6 +1,9 @@
 package org.telosys.tools.dsl.parser.model2;
 
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.telosys.tools.dsl.parser.EntityParserException;
 
@@ -67,7 +70,7 @@ public class DomainModel {
 	}
 	
 	/**
-	 * Returns an entity for the given name 
+	 * Returns an entity for the given name (or null if not found)
 	 * @param entityName
 	 * @return
 	 */
@@ -75,10 +78,23 @@ public class DomainModel {
 		return entities.get(entityName);
 	}
 	
-	public int getNumberOfEntities() {
+	/**
+	 * Returns the number of entities currently defined in the model
+	 * @return
+	 */
+	public final int getNumberOfEntities() {
 		return entities.size();
 	}
 	
+	/**
+	 * Returns all the entity names (in alphabetical order)
+	 * @return
+	 */
+	public final List<String> getEntityNames() {
+		List<String> names = new LinkedList<String>( entities.keySet() ) ;
+		Collections.sort(names);
+		return names ;
+	}
 	
 	//------------------------------------------------------------------------------------------
 	// ENUMERATION
@@ -94,7 +110,7 @@ public class DomainModel {
 	}
 	
 	/**
-	 * Returns an enumeration for the given name 
+	 * Returns an enumeration for the given name (or null if not found)
 	 * @param enumerationName
 	 * @return
 	 */
@@ -102,7 +118,38 @@ public class DomainModel {
 		return enumerations.get(enumerationName);
 	}
 	
-	public int getNumberOfEnumerations() {
+	/**
+	 * Returns the number of enumerations currently defined in the model
+	 * @return
+	 */
+	public final int getNumberOfEnumerations() {
 		return enumerations.size();
 	}
+
+	/**
+	 * Returns all the enumeration names (in alphabetical order)
+	 * @return
+	 */
+	public final List<String> getEnumerationNames() {
+		List<String> names = new LinkedList<String>( enumerations.keySet() ) ;
+		Collections.sort(names);
+		return names ;
+	}
+	
+	//------------------------------------------------------------------------------------------
+	// ALL
+	//------------------------------------------------------------------------------------------
+	/**
+	 * Returns all the defined names, entities and enumerations (in alphabetical order)
+	 * @return
+	 */
+	public final List<String> getAllNames() {
+		//List<String> names = new LinkedList<String>( enumerations.keySet() ) ;
+//		
+//		Collections.sort(names);
+//		return names ;
+		// TODO
+		throw new RuntimeException("NOT IMPLEMENTED");
+	}
+	
 }

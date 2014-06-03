@@ -1,10 +1,15 @@
 package org.telosys.tools.dsl.parser.model;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.EntityParserException;
 import org.telosys.tools.dsl.parser.model2.DomainEntity;
+import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
 import org.telosys.tools.dsl.parser.model2.DomainModel;
@@ -23,6 +28,19 @@ public class DomainModelTest {
 		assertTrue( model.getNumberOfEntities() == 2 ) ;
 
 		model.addEntity( new DomainEntity("String") ); // "string" neutral type is case sensitive => No error
+		
+		DomainEntity book = model.getEntity("Book");
+		assertNotNull(book);
+
+		DomainEntity tmp = model.getEntity("NotDefined");
+		assertNull(tmp);
+		
+		List<String> entityNames = model.getEntityNames();
+		assertTrue(entityNames.size() == 3 ) ;		
+		System.out.println("Entity names : ");
+		for ( String name : entityNames ) {
+			System.out.println(" . " + name);
+		}
 	}
 
 	@Test ( expected = EntityParserException.class )
@@ -50,6 +68,23 @@ public class DomainModelTest {
 		assertTrue( model.getNumberOfEnumerations() == 2 ) ;
 
 		model.addEnumeration( new DomainEnumerationForString("String") ); // "string" neutral type is case sensitive => No error
+
+		DomainEnumeration<?> country = model.getEnumeration("Country");
+		assertNotNull(country);
+
+		DomainEnumeration<?> bookType = model.getEnumeration("BookType");
+		assertNotNull(bookType);
+
+		DomainEnumeration<?> tmp = model.getEnumeration("NotDefined");
+		assertNull(tmp);
+		
+		List<String> enumerationNames = model.getEnumerationNames();
+		assertTrue(enumerationNames.size() == 3 ) ;		
+		System.out.println("Enumeration names : ");
+		for ( String name : enumerationNames ) {
+			System.out.println(" . " + name);
+		}
+		
 	}
 
 	@Test ( expected = EntityParserException.class )
