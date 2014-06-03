@@ -71,11 +71,6 @@ public class AnnotationParserTest {
         AnnotationParser annotationParser = new AnnotationParser();
 
         String field = "id:integer{@Id;@Max(3)};";
-
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Id"));
-        annotationList.add(new Annotation("Max", "3"));
-
         annotationParser.parseAnnotations(field);
     }
 
