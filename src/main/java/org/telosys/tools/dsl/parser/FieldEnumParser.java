@@ -5,14 +5,15 @@ import java.math.BigInteger;
 
 import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.FieldEnum;
+import org.telosys.tools.dsl.parser.model2.DomainEnumerationItem;
 
-public class FieldEnumParser {
+public class FieldEnumParser<T> {
 
 	/**
 	 * @param fieldInfo
 	 * @return
 	 */
-	FieldEnum<? extends Object> parseField(String fieldInfo, TypeEnum type) {
+	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type) {
 		int startDescription = fieldInfo.indexOf("=");
 		String name = fieldInfo.substring(0, startDescription);
 		if (!name.matches("^[A-Z]*$"))
@@ -30,15 +31,15 @@ public class FieldEnumParser {
 			throw new EntityParserException("The value of the field is missing");
 		}
 
-		FieldEnum<? extends Object> field = null;
+		DomainEnumerationItem<?> field = null;
 		if (type == TypeEnum.INTEGER) {
-			field = new FieldEnum<BigInteger>(name, (BigInteger) getValue(
+			field = new DomainEnumerationItem<BigInteger>(name, (BigInteger) getValue(
 					value, TypeEnum.INTEGER));
 		} else if (type == TypeEnum.DECIMAL) {
-			field = new FieldEnum<BigDecimal>(name, (BigDecimal) getValue(
+			field = new DomainEnumerationItem<BigDecimal>(name, (BigDecimal) getValue(
 					value, TypeEnum.DECIMAL));
 		} else if (type == TypeEnum.STRING) {
-			field = new FieldEnum<String>(name, (String) getValue(value,
+			field = new DomainEnumerationItem<String>(name, (String) getValue(value,
 					TypeEnum.STRING));
 		}
 		return field;

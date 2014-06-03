@@ -4,15 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.StringTokenizer;
 
-import org.telosys.tools.dsl.parser.model.Entity;
-import org.telosys.tools.dsl.parser.model.Enumeration;
 import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.FieldEnum;
+import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
+import org.telosys.tools.dsl.parser.model2.DomainEnumerationForDecimal;
+import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
+import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
@@ -72,13 +70,13 @@ public class EnumerationParser {
 
 		formattedContent = StringUtils.readStream(is);
 		flattenContent = computeFlattenContent();
-		Enumeration<?> res = parseFlattenContent(file.getName()
+		DomainEnumeration<?> res = parseFlattenContent(file.getName()
 				.substring(0, file.getName().lastIndexOf(".")));
 
 		System.out.println(res.toString());
 	}
 	
-	public Enumeration<?> parseFlattenContent(String filename) {
+	public DomainEnumeration<?> parseFlattenContent(String filename) {
         // get index of first and last open brackets
         int bodyStart = flattenContent.indexOf("{");
         int bodyEnd = flattenContent.lastIndexOf("}");
@@ -96,7 +94,7 @@ public class EnumerationParser {
         if(split.length==2){
         	enumName = split[0];
         	String enumType = split[1];
-        	if(enumType.equals("int")){
+        	if(enumType.equals("integer")){
         		type = TypeEnum.INTEGER;
         	}else if (enumType.equals("string")){
         		type = TypeEnum.STRING;
@@ -125,13 +123,13 @@ public class EnumerationParser {
             throw new EntityParserException("The name must not contains special char" + enumName);
 
         // create object
-        Enumeration<?> enumeration = null;
+        DomainEnumeration<?> enumeration = null;
         if(type == TypeEnum.INTEGER){
-        	enumeration = new Enumeration<BigInteger>(enumName, type);
+        	enumeration = new DomainEnumerationForInteger(enumName);
         }else if(type == TypeEnum.STRING){
-        	enumeration = new Enumeration<String>(enumName, type);
+        	enumeration = new DomainEnumerationForString(enumName);
         } else if(type == TypeEnum.DECIMAL){
-        	enumeration = new Enumeration<BigDecimal>(enumName, type);
+        	enumeration = new DomainEnumerationForDecimal(enumName);
         }  
 
         // find all fields
@@ -147,8 +145,7 @@ public class EnumerationParser {
 
         // extract fields
         for (String field : fieldEnumList) {
-            FieldEnum f = fieldEnumParser.parseField(field, type);
-            enumeration.addField(f);
+            enumeration.addItem(fieldEnumParser.parseField(field, type));
         }
         return enumeration;
 	}
