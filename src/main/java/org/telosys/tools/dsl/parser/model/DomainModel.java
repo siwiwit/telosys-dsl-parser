@@ -151,5 +151,12 @@ public class DomainModel {
 		// TODO
 		throw new RuntimeException("NOT IMPLEMENTED");
 	}
+
+	@Override
+	public String toString() {
+		return "DomainModel [modelName=" + modelName + ", entities=" + entities
+				+ ", enumerations=" + enumerations + "]";
+	}
+	
 	
 }

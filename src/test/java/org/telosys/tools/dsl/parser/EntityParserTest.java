@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 
 public class EntityParserTest {
@@ -20,7 +21,7 @@ public class EntityParserTest {
 	@Test(expected = EntityParserException.class)
 	public void testParseFileWithAFileWhichDoesntExist() {
 		File file = new File("entity_test/nul.entity");
-		EntityParser parser = new EntityParser();
+		EntityParser parser = new EntityParser(new DomainModel("model"));
 		parser.parse(file);
 	}
 
@@ -32,7 +33,7 @@ public class EntityParserTest {
                 "\tbirthDate : date ;\n" +
                 "}\n";
         
-        EntityParser parser = new EntityParser(formattedContent);
+        EntityParser parser = new EntityParser(formattedContent, new DomainModel("model"));
         String flattenContent = parser.computeFlattenContent();
 
         String compareTo = "Employee{id:id{@test};firstName:string;birthDate:date;}";
@@ -43,7 +44,7 @@ public class EntityParserTest {
     public void testParseMissingBracket() {
         String testMissingBracket = "Entityid:int;";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingBracket);
         parser.parseFlattenContent("Entity");
     }
@@ -52,7 +53,7 @@ public class EntityParserTest {
     public void testParseMultipleEntities() {
         String testMultipleEntities = "Entity{id:int;}Entity2{id:int;}";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMultipleEntities);
         parser.parseFlattenContent("Entity");
     }
@@ -61,7 +62,7 @@ public class EntityParserTest {
     public void testParseWithoutField() {
         String testEntityWithoutField = "Entity{}";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityWithoutField);
         parser.parseFlattenContent("Entity");
     }
@@ -70,7 +71,7 @@ public class EntityParserTest {
     public void testParseEntityWithIllegalCharacters() {
         String testEntityNameIllegalCharacters = "E#n_tité{id:int;}";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityNameIllegalCharacters);
         parser.parseFlattenContent("Entity");
     }
@@ -79,7 +80,7 @@ public class EntityParserTest {
     public void testParseFieldWithIllegalCharacters() {
         String testEntityFieldIllegalCharacters = "Entity{ié#_:int;}";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityFieldIllegalCharacters);
         parser.parseFlattenContent("Entity");
     }
@@ -88,7 +89,7 @@ public class EntityParserTest {
     public void testParseMissingSemiColumn() {
         String testMissingSemiColumn = "Entity{id:int;name:string}";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingSemiColumn);
         parser.parseFlattenContent("Entity");
     }
@@ -97,7 +98,7 @@ public class EntityParserTest {
     public void testParseMissingLastBracket() {
         String testMissingLastBracket = "Entity{id:int;";
 
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingLastBracket);
         parser.parseFlattenContent("Entity");
     }
@@ -106,7 +107,7 @@ public class EntityParserTest {
     public void testParseValid() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         String testValid = "Entity{id:integer{@Id,@Max(3)};}";
         
-        EntityParser parser = new EntityParser();
+        EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testValid);
         
         FieldParser mockFieldParser = EasyMock.createMock(FieldParser.class);

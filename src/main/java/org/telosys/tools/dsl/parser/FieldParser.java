@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 import org.telosys.tools.dsl.parser.model.DomainType;
 
@@ -18,10 +19,16 @@ public class FieldParser {
     private AnnotationParser annotationParser;
 
     private Logger logger;
+    
+    /**
+     * Curent Model
+     */
+	private DomainModel model;
 
-    public FieldParser() {
+    public FieldParser(DomainModel model) {
         this.annotationParser = new AnnotationParser();
         this.logger = LoggerFactory.getLogger(FieldParser.class);
+        this.model = model;
     }
 
     /**

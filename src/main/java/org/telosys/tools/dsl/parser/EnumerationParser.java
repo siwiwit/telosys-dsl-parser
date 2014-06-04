@@ -11,6 +11,7 @@ import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForInteger;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForString;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
@@ -46,13 +47,13 @@ public class EnumerationParser {
 	 *
 	 * @param file
 	 */
-	public void parse(File file) {
+	public DomainEnumeration<?> parse(File file) {
 		try {
 			if (!file.exists()) {
 				throw new FileNotFoundException();
 			}
 			InputStream io = new FileInputStream(file);
-			this.parse(io, file.getAbsolutePath());
+			return this.parse(io, file.getAbsolutePath());
 		} catch (FileNotFoundException e) {
 			throw new EntityParserException("File Not found : "
 					+ file.getAbsolutePath());
@@ -65,15 +66,14 @@ public class EnumerationParser {
 	 *
 	 * @param is
 	 */
-	public void parse(InputStream is, String path) {
+	public DomainEnumeration<?> parse(InputStream is, String path) {
 		File file = new File(path);
 
 		formattedContent = StringUtils.readStream(is);
 		flattenContent = computeFlattenContent();
 		DomainEnumeration<?> res = parseFlattenContent(file.getName()
 				.substring(0, file.getName().lastIndexOf(".")));
-
-		System.out.println(res.toString());
+		return res;
 	}
 	
 	public DomainEnumeration<?> parseFlattenContent(String filename) {

@@ -12,6 +12,11 @@ public class DomainEnumerationItem<T> {
 	}
 
 	@Override
+	public String toString() {
+		return "DomainEnumerationItem [name=" + name + ", value=" + value + "]";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

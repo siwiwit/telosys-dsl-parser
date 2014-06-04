@@ -8,6 +8,7 @@ import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class FieldEnumParser<T> {
 
+	
 	/**
 	 * @param fieldInfo
 	 * @return

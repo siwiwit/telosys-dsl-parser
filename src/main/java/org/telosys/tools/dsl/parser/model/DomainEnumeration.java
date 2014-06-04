@@ -35,7 +35,12 @@ public abstract class DomainEnumeration<T> extends DomainType {
     	return items.size() ;
     }
     
-    public void addItem(String name, T value) {
+    @Override
+	public String toString() {
+		return "DomainEnumeration [items=" + items + "]";
+	}
+
+	public void addItem(String name, T value) {
     	DomainEnumerationItem<T> item = new DomainEnumerationItem<T>(name, value);
     	addItem(item);
     }

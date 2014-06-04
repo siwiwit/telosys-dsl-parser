@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralType;
 import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 
@@ -19,7 +20,7 @@ public class FieldParserTest {
 
         DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
 
@@ -27,7 +28,7 @@ public class FieldParserTest {
     public void testParseFieldWithoutType() throws Exception {
         String fieldInfo = "id:";
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         fieldParser.parseField(fieldInfo);
     }
 
@@ -35,7 +36,7 @@ public class FieldParserTest {
     public void testParseFieldWithoutName() throws Exception {
         String fieldInfo = ":integer";
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         fieldParser.parseField(fieldInfo);
     }
 
@@ -47,7 +48,7 @@ public class FieldParserTest {
         annotationList.add(new DomainEntityFieldAnnotation("Id"));
         compareTo.setAnnotationList(annotationList);
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         
         //mock annotationParser
         AnnotationParser mockAnnotationParser = EasyMock.createMock(AnnotationParser.class);
@@ -68,7 +69,7 @@ public class FieldParserTest {
 
         DomainEntityField compareTo = new DomainEntityField("id", new DomainNeutralType("Enum=#Gender"));
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
 }
