@@ -1,4 +1,4 @@
-package org.telosys.tools.dsl.parser.model2;
+package org.telosys.tools.dsl.parser.model;
 
 import java.util.ArrayList;
 import java.util.List;

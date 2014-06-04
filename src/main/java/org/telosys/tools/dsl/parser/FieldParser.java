@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model2.DomainEntityField;
-import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
-import org.telosys.tools.dsl.parser.model2.DomainType;
+import org.telosys.tools.dsl.parser.model.DomainEntityField;
+import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
+import org.telosys.tools.dsl.parser.model.DomainType;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre

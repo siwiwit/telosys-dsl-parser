@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.EntityParserException;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForDecimal;
 
 public class DomainEnumerationForDecimalTest {
 

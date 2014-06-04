@@ -8,8 +8,8 @@ import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model2.DomainEntity;
-import org.telosys.tools.dsl.parser.model2.DomainEntityField;
+import org.telosys.tools.dsl.parser.model.DomainEntity;
+import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 

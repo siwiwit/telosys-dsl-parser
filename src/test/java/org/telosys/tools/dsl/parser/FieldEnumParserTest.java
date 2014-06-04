@@ -6,8 +6,8 @@ import java.math.BigInteger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model2.DomainEnumeration.TypeEnum;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationItem;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class FieldEnumParserTest {
 

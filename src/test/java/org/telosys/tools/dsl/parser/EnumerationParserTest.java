@@ -5,11 +5,11 @@ import java.math.BigInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForDecimal;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationItem;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForInteger;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForString;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class EnumerationParserTest {
     @Test(expected = EntityParserException.class)

@@ -7,10 +7,10 @@ import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model2.DomainEntityField;
-import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralType;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
+import org.telosys.tools.dsl.parser.model.DomainEntityField;
+import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainNeutralType;
+import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 
 public class FieldParserTest {
     @Test

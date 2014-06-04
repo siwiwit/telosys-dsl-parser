@@ -6,11 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
-import org.telosys.tools.dsl.parser.model2.DomainEnumeration.TypeEnum;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForDecimal;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForInteger;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForString;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 

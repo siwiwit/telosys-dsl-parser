@@ -8,11 +8,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.EntityParserException;
-import org.telosys.tools.dsl.parser.model2.DomainEntity;
-import org.telosys.tools.dsl.parser.model2.DomainEntityField;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
-import org.telosys.tools.dsl.parser.model2.DomainTypeNature;
 
 public class DomainEntityTest {
 

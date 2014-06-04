@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.EntityParserException;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
 
 public class DomainEnumerationForStringTest {
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
 /**
