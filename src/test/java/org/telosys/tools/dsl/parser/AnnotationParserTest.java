@@ -1,13 +1,11 @@
 package org.telosys.tools.dsl.parser;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.model2.DomainEntityField;
-import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
 
 public class AnnotationParserTest {
     @Test
@@ -28,7 +26,7 @@ public class AnnotationParserTest {
 
         String field = "id:integer;";
 
-        List<Annotation> annotationList = new ArrayList<Annotation>();
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
 
         Assert.assertEquals(annotationList, annotationParser.parseAnnotations(field));
     }

@@ -14,6 +14,9 @@ import org.telosys.tools.dsl.parser.EntityParserException;
  */
 public abstract class DomainEnumeration<T> extends DomainType {
 
+	public enum TypeEnum {
+		INTEGER, STRING, DECIMAL
+	};
 //    private final Class<?>  itemClass;
     private final Map<String,DomainEnumerationItem<T>> items;
 

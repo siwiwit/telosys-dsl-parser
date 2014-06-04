@@ -3,8 +3,7 @@ package org.telosys.tools.dsl.parser;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
-import org.telosys.tools.dsl.parser.model.FieldEnum;
+import org.telosys.tools.dsl.parser.model2.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationItem;
 
 public class FieldEnumParser<T> {

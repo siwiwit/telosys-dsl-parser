@@ -7,10 +7,9 @@ import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.NeutralType;
 import org.telosys.tools.dsl.parser.model2.DomainEntityField;
 import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model2.DomainNeutralType;
 import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
 
 public class FieldParserTest {
@@ -67,7 +66,7 @@ public class FieldParserTest {
     public void testParseFieldWithEnum() {
         String fieldInfo = "id:#Gender";
 
-        Field compareTo = new Field("id", new NeutralType("Enum=#Gender"));
+        DomainEntityField compareTo = new DomainEntityField("id", new DomainNeutralType("Enum=#Gender"));
 
         FieldParser fieldParser = new FieldParser();
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));

@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
+import org.telosys.tools.dsl.parser.model2.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationForDecimal;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
 import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;

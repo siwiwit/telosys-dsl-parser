@@ -8,7 +8,6 @@ import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Entity;
 import org.telosys.tools.dsl.parser.model2.DomainEntity;
 import org.telosys.tools.dsl.parser.model2.DomainEntityField;
 import org.telosys.tools.dsl.parser.model2.DomainEntityFieldAnnotation;
