@@ -29,7 +29,7 @@ public class ModelParser {
             model.addEnumeration(enumParser.parse(new File(enumeration)));
         }
 
-        List<String> entities = listEntities();
+        List<String> entities = getListEntities();
         EntityParser entityParser = new EntityParser(model);
         for (String entity : entities) {
             model.addEntity(entityParser.parse(entity));
@@ -38,7 +38,7 @@ public class ModelParser {
     }
 
 
-    public List<String> listEntities() {
+    public List<String> getListEntities() {
         if (!this.files.containsKey("entity")) {
             this.getListFiles();
         }
