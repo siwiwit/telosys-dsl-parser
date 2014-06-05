@@ -5,11 +5,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.telosys.tools.dsl.parser.model.DomainEntity;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
 public class DomainModelParser {
 
-	private final static String DOT_MODEL = ".model" ;
+	private final static String DOT_MODEL  = ".model" ;
+	private final static String DOT_ENTITY = ".entity" ;
+	private final static String DOT_ENUM   = ".enum" ;
 	
 	/**
 	 * Parse the given model 
@@ -52,6 +56,18 @@ public class DomainModelParser {
 			String fileName = file.getName() ;
 			int i = fileName.indexOf(DOT_MODEL);
 			modelName = fileName.substring(0, i);
+		}
+		
+		// 
+		File directory = file.getParentFile();
+		File[] files = directory.listFiles() ;
+		for ( File f : files ) {
+			if ( f.isFile() && f.getName().endsWith(DOT_ENTITY)) {
+				DomainEntity entity = parseEntityFile(f);
+			}
+			if ( f.isFile() && f.getName().endsWith(DOT_ENUM)) {
+				DomainEnumeration enumeration = parseEnumerationFile(f);
+			}
 		}
 		return new DomainModel(modelName);
 	}
