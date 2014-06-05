@@ -17,8 +17,9 @@ public class ModelParserTest {
         File folder = new File("src/test/resources/model_test/valid");
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-            	ModelParser parser = new ModelParser();
-                DomainModel model = parser.parse(fileEntry.getAbsolutePath());
+            	ModelParser parser = new ModelParser(fileEntry.getAbsolutePath());
+                DomainModel model = parser.parse();
+                System.out.println(model);
             }
         }
     }

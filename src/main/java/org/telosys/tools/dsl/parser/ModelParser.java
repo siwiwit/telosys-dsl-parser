@@ -1,51 +1,81 @@
 package org.telosys.tools.dsl.parser;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ModelParser {
-	
-	public DomainModel parse(String folder) {
-		DomainModel model = new DomainModel(folder);
-		File folderF = new File(folder);
-		List<String> enumerations = getListEnumFiles(folderF);
-		EnumerationParser enumParser = new EnumerationParser();
-		for(String enumeration : enumerations){
-			model.addEnumeration(enumParser.parse(new File(enumeration)));
-		}
-		
-		List<String> entities = listEntities(folderF);
-		EntityParser entityParser = new EntityParser(model);
-		for(String entity : entities){
-				model.addEntity(entityParser.parse(entity));
-		}
-		return model;
-	}
 
-	
-	public List<String> listEntities(File folder) {
-		return getListFiles(folder, "entity");
-	}
-	
-	public List<String> getListEnumFiles(File folder) {
-		return getListFiles(folder, "enum");
-	}
-	
-	public List<String> getListFiles(File folder, String extension){
-		List<String> files = new ArrayList<String>();
+    private Map<String, List<String>> files;
+    private String[] types = {"entity", "enum"};
+    private File folder;
 
-		int i;
-		String[] allFiles = folder.list();
-		for (i = 0; i < allFiles.length; i++) {
-			if (allFiles[i].endsWith("."+extension) == true) {
-				files.add(folder.getAbsolutePath()+"/"+allFiles[i]);
-			}
-		}
-		
-		return files;
-	}
+    public ModelParser(String folder) {
+        this.folder = new File(folder);
+        this.files = new HashMap<String, List<String>>();
+    }
+
+
+    public DomainModel parse() {
+        DomainModelParser domainModelParser = new DomainModelParser();
+        DomainModel model = domainModelParser.parse(this.folder);
+
+        List<String> enumerations = getListEnumFiles();
+
+        EnumerationParser enumParser = new EnumerationParser();
+        for (String enumeration : enumerations) {
+            model.addEnumeration(enumParser.parse(new File(enumeration)));
+        }
+
+        List<String> entities = getListEntities();
+        for (String entity : entities) {
+        	File file = new File(entity);
+        	model.addEntity(new DomainEntity(file.getName().substring(0,file.getName().lastIndexOf("."))));
+        }
+        
+        EntityParser entityParser = new EntityParser(model);
+        entities = getListEntities();
+        for (String entity : entities) {
+            model.putEntity(entityParser.parse(entity));
+        }
+        return model;
+    }
+
+
+    public List<String> getListEntities() {
+        if (!this.files.containsKey("entity")) {
+            this.getListFiles();
+        }
+        return this.files.get("entity");
+    }
+
+    public List<String> getListEnumFiles() {
+        if (!this.files.containsKey("enum")) {
+            this.getListFiles();
+        }
+        return this.files.get("enum");
+    }
+
+    private void getListFiles() {
+        for (String type : this.types) {
+            this.files.put(type, new ArrayList<String>());
+        }
+
+        String[] allFiles = this.folder.list();
+        for (String fileName : allFiles) {
+            String extension = fileName.substring(fileName.lastIndexOf(".")+1); 
+            if (this.files.containsKey(extension)) {
+                List<String> current = this.files.get(extension);
+                current.add(folder.getAbsolutePath()+"/"+fileName);
+                this.files.put(extension, current);
+            }
+        }
+
+    }
 
 }

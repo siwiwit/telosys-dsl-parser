@@ -1,5 +1,6 @@
 package org.telosys.tools.dsl.parser.model;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,5 +67,15 @@ public class DomainEntity extends DomainType {
         int result = this.getName() != null ? this.getName().hashCode() : 0;
         result = 31 * result + (fields != null ? fields.hashCode() : 0);
         return result;
+    }
+    /**
+     * Copy the field of the entity into another entity
+     * @param intoCopy the destination
+     */
+    public void copyIn(DomainEntity intoCopy){
+    	Enumeration<DomainEntityField> e = fields.elements();
+    	while(e.hasMoreElements()){
+    		intoCopy.addField(e.nextElement());
+    	}
     }
 }
