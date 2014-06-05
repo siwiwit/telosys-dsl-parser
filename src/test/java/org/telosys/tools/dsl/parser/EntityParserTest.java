@@ -42,7 +42,7 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseMissingBracket() {
-        String testMissingBracket = "Entityid:int;";
+        String testMissingBracket = "Entityid:integer;";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingBracket);
@@ -51,7 +51,7 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseMultipleEntities() {
-        String testMultipleEntities = "Entity{id:int;}Entity2{id:int;}";
+        String testMultipleEntities = "Entity{id:integer;}Entity2{id:integer;}";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMultipleEntities);
@@ -69,7 +69,7 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseEntityWithIllegalCharacters() {
-        String testEntityNameIllegalCharacters = "E#n_tité{id:int;}";
+        String testEntityNameIllegalCharacters = "E#n_tité{id:integer;}";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityNameIllegalCharacters);
@@ -78,7 +78,7 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseFieldWithIllegalCharacters() {
-        String testEntityFieldIllegalCharacters = "Entity{ié#_:int;}";
+        String testEntityFieldIllegalCharacters = "Entity{ié#_:integer;}";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityFieldIllegalCharacters);
@@ -87,7 +87,7 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseMissingSemiColumn() {
-        String testMissingSemiColumn = "Entity{id:int;name:string}";
+        String testMissingSemiColumn = "Entity{id:integer;name:string}";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingSemiColumn);
@@ -96,10 +96,46 @@ public class EntityParserTest {
 
     @Test(expected = EntityParserException.class)
     public void testParseMissingLastBracket() {
-        String testMissingLastBracket = "Entity{id:int;";
+        String testMissingLastBracket = "Entity{id:integer;";
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testMissingLastBracket);
+        parser.parseFlattenContent("Entity");
+    }
+    
+    @Test(expected = EntityParserException.class)
+    public void testParseWithTwoIds() {
+        String testWithTwoIds = "Entity{id:integer{@Id};idbis:integer{@Id};}";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testWithTwoIds);
+        parser.parseFlattenContent("Entity");
+    }
+    
+    @Test(expected = EntityParserException.class)
+    public void testParseWithAnIdInAnArray() {
+        String testWithAnIdInAnArray = "Entity{id:integer[]{@Id};}";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testWithAnIdInAnArray);
+        parser.parseFlattenContent("Entity");
+    }
+    
+    @Test(expected = EntityParserException.class)
+    public void testParseWithAnIdInAClob() {
+        String testWithAnIdInAClob = "Entity{id:clob{@Id};}";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testWithAnIdInAClob);
+        parser.parseFlattenContent("Entity");
+    }
+    
+    @Test(expected = EntityParserException.class)
+    public void testParseWithAnIdInABlob() {
+        String testWithAnIdInABlob = "Entity{id:blob{@Id};}";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testWithAnIdInABlob);
         parser.parseFlattenContent("Entity");
     }
 

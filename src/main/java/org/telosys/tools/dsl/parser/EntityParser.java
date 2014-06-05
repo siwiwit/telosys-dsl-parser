@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainModel;
+import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.Utils;
 
@@ -95,7 +96,8 @@ public class EntityParser {
         flattenContent = computeFlattenContent();
         int indexPoint = file.getName().lastIndexOf(".");
         if (indexPoint >= 0) {
-            return parseFlattenContent(file.getName().substring(0, indexPoint));
+            DomainEntity entity = parseFlattenContent(file.getName().substring(0, indexPoint));
+        	return entity;
         } else {
             throw new EntityParserException("The filename has no extension");
         }
@@ -187,6 +189,7 @@ public class EntityParser {
             DomainEntityField f = fieldParser.parseField(field);
             table.addField(f);
         }
+        verifyEntityStructure(table);
         return table;
     }
 
@@ -205,7 +208,25 @@ public class EntityParser {
             throw new EntityParserException(errorMessage);
         }
     }
-
+    public void verifyEntityStructure(DomainEntity entity) throws EntityParserException {
+    	DomainEntityField fieldWithId = null;
+    	for(DomainEntityField tmp : entity.getFields()){
+    		if(tmp.getAnnotationNames().contains("Id")) {
+    			if(fieldWithId != null) {
+    				throw new EntityParserException("The Id is defined more than once in the entity "+ entity.getName());
+    			} 
+    			if(tmp.getCardinality() != 1) {
+    				throw new EntityParserException("The Id can't be in an array in the entity "+ entity.getName());
+    			} 
+    			if(tmp.isNeutralType()){
+    				if(tmp.getTypeName().equals(DomainNeutralTypes.BLOB) || tmp.getTypeName().equals(DomainNeutralTypes.CLOB)) {
+    					throw new EntityParserException("The Id can't be a blob ou a clob in the entity "+ entity.getName());
+    				}
+    			}
+    			fieldWithId = tmp;
+    		}
+    	}
+    }
     public String getFormattedContent() {
         return formattedContent;
     }

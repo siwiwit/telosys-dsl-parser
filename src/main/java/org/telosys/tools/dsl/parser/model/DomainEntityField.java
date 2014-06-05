@@ -1,7 +1,12 @@
 package org.telosys.tools.dsl.parser.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.telosys.tools.dsl.parser.EntityParserException;
 
 public class DomainEntityField {
 
@@ -10,26 +15,36 @@ public class DomainEntityField {
     private final int        cardinality ;
     
     // TODO : Hashtable (each annotation is unique for a field)
-    private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
+  //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
 
-    public DomainEntityField(String name, DomainType type){
+    private final Hashtable<String,DomainEntityFieldAnnotation> annotations  = new Hashtable<String,DomainEntityFieldAnnotation>() ;
+
+	public DomainEntityField(String name, DomainType type){
         this.name = name;
         this.type = type;
         this.cardinality = 1 ;
-        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+//        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
     public DomainEntityField(String name, DomainType type, int cardinality ){
         this.name = name;
         this.type = type;
         this.cardinality = cardinality ;
-        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+    //    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
     public void setAnnotationList(List<DomainEntityFieldAnnotation> annotationList) {
-        this.annotationList = annotationList;
+        for(DomainEntityFieldAnnotation annotation : annotationList){
+        	addAnnotation(annotation);
+        }
     }
-    
+    public void addAnnotation(DomainEntityFieldAnnotation annotation) {
+    	if(!annotations.containsKey(annotation.getName())) {
+    		annotations.put(annotation.getName(), annotation);
+    	} else {
+    		throw new EntityParserException("The annotation " + annotation.getName() +" is already define in the field "+this.getName());
+    	}
+    }
 	public final String getName() {
 		return name ;
 	}	
@@ -63,7 +78,7 @@ public class DomainEntityField {
         return "Field{" +
                 "name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", annotationList=" + annotationList +
+                ", annotationList=" + annotations +
                 '}';
     }
 
@@ -74,7 +89,7 @@ public class DomainEntityField {
 
         DomainEntityField field = (DomainEntityField) o;
 
-        if (!annotationList.equals(field.annotationList)) return false;
+        if (!annotations.equals(field.annotations)) return false;
         if (!name.equals(field.name)) return false;
         if (!type.equals(field.type)) return false;
 
@@ -85,7 +100,16 @@ public class DomainEntityField {
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (annotationList != null ? annotationList.hashCode() : 0);
+        result = 31 * result + (annotations != null ? annotations.hashCode() : 0);
         return result;
     }
+    /**
+	 * Returns all the annotation names (in alphabetical order)
+	 * @return
+	 */
+	public final List<String> getAnnotationNames() {
+		List<String> names = new LinkedList<String>( annotations.keySet() ) ;
+		Collections.sort(names);
+		return names ;
+	}
 }
