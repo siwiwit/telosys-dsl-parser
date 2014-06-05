@@ -65,9 +65,12 @@ public class FieldParser {
 
         DomainType type;
         if (this.isTypeEnum(typeName)) {
-        	//TODO
-        	throw new EntityParserException("Not implemented yet!");
-//            type = new NeutralType("Enum=" + typeName);
+        	type = this.model.getEnumeration(typeName.substring(1));
+            if (type == null) {
+                String errorMessage = "The enumeration " + typeName.substring(1) + " does not exist";
+                this.logger.error(errorMessage);
+                throw new EntityParserException(errorMessage);
+            }
         } else if(DomainNeutralTypes.exists(typeName)){
             type = DomainNeutralTypes.getType(typeName);
         } else {

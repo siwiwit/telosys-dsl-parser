@@ -7,11 +7,7 @@ import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.DomainEntityField;
-import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
-import org.telosys.tools.dsl.parser.model.DomainModel;
-import org.telosys.tools.dsl.parser.model.DomainNeutralType;
-import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
+import org.telosys.tools.dsl.parser.model.*;
 
 public class FieldParserTest {
     @Test
@@ -49,7 +45,7 @@ public class FieldParserTest {
         compareTo.setAnnotationList(annotationList);
 
         FieldParser fieldParser = new FieldParser(new DomainModel("model"));
-        
+
         //mock annotationParser
         AnnotationParser mockAnnotationParser = EasyMock.createMock(AnnotationParser.class);
         EasyMock.expect(mockAnnotationParser.parseAnnotations("id:integer{@Id}")).andReturn(annotationList);
@@ -57,19 +53,22 @@ public class FieldParserTest {
         field.setAccessible(true);
         field.set(fieldParser, mockAnnotationParser);
         EasyMock.replay(mockAnnotationParser);
-          
+
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
         EasyMock.verify(mockAnnotationParser);
     }
-    //TODO
-    @Ignore
+
     @Test
     public void testParseFieldWithEnum() {
         String fieldInfo = "id:#Gender";
 
-        DomainEntityField compareTo = new DomainEntityField("id", new DomainNeutralType("Enum=#Gender"));
+        DomainModel model = new DomainModel("model");
+        DomainEnumerationForString domainEnumeration = new DomainEnumerationForString("Gender");
+        model.addEnumeration(domainEnumeration);
 
-        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+        DomainEntityField compareTo = new DomainEntityField("id", domainEnumeration);
+
+        FieldParser fieldParser = new FieldParser(model);
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
 }
