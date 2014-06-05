@@ -21,8 +21,9 @@ public class ModelParser {
 
 
     public DomainModel parse() {
-        DomainModel model = new DomainModel(this.folder.getPath());
-        
+        DomainModelParser domainModelParser = new DomainModelParser();
+        DomainModel model = domainModelParser.parse(this.folder);
+
         List<String> enumerations = getListEnumFiles();
 
         EnumerationParser enumParser = new EnumerationParser();
