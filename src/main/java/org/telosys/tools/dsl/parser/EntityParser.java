@@ -1,17 +1,18 @@
 package org.telosys.tools.dsl.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model.Entity;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.utils.StringUtils;
-import org.telosys.tools.dsl.parser.utils.Utils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.tools.dsl.parser.model.DomainEntity;
+import org.telosys.tools.dsl.parser.model.DomainEntityField;
+import org.telosys.tools.dsl.parser.model.DomainModel;
+import org.telosys.tools.dsl.parser.utils.StringUtils;
+import org.telosys.tools.dsl.parser.utils.Utils;
 
 /**
  * First entry point for the telosys entity parser
@@ -39,37 +40,44 @@ public class EntityParser {
 
     private Logger logger;
 
-    public EntityParser() {
+    /**
+     * the current model
+     */
+	private DomainModel model;
+
+    public EntityParser(DomainModel model) {
         this.formattedContent = "";
         this.flattenContent = "";
-        this.fieldParser = new FieldParser();
+        this.fieldParser = new FieldParser(model);
         this.logger = LoggerFactory.getLogger(EntityParser.class);
+        this.model = model;
     }
 
-    public EntityParser(String formattedContent) {
+    public EntityParser(String formattedContent, DomainModel model) {
         this.formattedContent = formattedContent;
         this.flattenContent = "";
-        this.fieldParser = new FieldParser();
+        this.fieldParser = new FieldParser(model);
         this.logger = LoggerFactory.getLogger(EntityParser.class);
+        this.model = model;
     }
 
     /**
      * @param fileName
      */
-    public void parse(String fileName) {
-        this.parse(new File(fileName));
+    public DomainEntity parse(String fileName) {
+        return this.parse(new File(fileName));
     }
 
     /**
      * @param file
      */
-    public void parse(File file) {
+    public DomainEntity parse(File file) {
         try {
             if (!file.exists()) {
                 throw new FileNotFoundException();
             }
             InputStream io = new FileInputStream(file);
-            this.parse(io, file.getAbsolutePath());
+            return this.parse(io, file.getAbsolutePath());
         } catch (FileNotFoundException e) {
             throw new EntityParserException("File Not found : "
                     + file.getAbsolutePath());
@@ -80,14 +88,14 @@ public class EntityParser {
     /**
      * @param is
      */
-    public void parse(InputStream is, String path) {
+    public DomainEntity parse(InputStream is, String path) {
         File file = new File(path);
 
         formattedContent = StringUtils.readStream(is);
         flattenContent = computeFlattenContent();
         int indexPoint = file.getName().lastIndexOf(".");
         if (indexPoint >= 0) {
-            Entity res = parseFlattenContent(file.getName().substring(0, indexPoint));
+            return parseFlattenContent(file.getName().substring(0, indexPoint));
         } else {
             throw new EntityParserException("The filename has no extension");
         }
@@ -116,7 +124,7 @@ public class EntityParser {
      * @param filename The filename to check the content
      * @return An entity wich contain the name of the entity, and all its fields
      */
-    public Entity parseFlattenContent(String filename) {
+    public DomainEntity parseFlattenContent(String filename) {
         this.logger.info("Parsing of the file " + filename);
 
         // get index of first and last open brackets
@@ -156,7 +164,7 @@ public class EntityParser {
         }
 
         // create object
-        Entity table = new Entity(entityName);
+        DomainEntity table = new DomainEntity(entityName);
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
@@ -176,7 +184,7 @@ public class EntityParser {
 
         // extract fields
         for (String field : fieldList) {
-            Field f = fieldParser.parseField(field);
+            DomainEntityField f = fieldParser.parseField(field);
             table.addField(f);
         }
         return table;

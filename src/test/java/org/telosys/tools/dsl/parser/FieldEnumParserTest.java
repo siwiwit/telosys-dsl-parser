@@ -1,16 +1,13 @@
 package org.telosys.tools.dsl.parser;
 
-import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Enumeration;
-import org.telosys.tools.dsl.parser.model.FieldEnum;
-import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class FieldEnumParserTest {
 
@@ -22,7 +19,7 @@ public class FieldEnumParserTest {
 	public void testParseValidString() {
         String testValid = "TEST=\"string1\"";
         FieldEnumParser parser = new FieldEnumParser();
-        FieldEnum<String> toCompare = new FieldEnum<String>("TEST", "string1");
+        DomainEnumerationItem<String> toCompare = new DomainEnumerationItem<String>("TEST", "string1");
         Assert.assertEquals(toCompare, parser.parseField(testValid, TypeEnum.STRING));
 	}
 	
@@ -30,7 +27,7 @@ public class FieldEnumParserTest {
 	public void testParseValidDecimal() {
         String testValid = "TEST=4.3";
         FieldEnumParser parser = new FieldEnumParser();
-        FieldEnum<BigDecimal> toCompare = new FieldEnum<BigDecimal>("TEST", new BigDecimal("4.3"));
+        DomainEnumerationItem<BigDecimal> toCompare = new DomainEnumerationItem<BigDecimal>("TEST", new BigDecimal("4.3"));
         Assert.assertEquals(toCompare, parser.parseField(testValid, TypeEnum.DECIMAL));
 	}
 	
@@ -38,7 +35,7 @@ public class FieldEnumParserTest {
 	public void testParseValidInteger() {
         String testValid = "TEST=4";
         FieldEnumParser parser = new FieldEnumParser();
-        FieldEnum<BigInteger> toCompare = new FieldEnum<BigInteger>("TEST", new BigInteger("4"));
+        DomainEnumerationItem<BigInteger> toCompare = new DomainEnumerationItem<BigInteger>("TEST", new BigInteger("4"));
         Assert.assertEquals(toCompare, parser.parseField(testValid, TypeEnum.INTEGER));
 	}
 	

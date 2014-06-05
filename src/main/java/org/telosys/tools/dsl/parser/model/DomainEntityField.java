@@ -3,21 +3,47 @@ package org.telosys.tools.dsl.parser.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Field {
+public class DomainEntityField {
 
-    private String name ;
-    private Type type ;
-    private List<Annotation> annotationList;
+    private final String     name ;
+    private final DomainType type ;
+    
+    // TODO : Hashtable (each annotation is unique for a field)
+    private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
 
-    public Field(String name, Type type){
+    public DomainEntityField(String name, DomainType type){
         this.name = name;
         this.type = type;
-        this.annotationList = new ArrayList<Annotation>();
+        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
-    public void setAnnotationList(List<Annotation> annotationList) {
+    public void setAnnotationList(List<DomainEntityFieldAnnotation> annotationList) {
         this.annotationList = annotationList;
     }
+    
+	public final String getName() {
+		return name ;
+	}	
+    
+	public final DomainType getType() {
+		return type ;
+	}	
+	
+	public final String getTypeName() {
+		return type.getName() ;
+	}	
+        
+	public final boolean isNeutralType() {
+		return type.isNeutralType() ;
+	}
+	
+	public final boolean isEntity() {
+		return type.isEntity() ;
+	}
+	
+	public final boolean isEnumeration() {
+		return type.isEnumeration() ;
+	}
 
     @Override
     public String toString() {
@@ -33,7 +59,7 @@ public class Field {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Field field = (Field) o;
+        DomainEntityField field = (DomainEntityField) o;
 
         if (!annotationList.equals(field.annotationList)) return false;
         if (!name.equals(field.name)) return false;

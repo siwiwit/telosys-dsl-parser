@@ -1,4 +1,4 @@
-package org.telosys.tools.dsl.parser.model2;
+package org.telosys.tools.dsl.parser.model;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -54,9 +54,10 @@ public class DomainEntity extends DomainType {
         DomainEntity otherEntity = (DomainEntity)other;
         if(!otherEntity.getName().equals(this.getName())) return false;
         if(otherEntity.fields.size() != fields.size()) return false;
-        for (int i = 0; i < fields.size(); i++) {
-			if(!otherEntity.fields.get(i).equals(fields.get(i))) return false;
-		}
+//        for (int i = 0; i < fields.size(); i++) {
+//			if(!otherEntity.getFields().get(i).equals(getFields().get(i))) return false;
+//		}
+        if(!otherEntity.fields.equals(fields)) return false;
     	return true;
     }
 

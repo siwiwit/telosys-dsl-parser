@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.telosys.tools.dsl.parser.model2.DomainModel;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 
 public class DomainModelParser {
 

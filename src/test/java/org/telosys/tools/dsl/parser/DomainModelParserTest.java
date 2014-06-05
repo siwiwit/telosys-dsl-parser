@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model2.DomainModel;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 
 public class DomainModelParserTest {
 

@@ -1,13 +1,14 @@
 package org.telosys.tools.dsl.parser;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.NeutralType;
-import org.telosys.tools.dsl.parser.model.Type;
-
-import java.util.List;
+import org.telosys.tools.dsl.parser.model.DomainEntityField;
+import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.model.DomainModel;
+import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
+import org.telosys.tools.dsl.parser.model.DomainType;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -18,17 +19,23 @@ public class FieldParser {
     private AnnotationParser annotationParser;
 
     private Logger logger;
+    
+    /**
+     * Curent Model
+     */
+	private DomainModel model;
 
-    public FieldParser() {
+    public FieldParser(DomainModel model) {
         this.annotationParser = new AnnotationParser();
         this.logger = LoggerFactory.getLogger(FieldParser.class);
+        this.model = model;
     }
 
     /**
      * @param fieldInfo
      * @return
      */
-    Field parseField(String fieldInfo) {
+    DomainEntityField parseField(String fieldInfo) {
         int startDescription = fieldInfo.indexOf(":");
         String name = fieldInfo.substring(0, startDescription);
         if (!name.matches("^[\\w]*$")) {
@@ -56,15 +63,24 @@ public class FieldParser {
             throw new EntityParserException(errorMessage);
         }
 
-        Type type;
+        DomainType type;
         if (this.isTypeEnum(typeName)) {
-            type = new NeutralType("Enum=" + typeName);
+        	type = this.model.getEnumeration(typeName.substring(1));
+            if (type == null) {
+                String errorMessage = "The enumeration " + typeName.substring(1) + " does not exist";
+                this.logger.error(errorMessage);
+                throw new EntityParserException(errorMessage);
+            }
+        } else if(DomainNeutralTypes.exists(typeName)){
+            type = DomainNeutralTypes.getType(typeName);
         } else {
-            type = new NeutralType(typeName);
+        	String errorMessage = "The type of the field is incorrect";
+        	this.logger.error(errorMessage);
+        	throw new EntityParserException(errorMessage);
         }
 
-        Field field = new Field(name, type);
-        List<Annotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
+        DomainEntityField field = new DomainEntityField(name, type);
+        List<DomainEntityFieldAnnotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
         field.setAnnotationList(annotations);
 
         return field;

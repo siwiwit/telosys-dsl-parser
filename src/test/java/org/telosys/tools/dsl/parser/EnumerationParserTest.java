@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Enumeration;
-import org.telosys.tools.dsl.parser.model.Enumeration.TypeEnum;
-import org.telosys.tools.dsl.parser.model.FieldEnum;
+import org.telosys.tools.dsl.parser.model.DomainEnumeration;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForInteger;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationForString;
+import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class EnumerationParserTest {
     @Test(expected = EntityParserException.class)
@@ -65,12 +66,12 @@ public class EnumerationParserTest {
     
     @Test()
     public void testParseValidInt() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String testValid = "EnumTest:int{TEST=3,TESTBIS=4}";
+        String testValid = "EnumTest:integer{TEST=3,TESTBIS=4}";
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(testValid);
-        Enumeration<BigInteger> toCompare = new Enumeration<BigInteger>("EnumTest", TypeEnum.INTEGER);
-        toCompare.addField(new FieldEnum<BigInteger>("TEST", new BigInteger("3")));
-        toCompare.addField(new FieldEnum<BigInteger>("TESTBIS", new BigInteger("4")));
+        DomainEnumeration<BigInteger> toCompare = new DomainEnumerationForInteger("EnumTest");
+        toCompare.addItem(new DomainEnumerationItem<BigInteger>("TEST", new BigInteger("3")));
+        toCompare.addItem(new DomainEnumerationItem<BigInteger>("TESTBIS", new BigInteger("4")));
         Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
     }
     
@@ -79,9 +80,9 @@ public class EnumerationParserTest {
         String testValid = "EnumTest:decimal{TEST=3.4,TESTBIS=4.5}";
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(testValid);
-        Enumeration<BigDecimal> toCompare = new Enumeration<BigDecimal>("EnumTest", TypeEnum.DECIMAL);
-        toCompare.addField(new FieldEnum<BigDecimal>("TEST", new BigDecimal("3.4")));
-        toCompare.addField(new FieldEnum<BigDecimal>("TESTBIS", new BigDecimal("4.5")));
+        DomainEnumeration<BigDecimal> toCompare = new DomainEnumerationForDecimal("EnumTest");
+        toCompare.addItem(new DomainEnumerationItem<BigDecimal>("TEST", new BigDecimal("3.4")));
+        toCompare.addItem(new DomainEnumerationItem<BigDecimal>("TESTBIS", new BigDecimal("4.5")));
         Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
     }
     
@@ -90,15 +91,15 @@ public class EnumerationParserTest {
         String testValid = "EnumTest:string{TEST=\"string1\",TESTBIS=\"string2\"}";
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(testValid);
-        Enumeration<String> toCompare = new Enumeration<String>("EnumTest", TypeEnum.STRING);
-        toCompare.addField(new FieldEnum<String>("TEST", "string1"));
-        toCompare.addField(new FieldEnum<String>("TESTBIS", "string2"));
+        DomainEnumeration<String> toCompare = new DomainEnumerationForString("EnumTest");
+        toCompare.addItem(new DomainEnumerationItem<String>("TEST", "string1"));
+        toCompare.addItem(new DomainEnumerationItem<String>("TESTBIS", "string2"));
         Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
     }
     
     @Test(expected = EntityParserException.class)
     public void testParseInValidInt() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String testInvalid = "EnumTest:int{TEST=3.4,TESTBIS=4}";
+        String testInvalid = "EnumTest:integer{TEST=3.4,TESTBIS=4}";
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(testInvalid);
         parser.parseFlattenContent("EnumTest");

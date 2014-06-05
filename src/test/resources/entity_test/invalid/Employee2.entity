@@ -1,6 +1,6 @@
 Employee2{
-    id : int {@Id};
+    id : integer {@Id};
 }
 Employee3{
-    id : int {@Id};
+    id : integer {@Id};
 }

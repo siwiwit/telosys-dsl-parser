@@ -1,5 +1,7 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.parser.model.DomainModel;
+
 /**
  *
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -21,8 +23,7 @@ public class Application {
             throw new EntityParserException("A single parameter is required");
 
         // call parser tool
-        EntityParser ep = new EntityParser();
-        ep.parse(args[0]);
-
+        ModelParser dm = new ModelParser();
+        dm.parse(args[0]);
     }
 }

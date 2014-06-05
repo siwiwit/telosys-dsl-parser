@@ -1,2 +1,2 @@
 Employee
-    id : int {@Id};
+    id : integer {@Id};

@@ -8,11 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.telosys.tools.dsl.parser.EntityParserException;
-import org.telosys.tools.dsl.parser.model2.DomainEntity;
-import org.telosys.tools.dsl.parser.model2.DomainEnumeration;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForInteger;
-import org.telosys.tools.dsl.parser.model2.DomainEnumerationForString;
-import org.telosys.tools.dsl.parser.model2.DomainModel;
 
 public class DomainModelTest {
 

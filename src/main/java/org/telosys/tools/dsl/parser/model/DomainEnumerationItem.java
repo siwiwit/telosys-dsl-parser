@@ -1,32 +1,6 @@
 package org.telosys.tools.dsl.parser.model;
 
-public class FieldEnum<T> {
-
-	private String name;
-	
-	private T value;
-
-	public FieldEnum(String name, T value) {
-		super();
-		this.name = name;
-		this.value = value;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public T getValue() {
-		return value;
-	}
-
-	public void setValue(T value) {
-		this.value = value;
-	}
+public class DomainEnumerationItem<T> {
 
 	@Override
 	public int hashCode() {
@@ -38,6 +12,11 @@ public class FieldEnum<T> {
 	}
 
 	@Override
+	public String toString() {
+		return "DomainEnumerationItem [name=" + name + ", value=" + value + "]";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -45,7 +24,7 @@ public class FieldEnum<T> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FieldEnum<?> other = (FieldEnum<?>) obj;
+		DomainEnumerationItem<T> other = (DomainEnumerationItem<T>) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -58,7 +37,24 @@ public class FieldEnum<T> {
 			return false;
 		return true;
 	}
+
+	private final String name ;
 	
+	private final T value ;
+
+	public DomainEnumerationItem(String name, T value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public T getValue() {
+		return value;
+	}
 	
 	
 }

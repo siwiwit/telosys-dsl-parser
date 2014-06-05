@@ -1,23 +1,22 @@
 package org.telosys.tools.dsl.parser;
 
-import org.easymock.EasyMock;
-import org.junit.Assert;
-import org.junit.Test;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.model.Field;
-import org.telosys.tools.dsl.parser.model.NeutralType;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.easymock.EasyMock;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.telosys.tools.dsl.parser.model.*;
 
 public class FieldParserTest {
     @Test
     public void testParseFieldValid() throws Exception {
-        String fieldInfo = "id:int";
+        String fieldInfo = "id:integer";
 
-        Field compareTo = new Field("id", new NeutralType("int"));
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
 
@@ -25,36 +24,36 @@ public class FieldParserTest {
     public void testParseFieldWithoutType() throws Exception {
         String fieldInfo = "id:";
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         fieldParser.parseField(fieldInfo);
     }
 
     @Test(expected = EntityParserException.class)
     public void testParseFieldWithoutName() throws Exception {
-        String fieldInfo = ":int";
+        String fieldInfo = ":integer";
 
-        FieldParser fieldParser = new FieldParser();
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
         fieldParser.parseField(fieldInfo);
     }
 
     @Test()
     public void testParseFieldWithAnnotation() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        String fieldInfo = "id:int{@Id}";
-        Field compareTo = new Field("id", new NeutralType("int"));
-        List<Annotation> annotationList = new ArrayList<Annotation>();
-        annotationList.add(new Annotation("Id"));
+        String fieldInfo = "id:integer{@Id}";
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
+        List<DomainEntityFieldAnnotation> annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        annotationList.add(new DomainEntityFieldAnnotation("Id"));
         compareTo.setAnnotationList(annotationList);
 
-        FieldParser fieldParser = new FieldParser();
-        
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+
         //mock annotationParser
         AnnotationParser mockAnnotationParser = EasyMock.createMock(AnnotationParser.class);
-        EasyMock.expect(mockAnnotationParser.parseAnnotations("id:int{@Id}")).andReturn(annotationList);
+        EasyMock.expect(mockAnnotationParser.parseAnnotations("id:integer{@Id}")).andReturn(annotationList);
         java.lang.reflect.Field field = fieldParser.getClass().getDeclaredField("annotationParser");
         field.setAccessible(true);
         field.set(fieldParser, mockAnnotationParser);
         EasyMock.replay(mockAnnotationParser);
-          
+
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
         EasyMock.verify(mockAnnotationParser);
     }
@@ -63,9 +62,13 @@ public class FieldParserTest {
     public void testParseFieldWithEnum() {
         String fieldInfo = "id:#Gender";
 
-        Field compareTo = new Field("id", new NeutralType("Enum=#Gender"));
+        DomainModel model = new DomainModel("model");
+        DomainEnumerationForString domainEnumeration = new DomainEnumerationForString("Gender");
+        model.addEnumeration(domainEnumeration);
 
-        FieldParser fieldParser = new FieldParser();
+        DomainEntityField compareTo = new DomainEntityField("id", domainEnumeration);
+
+        FieldParser fieldParser = new FieldParser(model);
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
 }

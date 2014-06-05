@@ -1,12 +1,12 @@
 package org.telosys.tools.dsl.parser;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.telosys.tools.dsl.parser.model.Annotation;
-import org.telosys.tools.dsl.parser.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
+import org.telosys.tools.dsl.parser.utils.Utils;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -25,13 +25,13 @@ public class AnnotationParser {
      * @param fieldInfo String
      * @return list of annotations found
      */
-    List<Annotation> parseAnnotations(String fieldInfo) {
+    List<DomainEntityFieldAnnotation> parseAnnotations(String fieldInfo) {
 
         // get index of first and last open brackets
         int bodyStart = fieldInfo.indexOf("{");
         int bodyEnd = fieldInfo.lastIndexOf("}");
 
-        List<Annotation> list = new ArrayList<Annotation>();
+        List<DomainEntityFieldAnnotation> list = new ArrayList<DomainEntityFieldAnnotation>();
 
         // no annotation found
         if ((bodyEnd < 0 && bodyStart >= 0) || (bodyEnd >= 0 && bodyStart < 0)) {
@@ -57,7 +57,7 @@ public class AnnotationParser {
 
         // extract annotations
         for (String annotationString : annotationList) {
-            Annotation annotation = this.parseSingleAnnotation(annotationString);
+        	DomainEntityFieldAnnotation annotation = this.parseSingleAnnotation(annotationString);
             list.add(annotation);
         }
 
@@ -68,7 +68,7 @@ public class AnnotationParser {
      * @param annotationString String
      * @return Annotation created by the parser
      */
-    private Annotation parseSingleAnnotation(String annotationString) {
+    private DomainEntityFieldAnnotation parseSingleAnnotation(String annotationString) {
         // start with a @
         if (annotationString.charAt(0) != '@') {
             String errorMessage = "An annotation must start with a '@' ";
@@ -115,9 +115,9 @@ public class AnnotationParser {
                 }
 
                 if (containsParam) {
-                    return new Annotation(givenAnnotation, param);
+                    return new DomainEntityFieldAnnotation(givenAnnotation, param);
                 } else {
-                    return new Annotation(givenAnnotation);
+                    return new DomainEntityFieldAnnotation(givenAnnotation);
                 }
             }
         }

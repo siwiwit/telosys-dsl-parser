@@ -7,8 +7,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralType;
-import org.telosys.tools.dsl.parser.model2.DomainNeutralTypes;
 
 public class DomainNeutralTypesTest {
 
