@@ -57,6 +57,30 @@ public class FieldParser {
         }
 
         String typeName = fieldInfo.substring(startDescription+1, end);
+
+        int cardinality = 1 ;
+
+        if (isTypeArray(typeName)){
+            int startArray = typeName.lastIndexOf("[");
+            int endArray = typeName.lastIndexOf("]");
+            System.out.println(typeName);
+            if  (endArray-startArray == 1){
+                cardinality = -1;
+                typeName = typeName.substring(0,startArray);
+            }else{
+
+                String figure = typeName.substring(startArray+1, endArray);
+                try{
+                    cardinality = Integer.parseInt(figure);
+                    typeName = typeName.substring(0,startArray);
+                }catch (Exception e){
+                    String errorMessage = "The cardinality for " + typeName + " is not correct";
+                    this.logger.error(errorMessage);
+                    throw new EntityParserException(errorMessage);
+                }
+            }
+        }
+
         if (typeName.length() == 0) {
             String errorMessage = "The type of the field is missing";
             this.logger.error(errorMessage);
@@ -85,7 +109,7 @@ public class FieldParser {
         	}
         }
 
-        DomainEntityField field = new DomainEntityField(name, type);
+        DomainEntityField field = new DomainEntityField(name, type, cardinality);
         List<DomainEntityFieldAnnotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
         field.setAnnotationList(annotations);
 
@@ -94,5 +118,9 @@ public class FieldParser {
 
     private boolean isTypeEnum(String type) {
         return type.startsWith("#");
+    }
+
+    private boolean isTypeArray(String type) {
+        return type.contains("[") && type.contains("]");
     }
 }

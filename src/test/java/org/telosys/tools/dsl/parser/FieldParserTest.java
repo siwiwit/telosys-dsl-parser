@@ -85,4 +85,43 @@ public class FieldParserTest {
         FieldParser fieldParser = new FieldParser(model);
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
+
+    @Test
+    public void testParseFieldWithCardinalityN() throws Exception {
+        String fieldInfo = "id:integer[]";
+
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"), -1);
+
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+        Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+    }
+
+    @Test
+    public void testParseFieldWithCardinality3() throws Exception {
+        String fieldInfo = "id:integer[3]";
+
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"), 3);
+
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+        Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+    }
+
+    @Test
+    public void testParseFieldWithoutCardinality() throws Exception {
+        String fieldInfo = "id:integer";
+
+        DomainEntityField compareTo = new DomainEntityField("id", DomainNeutralTypes.getType("integer"), 1);
+
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+        Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldWithBadCardinality() throws Exception {
+        String fieldInfo = "id:integer[n]";
+        FieldParser fieldParser = new FieldParser(new DomainModel("model"));
+        fieldParser.parseField(fieldInfo);
+    }
+
+
 }
