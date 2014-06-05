@@ -14,7 +14,11 @@ import org.telosys.tools.dsl.parser.EntityParserException;
  */
 public class DomainModel {
 
-	private final String modelName ; // useful ??? 
+	private final String modelName ;  
+	
+//	private final String modelVersion ; 
+//	
+//	private final String modelDescription ;  
 	
 	// NB :
 	// Do not accept an entity and an enumeration with the same name /!\
@@ -151,12 +155,5 @@ public class DomainModel {
 		// TODO
 		throw new RuntimeException("NOT IMPLEMENTED");
 	}
-
-	@Override
-	public String toString() {
-		return "DomainModel [modelName=" + modelName + ", entities=" + entities
-				+ ", enumerations=" + enumerations + "]";
-	}
-	
 	
 }
