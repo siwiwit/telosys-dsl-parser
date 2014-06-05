@@ -23,7 +23,7 @@ public class Application {
             throw new EntityParserException("A single parameter is required");
 
         // call parser tool
-        ModelParser dm = new ModelParser();
-        dm.parse(args[0]);
+        ModelParser dm = new ModelParser(args[0]);
+        dm.parse();
     }
 }
