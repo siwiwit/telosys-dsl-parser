@@ -3,10 +3,13 @@ package org.telosys.tools.dsl.parser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.telosys.tools.dsl.parser.model.DomainEntity;
-import org.telosys.tools.dsl.parser.model.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
 public class DomainModelParser {
@@ -58,18 +61,28 @@ public class DomainModelParser {
 			modelName = fileName.substring(0, i);
 		}
 		
-		// 
-//		File directory = file.getParentFile();
-//		File[] files = directory.listFiles() ;
-//		for ( File f : files ) {
-//			if ( f.isFile() && f.getName().endsWith(DOT_ENTITY)) {
-//				DomainEntity entity = parseEntityFile(f);
-//			}
-//			if ( f.isFile() && f.getName().endsWith(DOT_ENUM)) {
-//				DomainEnumeration enumeration = parseEnumerationFile(f);
-//			}
-//		}
-		return new DomainModel(modelName);
+		
+		File folder = file.getParentFile();
+		Map<String, List<String>> files = getMapFiles(folder);
+        DomainModel model = new DomainModel(modelName);
+        List<String> enumerations = files.get(DOT_ENUM);
+        
+        EnumerationParser enumParser = new EnumerationParser();
+        for (String enumeration : enumerations) {
+            model.addEnumeration(enumParser.parse(new File(enumeration)));
+        }
+        
+        List<String> entities = files.get(DOT_ENTITY);
+        for (String entity : entities) {
+        	File entityFile = new File(entity);
+        	model.addEntity(new DomainEntity(entityFile.getName().substring(0,entityFile.getName().lastIndexOf("."))));
+        }
+        
+        EntityParser entityParser = new EntityParser(model);
+        for (String entity : entities) {
+            model.putEntity(entityParser.parse(entity));
+        }
+        return model;
 	}
 	
 	private Properties loadProperties( File propFile ) 
@@ -92,5 +105,23 @@ public class DomainModelParser {
 		}
 		return props;
 	}
+	
+
+    private Map<String, List<String>>  getMapFiles(File folder) {
+    	HashMap<String, List<String>> files = new HashMap<String, List<String>>();
+    	files.put(DOT_ENTITY, new ArrayList<String>());
+    	files.put(DOT_ENUM, new ArrayList<String>());
+    	
+        String[] allFiles = folder.list();
+        for (String fileName : allFiles) {
+            String extension = fileName.substring(fileName.lastIndexOf(".")); 
+            if (files.containsKey(extension)) {
+                List<String> current = files.get(extension);
+                current.add(folder.getAbsolutePath()+"/"+fileName);
+                files.put(extension, current);
+            }
+        }
+        return files;
+    }
 	
 }

@@ -1,10 +1,8 @@
 package org.telosys.tools.dsl.parser;
 
-import org.telosys.tools.dsl.parser.model.DomainModel;
-
+import java.io.File;
 /**
- *
- * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
+ * @author Jonhathan Goncalves, Mathieu Herbert, Thomas Legendre
  * @date 2014-05-22
  * @version 1.0
  */
@@ -23,7 +21,7 @@ public class Application {
             throw new EntityParserException("A single parameter is required");
 
         // call parser tool
-        ModelParser dm = new ModelParser(args[0]);
-        dm.parse();
+        DomainModelParser dm = new DomainModelParser();
+        dm.parse(new File(args[0]));
     }
 }
