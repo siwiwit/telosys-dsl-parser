@@ -1,5 +1,6 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
 import java.io.File;
@@ -32,9 +33,15 @@ public class ModelParser {
         }
 
         List<String> entities = getListEntities();
-        EntityParser entityParser = new EntityParser(model);
         for (String entity : entities) {
-            model.addEntity(entityParser.parse(entity));
+        	File file = new File(entity);
+        	model.addEntity(new DomainEntity(file.getName().substring(0,file.getName().lastIndexOf("."))));
+        }
+        
+        EntityParser entityParser = new EntityParser(model);
+        entities = getListEntities();
+        for (String entity : entities) {
+            model.putEntity(entityParser.parse(entity));
         }
         return model;
     }
@@ -61,10 +68,10 @@ public class ModelParser {
 
         String[] allFiles = this.folder.list();
         for (String fileName : allFiles) {
-            String extension = fileName.substring(fileName.lastIndexOf("." )); 
+            String extension = fileName.substring(fileName.lastIndexOf(".")+1); 
             if (this.files.containsKey(extension)) {
                 List<String> current = this.files.get(extension);
-                current.add(fileName);
+                current.add(folder.getAbsolutePath()+"/"+fileName);
                 this.files.put(extension, current);
             }
         }

@@ -155,5 +155,19 @@ public class DomainModel {
 		// TODO
 		throw new RuntimeException("NOT IMPLEMENTED");
 	}
+	/**
+	 * Put all the fields of the entity into an entity from the list of the fields of the model which has the same name
+	 * @param entity
+	 */
+	public void putEntity(DomainEntity entity){
+		entity.copyIn(getEntity(entity.getName()));
+	}
+
+	@Override
+	public String toString() {
+		return "DomainModel [modelName=" + modelName + ", entities=" + entities
+				+ ", enumerations=" + enumerations + "]";
+	}
+	
 	
 }
