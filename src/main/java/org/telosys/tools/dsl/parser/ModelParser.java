@@ -17,7 +17,7 @@ public class ModelParser {
 			model.addEnumeration(enumParser.parse(new File(enumeration)));
 		}
 		
-		List<String> entities = listEntities(folderF);
+		List<String> entities = getListEntitiesFiles(folderF);
 		EntityParser entityParser = new EntityParser(model);
 		for(String entity : entities){
 				model.addEntity(entityParser.parse(entity));
@@ -26,7 +26,7 @@ public class ModelParser {
 	}
 
 	
-	public List<String> listEntities(File folder) {
+	public List<String> getListEntitiesFiles(File folder) {
 		return getListFiles(folder, "entity");
 	}
 	
