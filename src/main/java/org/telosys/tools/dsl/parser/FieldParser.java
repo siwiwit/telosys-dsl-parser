@@ -65,18 +65,24 @@ public class FieldParser {
 
         DomainType type;
         if (this.isTypeEnum(typeName)) {
-        	type = this.model.getEnumeration(typeName.substring(1));
-            if (type == null) {
+        	
+            if (!this.model.getEnumerationNames().contains(typeName.substring(1))) {
                 String errorMessage = "The enumeration " + typeName.substring(1) + " does not exist";
                 this.logger.error(errorMessage);
                 throw new EntityParserException(errorMessage);
+            } else {
+            	type = this.model.getEnumeration(typeName.substring(1));
             }
         } else if(DomainNeutralTypes.exists(typeName)){
             type = DomainNeutralTypes.getType(typeName);
         } else {
-        	String errorMessage = "The type of the field is incorrect";
-        	this.logger.error(errorMessage);
-        	throw new EntityParserException(errorMessage);
+        	if(!model.getEntityNames().contains(typeName)) {
+        		String errorMessage = "The type of the field is incorrect";
+        		this.logger.error(errorMessage);
+        		throw new EntityParserException(errorMessage);
+        	} else {
+        		type = model.getEntity(typeName);
+        	}
         }
 
         DomainEntityField field = new DomainEntityField(name, type);

@@ -16,12 +16,13 @@ public class ModelParser {
 
     public ModelParser(String folder) {
         this.folder = new File(folder);
+        this.files = new HashMap<String, List<String>>();
     }
 
 
     public DomainModel parse() {
         DomainModel model = new DomainModel(this.folder.getPath());
-
+        
         List<String> enumerations = getListEnumFiles();
 
         EnumerationParser enumParser = new EnumerationParser();
@@ -53,15 +54,13 @@ public class ModelParser {
     }
 
     private void getListFiles() {
-
-        this.files = new HashMap<String, List<String>>();
         for (String type : this.types) {
             this.files.put(type, new ArrayList<String>());
         }
 
         String[] allFiles = this.folder.list();
         for (String fileName : allFiles) {
-            String extension = fileName.split(".")[0];
+            String extension = fileName.substring(fileName.lastIndexOf("." )); 
             if (this.files.containsKey(extension)) {
                 List<String> current = this.files.get(extension);
                 current.add(fileName);

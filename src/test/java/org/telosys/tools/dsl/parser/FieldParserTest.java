@@ -71,4 +71,18 @@ public class FieldParserTest {
         FieldParser fieldParser = new FieldParser(model);
         Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
     }
+    
+    @Test
+    public void testParseFieldWithEntityReferenced() {
+        String fieldInfo = "id:Country";
+
+        DomainModel model = new DomainModel("model");
+        DomainEntity country = new DomainEntity("Country");
+        model.addEntity(country);
+
+        DomainEntityField compareTo = new DomainEntityField("id", country);
+
+        FieldParser fieldParser = new FieldParser(model);
+        Assert.assertEquals(compareTo, fieldParser.parseField(fieldInfo));
+    }
 }
