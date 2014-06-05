@@ -59,16 +59,16 @@ public class DomainModelParser {
 		}
 		
 		// 
-		File directory = file.getParentFile();
-		File[] files = directory.listFiles() ;
-		for ( File f : files ) {
-			if ( f.isFile() && f.getName().endsWith(DOT_ENTITY)) {
-				DomainEntity entity = parseEntityFile(f);
-			}
-			if ( f.isFile() && f.getName().endsWith(DOT_ENUM)) {
-				DomainEnumeration enumeration = parseEnumerationFile(f);
-			}
-		}
+//		File directory = file.getParentFile();
+//		File[] files = directory.listFiles() ;
+//		for ( File f : files ) {
+//			if ( f.isFile() && f.getName().endsWith(DOT_ENTITY)) {
+//				DomainEntity entity = parseEntityFile(f);
+//			}
+//			if ( f.isFile() && f.getName().endsWith(DOT_ENUM)) {
+//				DomainEnumeration enumeration = parseEnumerationFile(f);
+//			}
+//		}
 		return new DomainModel(modelName);
 	}
 	
