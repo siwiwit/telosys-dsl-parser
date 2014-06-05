@@ -11,7 +11,7 @@ public class ModelParser {
 	public DomainModel parse(String folder) {
 		DomainModel model = new DomainModel(folder);
 		File folderF = new File(folder);
-		List<String> enumerations = listEnum(folderF);
+		List<String> enumerations = getListEnumFiles(folderF);
 		EnumerationParser enumParser = new EnumerationParser();
 		for(String enumeration : enumerations){
 			model.addEnumeration(enumParser.parse(new File(enumeration)));
@@ -27,14 +27,14 @@ public class ModelParser {
 
 	
 	public List<String> listEntities(File folder) {
-		return listFiles(folder, "entity");
+		return getListFiles(folder, "entity");
 	}
 	
-	public List<String> listEnum(File folder) {
-		return listFiles(folder, "enum");
+	public List<String> getListEnumFiles(File folder) {
+		return getListFiles(folder, "enum");
 	}
 	
-	public List<String> listFiles(File folder, String extension){
+	public List<String> getListFiles(File folder, String extension){
 		List<String> files = new ArrayList<String>();
 
 		int i;
