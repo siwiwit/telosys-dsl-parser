@@ -13,7 +13,7 @@ import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
-import org.telosys.tools.dsl.parser.utils.Utils;
+import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
 
 /**
  * First entry point for the telosys entity parser
@@ -109,9 +109,9 @@ public class EntityParser {
         while (content.hasMoreElements()) {
             String line = content.nextElement().toString().trim();
 
-            if (line.contains(Utils.getProperty("start_comment"))) {
+            if (line.contains(TelosysDSLProperties.getProperties().getProperty("start_comment"))) {
                 line = line.substring(0,
-                        line.indexOf(Utils.getProperty("start_comment")));
+                        line.indexOf(TelosysDSLProperties.getProperties().getProperty("start_comment")));
             }
 
             if (line.length() > 0) {

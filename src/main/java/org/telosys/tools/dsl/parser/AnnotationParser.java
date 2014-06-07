@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
-import org.telosys.tools.dsl.parser.utils.Utils;
+import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -97,7 +97,7 @@ public class AnnotationParser {
         String givenAnnotation = annotationString.substring(1, end);
 
         // check annotation exist
-        String annotationAllowed = Utils.getProperty("annotations");
+        String annotationAllowed = TelosysDSLProperties.getProperties().getProperty("annotations");
         String[] listAllowed = annotationAllowed.split(",");
 
         // find annotation
