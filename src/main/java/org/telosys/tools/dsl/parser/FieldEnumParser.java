@@ -12,7 +12,18 @@ public class FieldEnumParser<T> {
 		if(fieldInfo.contains("=")){
 			throw new EntityParserException("this Enumeration does not contains =");
 		}
+		
+		checkName(fieldInfo);
 		return new DomainEnumerationItem<BigInteger>(fieldInfo,value.add(new BigInteger("1")));
+	}
+	private void checkName(String name) {
+		if (!name.matches("^[A-Z]*$"))
+			throw new EntityParserException(
+					"The name of the fields must contains only uppercase "
+							+ name);
+		if (name.length() == 0) {
+			throw new EntityParserException("The name of the field is missing");
+		}
 	}
 	/**
 	 * @param fieldInfo
@@ -21,13 +32,7 @@ public class FieldEnumParser<T> {
 	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type) {
 		int startDescription = fieldInfo.indexOf("=");
 		String name = fieldInfo.substring(0, startDescription);
-		if (!name.matches("^[A-Z]*$"))
-			throw new EntityParserException(
-					"The name of the fields must contains only uppercase "
-							+ name);
-		if (name.length() == 0) {
-			throw new EntityParserException("The name of the field is missing");
-		}
+		checkName(name);
 
 		int end = fieldInfo.length();
 
