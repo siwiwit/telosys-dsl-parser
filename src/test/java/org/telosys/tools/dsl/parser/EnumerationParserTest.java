@@ -134,4 +134,18 @@ public class EnumerationParserTest {
 
 		Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
 	}
+	
+	@Test
+	public void testParseDefaultTypeWithoutValue() {
+		String test = "EnumTest{ONE,TWO,THREE}";
+		EnumerationParser parser = new EnumerationParser();
+		parser.setFlattenContent(test);
+
+		DomainEnumeration<BigInteger> toCompare = new DomainEnumerationForInteger("EnumTest");
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("ONE", new BigInteger("1")));
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("TWO", new BigInteger("2")));
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("THREE", new BigInteger("3")));
+
+		Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
+	}
 }

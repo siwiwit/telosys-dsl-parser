@@ -8,7 +8,12 @@ import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
 public class FieldEnumParser<T> {
 
-	
+	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type, BigInteger value) {
+		if(fieldInfo.contains("=")){
+			throw new EntityParserException("this Enumeration does not contains =");
+		}
+		return new DomainEnumerationItem<BigInteger>(fieldInfo,value.add(new BigInteger("1")));
+	}
 	/**
 	 * @param fieldInfo
 	 * @return
