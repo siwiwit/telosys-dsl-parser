@@ -9,22 +9,14 @@ import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 public class FieldEnumParser<T> {
 
 	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type, BigInteger value) {
-		if(fieldInfo.contains("=")){
-			throw new EntityParserException("this Enumeration does not contains =");
+		if(!isItemWithoutValue(fieldInfo)){
+			throw new EntityParserException("this item has to be without value : "+ fieldInfo);
 		}
 		
 		checkName(fieldInfo);
 		return new DomainEnumerationItem<BigInteger>(fieldInfo,value.add(new BigInteger("1")));
 	}
-	private void checkName(String name) {
-		if (!name.matches("^[A-Z]*$"))
-			throw new EntityParserException(
-					"The name of the fields must contains only uppercase "
-							+ name);
-		if (name.length() == 0) {
-			throw new EntityParserException("The name of the field is missing");
-		}
-	}
+
 	/**
 	 * @param fieldInfo
 	 * @return
@@ -89,5 +81,19 @@ public class FieldEnumParser<T> {
 		}
 		// unreachable code
 		return null;
+	}
+	
+	private void checkName(String name) {
+		if (!name.matches("^[A-Z]*$"))
+			throw new EntityParserException(
+					"The name of the fields must contains only uppercase "
+							+ name);
+		if (name.length() == 0) {
+			throw new EntityParserException("The name of the field is missing");
+		}
+	}
+	 
+	public static boolean isItemWithoutValue(String item){
+		return !item.contains("=");
 	}
 }

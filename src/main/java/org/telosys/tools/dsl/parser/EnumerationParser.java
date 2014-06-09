@@ -147,7 +147,7 @@ public class EnumerationParser {
 		}
 
 		// extract fields
-		if (type == TypeEnum.INTEGER && !fieldEnumList[0].contains("=")) {
+		if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
 			BigInteger previousValue = new BigInteger("0");
 			for (String field : fieldEnumList) {
 				enumeration.addItem(fieldEnumParser.parseField(field, type,
