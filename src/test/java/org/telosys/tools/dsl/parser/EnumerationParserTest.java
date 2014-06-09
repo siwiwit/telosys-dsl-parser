@@ -120,4 +120,18 @@ public class EnumerationParserTest {
         parser.setFlattenContent(testInvalid);
         parser.parseFlattenContent("EnumTest");
     }
+
+	@Test
+	public void testParseDefaultType() {
+		String test = "EnumTest{ONE=1,TWO=2,THREE=3}";
+		EnumerationParser parser = new EnumerationParser();
+		parser.setFlattenContent(test);
+
+		DomainEnumeration<BigInteger> toCompare = new DomainEnumerationForInteger("EnumTest");
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("ONE", new BigInteger("1")));
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("TWO", new BigInteger("2")));
+		toCompare.addItem(new DomainEnumerationItem<BigInteger>("THREE", new BigInteger("3")));
+
+		Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
+	}
 }

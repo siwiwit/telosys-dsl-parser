@@ -102,13 +102,11 @@ public class EnumerationParser {
         	}else {
         		throw new EntityParserException("The type of the Enum have to be int, string or decimal and nothing else");
         	}
+        } else if (split.length == 1) { // If no type is defined it's an integer
+			type = TypeEnum.INTEGER;
         } else {
         	throw new EntityParserException("There is something wrong with the head of the enum");
         }
-        
-        // the closing bracket must be at the end
-//        if (bodyEnd == flattenContent.length())
-//            throw new EntityParserException("There's something wrong with the end of the body");
 
         if (!enumName.equals(filename))
             throw new EntityParserException("The name of the file does not match with the enum name");
@@ -133,8 +131,6 @@ public class EnumerationParser {
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-//        if (body.lastIndexOf(";") != body.length()-1  )
-//            throw new EntityParserException("A semilicon is missing ");
 
         String[] fieldEnumList = body.split(",");
         // at least 1 field is required
