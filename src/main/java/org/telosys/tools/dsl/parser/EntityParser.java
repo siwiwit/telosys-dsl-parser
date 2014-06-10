@@ -192,6 +192,11 @@ public class EntityParser {
         return table;
     }
 
+    /**
+     * Check if the main structure of the file correspond to the specifications
+     * @param bodyStart first bracket index
+     * @param bodyEnd last bracket index
+     */
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
         if (bodyStart < 0) {
@@ -207,6 +212,12 @@ public class EntityParser {
             throw new EntityParserException(errorMessage);
         }
     }
+
+    /**
+     * Verify the sructure of an entity
+     * @param entity
+     * @throws EntityParserException
+     */
     public void verifyEntityStructure(DomainEntity entity) throws EntityParserException {
     	DomainEntityField fieldWithId = null;
     	for(DomainEntityField tmp : entity.getFields()){
