@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class StringUtilsTest {
@@ -23,4 +24,25 @@ public class StringUtilsTest {
 
         Assert.assertEquals(compareTo, formattedContent);
     }
+    
+    @Test
+    public void testReadStreamWithAnEmptyText() throws Exception {
+        File file = new File("src/test/resources/string_utils_tests/Empty.entity");
+        InputStream inputStream = new FileInputStream(file);
+
+        String formattedContent = StringUtils.readStream(inputStream);
+
+        String compareTo = "";
+
+        Assert.assertEquals(compareTo, formattedContent);
+    }
+    
+    @Test(expected=FileNotFoundException.class)
+    public void testReadStreamWithNotFoundFiles() throws Exception {
+        File file = new File("src/test/resources/string_utils_tests/NotFound.entity");
+        
+        InputStream inputStream = new FileInputStream(file);
+
+        StringUtils.readStream(inputStream);
+     }
 }
