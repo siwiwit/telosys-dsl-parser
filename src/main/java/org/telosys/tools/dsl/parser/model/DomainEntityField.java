@@ -2,10 +2,7 @@ package org.telosys.tools.dsl.parser.model;
 
 import org.telosys.tools.dsl.EntityParserException;
 
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class DomainEntityField {
 
@@ -17,7 +14,7 @@ public class DomainEntityField {
     // TODO : Hashtable (each annotation is unique for a field)
     //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
 
-    private final Hashtable<String, DomainEntityFieldAnnotation> annotations = new Hashtable<String, DomainEntityFieldAnnotation>();
+    private final Map<String, DomainEntityFieldAnnotation> annotations = new Hashtable<String, DomainEntityFieldAnnotation>();
 
     public DomainEntityField(String name, DomainType type) {
         this.name = name;

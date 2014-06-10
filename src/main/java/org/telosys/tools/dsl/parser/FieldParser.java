@@ -46,7 +46,7 @@ public class FieldParser {
      * @return The parsed field
      */
     DomainEntityField parseField(String fieldInfo) {
-        int startDescription = fieldInfo.indexOf(":");
+        int startDescription = fieldInfo.indexOf(':');
         String name = fieldInfo.substring(0, startDescription);
 
         // description and field is required
@@ -64,7 +64,7 @@ public class FieldParser {
         // find end of descritpion
         int end;
         if (fieldInfo.contains("{")) {
-            end = fieldInfo.indexOf("{");
+            end = fieldInfo.indexOf('{');
         } else {
             end = fieldInfo.length();
         }
@@ -73,8 +73,8 @@ public class FieldParser {
         int cardinality = 1;
 
         if (isTypeArray(typeName)) {
-            int startArray = typeName.lastIndexOf("[");
-            int endArray = typeName.lastIndexOf("]");
+            int startArray = typeName.lastIndexOf('[');
+            int endArray = typeName.lastIndexOf(']');
             if (endArray - startArray == 1) {
                 cardinality = -1;
                 typeName = typeName.substring(0, startArray);

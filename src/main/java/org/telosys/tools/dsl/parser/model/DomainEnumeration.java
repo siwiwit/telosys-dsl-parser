@@ -57,8 +57,7 @@ public abstract class DomainEnumeration<T> extends DomainType {
     }
 
     public List<DomainEnumerationItem<T>> getItems() {
-        List<DomainEnumerationItem<T>> list = new LinkedList<DomainEnumerationItem<T>>(items.values());
-        return list;
+        return new LinkedList<DomainEnumerationItem<T>>(items.values());
     }
 
     @Override

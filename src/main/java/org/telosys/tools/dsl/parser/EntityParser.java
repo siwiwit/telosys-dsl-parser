@@ -87,10 +87,9 @@ public class EntityParser {
 
         formattedContent = StringUtils.readStream(is);
         flattenContent = computeFlattenContent();
-        int indexPoint = file.getName().lastIndexOf(".");
+        int indexPoint = file.getName().lastIndexOf('.');
         if (indexPoint >= 0) {
-            DomainEntity entity = parseFlattenContent(file.getName().substring(0, indexPoint));
-            return entity;
+            return parseFlattenContent(file.getName().substring(0, indexPoint));
         } else {
             throw new EntityParserException("The filename has no extension");
         }
@@ -123,8 +122,8 @@ public class EntityParser {
         this.logger.info("Parsing of the file " + filename);
 
         // get index of first and last open brackets
-        int bodyStart = flattenContent.indexOf("{");
-        int bodyEnd = flattenContent.lastIndexOf("}");
+        int bodyStart = flattenContent.indexOf('{');
+        int bodyEnd = flattenContent.lastIndexOf('}');
 
         checkStructure(bodyStart, bodyEnd);
 
@@ -163,7 +162,7 @@ public class EntityParser {
 
         // find all fields
         String body = flattenContent.substring(bodyStart + 1, bodyEnd).trim();
-        if (body.lastIndexOf(";") != body.length() - 1) {
+        if (body.lastIndexOf(';') != body.length() - 1) {
             String errorMessage = "A semilicon is missing";
             this.logger.error(errorMessage);
             throw new EntityParserException(errorMessage);

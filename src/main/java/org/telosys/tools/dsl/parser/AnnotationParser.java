@@ -29,8 +29,8 @@ public class AnnotationParser {
     List<DomainEntityFieldAnnotation> parseAnnotations(String fieldInfo) {
 
         // get index of first and last open brackets
-        int bodyStart = fieldInfo.indexOf("{");
-        int bodyEnd = fieldInfo.lastIndexOf("}");
+        int bodyStart = fieldInfo.indexOf('{');
+        int bodyEnd = fieldInfo.lastIndexOf('}');
 
         List<DomainEntityFieldAnnotation> list = new ArrayList<DomainEntityFieldAnnotation>();
 
@@ -44,7 +44,7 @@ public class AnnotationParser {
         if (bodyEnd < 0 && bodyStart < 0) {
             return list;
         }
-    bodyStart++;
+        bodyStart++;
         fieldInfo = fieldInfo.substring(bodyStart, bodyEnd);
 
         // list of annotation found
@@ -84,8 +84,10 @@ public class AnnotationParser {
         boolean containsParam = false;
         String param = "";
         if (annotationString.contains("(")) {
-            end = annotationString.indexOf("(");
-            param = annotationString.substring(end + 1, annotationString.length() - 1);
+            end = annotationString.indexOf('(');
+            int endLess = end + 1 ;
+            int endMore = annotationString.length() - 1 ;
+            param = annotationString.substring(endLess, endMore);
             if (param.equals("")) {
                 String errorMessage = "A parameter is required for this annotation : " + annotationString;
                 this.logger.error(errorMessage);

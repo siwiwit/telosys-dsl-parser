@@ -68,14 +68,13 @@ public class EnumerationParser {
 
         formattedContent = StringUtils.readStream(is);
         flattenContent = computeFlattenContent();
-        DomainEnumeration<?> res = parseFlattenContent(file.getName().substring(0, file.getName().lastIndexOf(".")));
-        return res;
+        return parseFlattenContent(file.getName().substring(0, file.getName().lastIndexOf('.')));
     }
 
     public DomainEnumeration<?> parseFlattenContent(String filename) {
         // get index of first and last open brackets
-        int bodyStart = flattenContent.indexOf("{");
-        int bodyEnd = flattenContent.lastIndexOf("}");
+        int bodyStart = flattenContent.indexOf('{');
+        int bodyEnd = flattenContent.lastIndexOf('}');
 
         checkStructure(bodyStart, bodyEnd);
 
@@ -140,10 +139,10 @@ public class EnumerationParser {
 
         // extract fields
         if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
-            BigInteger previousValue = new BigInteger("0");
+            BigInteger previousValue = BigInteger.ONE   ;
             for (String field : fieldEnumList) {
                 enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
-                previousValue = previousValue.add(new BigInteger("1"));
+                previousValue = previousValue.add(BigInteger.ONE);
             }
         } else {
             for (String field : fieldEnumList) {
@@ -155,12 +154,12 @@ public class EnumerationParser {
 
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
-        if (bodyStart < 0){
+        if (bodyStart < 0) {
             throw new EntityParserException("There's something wrong with the beginning of the body");
         }
 
         // end of body required
-        if (bodyEnd < 1){
+        if (bodyEnd < 1) {
             throw new EntityParserException("There's something wrong with the end of the body");
         }
     }
@@ -173,8 +172,7 @@ public class EnumerationParser {
 
             if (line.contains(TelosysDSLProperties.getProperties().getProperty(
                     "start_comment"))) {
-                line = line.substring(0, line.indexOf(TelosysDSLProperties
-                        .getProperties().getProperty("start_comment")));
+                line = line.substring(0, line.indexOf(TelosysDSLProperties.getProperties().getProperty("start_comment")));
             }
 
             if (line.length() > 0) {

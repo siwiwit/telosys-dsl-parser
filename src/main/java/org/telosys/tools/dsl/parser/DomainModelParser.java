@@ -85,7 +85,7 @@ public class DomainModelParser {
         for (String entity : entities) {
             File entityFile = new File(entity);
             model.addEntity(new DomainEntity(entityFile.getName().substring(0,
-                    entityFile.getName().lastIndexOf("."))));
+                    entityFile.getName().lastIndexOf('.'))));
         }
 
         EntityParser entityParser = new EntityParser(model);
@@ -133,7 +133,7 @@ public class DomainModelParser {
 
         String[] allFiles = folder.list();
         for (String fileName : allFiles) {
-            String extension = fileName.substring(fileName.lastIndexOf("."));
+            String extension = fileName.substring(fileName.lastIndexOf('.'));
             if (files.containsKey(extension)) {
                 List<String> current = files.get(extension);
                 current.add(folder.getAbsolutePath() + "/" + fileName);

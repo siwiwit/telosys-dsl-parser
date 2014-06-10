@@ -2,10 +2,7 @@ package org.telosys.tools.dsl.parser.model;
 
 import org.telosys.tools.dsl.EntityParserException;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -14,7 +11,7 @@ import java.util.List;
  */
 public class DomainEntity extends DomainType {
 
-    private final Hashtable<String, DomainEntityField> fields;
+    private final Map<String, DomainEntityField> fields;
     public static final int THIRTY_ONE = 31; // TODO rename
 
     public DomainEntity(String name) {
@@ -86,7 +83,7 @@ public class DomainEntity extends DomainType {
      * @param intoCopy the destination
      */
     public void copyIn(DomainEntity intoCopy) {
-        Enumeration<DomainEntityField> e = fields.elements();
+        Enumeration<DomainEntityField> e = ((Hashtable) fields).elements();
         while (e.hasMoreElements()) {
             intoCopy.addField(e.nextElement());
         }

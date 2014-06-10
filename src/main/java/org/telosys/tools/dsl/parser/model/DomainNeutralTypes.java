@@ -2,10 +2,7 @@ package org.telosys.tools.dsl.parser.model;
 
 import org.telosys.tools.dsl.EntityParserException;
 
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class DomainNeutralTypes {
 
@@ -21,9 +18,9 @@ public class DomainNeutralTypes {
     public static final String CLOB = "clob";
 
 
-    private static final String[] names = {STRING, INTEGER, DECIMAL, BOOLEAN, DATE, TIME, TIMESTAMP, BLOB, CLOB};
+    private static final String[] NAMES = {STRING, INTEGER, DECIMAL, BOOLEAN, DATE, TIME, TIMESTAMP, BLOB, CLOB};
 
-    private static final Hashtable<String, DomainNeutralType> neutralTypes = new Hashtable<String, DomainNeutralType>();
+    private static final Map<String, DomainNeutralType> NEUTRAL_TYPES = new Hashtable<String, DomainNeutralType>();
 
     //	private final static void define(DomainNeutralType type) {
 //		neutralTypes.put(type.getName(), type);
@@ -40,26 +37,26 @@ public class DomainNeutralTypes {
 //		define(new DomainNeutralType("clob"));
 //	}
     static {
-        for (String name : names) {
+        for (String name : NAMES) {
             DomainNeutralType type = new DomainNeutralType(name);
-            neutralTypes.put(type.getName(), type);
+            NEUTRAL_TYPES.put(type.getName(), type);
         }
     }
 
     public static final boolean exists(String typeName) {
-        return neutralTypes.containsKey(typeName);
+        return NEUTRAL_TYPES.containsKey(typeName);
     }
 
     public static final DomainNeutralType getType(String typeName) {
-        if (neutralTypes.containsKey(typeName)) {
-            return neutralTypes.get(typeName);
+        if (NEUTRAL_TYPES.containsKey(typeName)) {
+            return NEUTRAL_TYPES.get(typeName);
         } else {
             throw new EntityParserException("Invalid neutral type name '" + typeName + "'");
         }
     }
 
     public static final List<String> getNames() {
-        return new LinkedList<String>(neutralTypes.keySet());
+        return new LinkedList<String>(NEUTRAL_TYPES.keySet());
     }
 
     public static final List<String> getSortedNames() {

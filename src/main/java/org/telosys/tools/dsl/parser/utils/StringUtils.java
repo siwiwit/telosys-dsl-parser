@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 
 public class StringUtils {
 
+    private  StringUtils(){}
     /**
      * Read content from a file
      *
