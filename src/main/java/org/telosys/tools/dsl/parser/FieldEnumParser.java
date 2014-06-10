@@ -5,6 +5,7 @@ import java.math.BigInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 

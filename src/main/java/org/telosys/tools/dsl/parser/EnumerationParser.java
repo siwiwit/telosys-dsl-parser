@@ -1,5 +1,6 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;

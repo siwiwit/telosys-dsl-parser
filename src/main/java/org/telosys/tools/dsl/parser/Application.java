@@ -1,5 +1,7 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.EntityParserException;
+
 import java.io.File;
 /**
  * @author Jonhathan Goncalves, Mathieu Herbert, Thomas Legendre

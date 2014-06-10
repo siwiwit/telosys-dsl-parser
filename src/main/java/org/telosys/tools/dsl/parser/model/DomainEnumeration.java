@@ -1,6 +1,6 @@
 package org.telosys.tools.dsl.parser.model;
 
-import org.telosys.tools.dsl.parser.EntityParserException;
+import org.telosys.tools.dsl.EntityParserException;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
