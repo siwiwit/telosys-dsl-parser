@@ -40,17 +40,11 @@ public class EntityParser {
 
     private Logger logger;
 
-    /**
-     * the current model
-     */
-	private DomainModel model;
-
     public EntityParser(DomainModel model) {
         this.formattedContent = "";
         this.flattenContent = "";
         this.fieldParser = new FieldParser(model);
         this.logger = LoggerFactory.getLogger(EntityParser.class);
-        this.model = model;
     }
 
     public EntityParser(String formattedContent, DomainModel model) {
@@ -58,7 +52,6 @@ public class EntityParser {
         this.flattenContent = "";
         this.fieldParser = new FieldParser(model);
         this.logger = LoggerFactory.getLogger(EntityParser.class);
-        this.model = model;
     }
 
     /**
