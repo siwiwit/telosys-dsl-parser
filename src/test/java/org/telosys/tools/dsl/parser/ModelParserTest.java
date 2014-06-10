@@ -47,7 +47,7 @@ public class ModelParserTest {
 				"src/test/resources/model_test/valid/model_withTwoEntities");
 		DomainModelParser parser = new DomainModelParser();
 		DomainModel model = parser.parse(folder);
-		DomainModel modelToCompare = new DomainModel("ModelwithTwoEntities");
+		DomainModel modelToCompare = new DomainModel("ModelWithTwoEntities");
 		DomainEntity country = new DomainEntity("Country");
 		DomainEntityField idCountry = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
 		idCountry.addAnnotation(new DomainEntityFieldAnnotation("Id"));
