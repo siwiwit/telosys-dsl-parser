@@ -100,10 +100,46 @@ public class AnnotationParserTest {
     }
 
     @Test(expected = EntityParserException.class)
-    public void testParseAnnotationWithMissingBracket() {
+    public void testParseAnnotationWithMissingLastBracket() {
         AnnotationParser annotationParser = new AnnotationParser();
 
         String field = "id:integer{@Id;";
+
+        annotationParser.parseAnnotations(field);
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseAnnotationWithMissingStartBracket() {
+        AnnotationParser annotationParser = new AnnotationParser();
+
+        String field = "id:integer@Id;}";
+
+        annotationParser.parseAnnotations(field);
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseAnnotationWithMissingStartParenthesis() {
+        AnnotationParser annotationParser = new AnnotationParser();
+
+        String field = "id:integer{@Id,@Max3)};";
+
+        annotationParser.parseAnnotations(field);
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseAnnotationWithMissingEndParenthesis() {
+        AnnotationParser annotationParser = new AnnotationParser();
+
+        String field = "id:integer{@Id,@Max(3};";
+
+        annotationParser.parseAnnotations(field);
+	}
+
+    @Test(expected = EntityParserException.class)
+    public void testParseAnnotationWithoutAt() {
+        AnnotationParser annotationParser = new AnnotationParser();
+
+        String field = "id:integer{#Id};";
 
         annotationParser.parseAnnotations(field);
     }
