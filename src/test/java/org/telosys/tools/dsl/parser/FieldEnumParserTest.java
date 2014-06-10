@@ -52,6 +52,13 @@ public class FieldEnumParserTest {
         FieldEnumParser parser = new FieldEnumParser();
         parser.parseField(testInvalid, TypeEnum.INTEGER);
 	}
+
+    @Test(expected=EntityParserException.class)
+    public void testParseWithoutValue() {
+        String testInvalid = "TEST";
+        FieldEnumParser parser = new FieldEnumParser();
+        parser.parseField(testInvalid, TypeEnum.INTEGER);
+    }
 	
 	@Test(expected=EntityParserException.class)
 	public void testParseWithAnEmptyValueString() {
@@ -87,19 +94,35 @@ public class FieldEnumParserTest {
 
     @Test
     public void testParseFieldIncrementation() {
-        String testWithoutValue = "TEST";
+        String fieldInfo = "TEST";
 
         DomainEnumerationItem<BigInteger> compareTo = new DomainEnumerationItem<BigInteger>("TEST", new BigInteger("2"));
 
         FieldEnumParser parser = new FieldEnumParser();
-        Assert.assertEquals(compareTo, parser.parseField(testWithoutValue, new BigInteger("1")));
+        Assert.assertEquals(compareTo, parser.parseField(fieldInfo, new BigInteger("1")));
     }
 
     @Test(expected = EntityParserException.class)
     public void testParseFieldIncrementationInvalid() {
-        String testWithoutValue = "TEST=2";
+        String fieldInfo = "TEST=2";
 
         FieldEnumParser parser = new FieldEnumParser();
-        parser.parseField(testWithoutValue, new BigInteger("1"));
+        parser.parseField(fieldInfo, new BigInteger("1"));
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldIncrementationWithInvalidName() {
+        String fieldInfo = "T_#EST";
+
+        FieldEnumParser parser = new FieldEnumParser();
+        parser.parseField(fieldInfo, new BigInteger("1"));
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldWithInvalidName() {
+        String fieldInfo = "T_#^EST=3";
+
+        FieldEnumParser parser = new FieldEnumParser();
+        parser.parseField(fieldInfo, TypeEnum.INTEGER);
     }
 }
