@@ -3,6 +3,8 @@ package org.telosys.tools.dsl.parser;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
@@ -11,7 +13,7 @@ import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
  * @param <T>
  */
 public class FieldEnumParser<T> {
-
+	 Logger logger = LoggerFactory.getLogger(EntityParser.class);
 	DomainEnumerationItem<?> parseField(String fieldInfo, BigInteger value) {
 		if(!isItemWithoutValue(fieldInfo)){
 			throw new EntityParserException("this item has to be without value : "+ fieldInfo);
@@ -26,6 +28,11 @@ public class FieldEnumParser<T> {
 	 * @return
 	 */
 	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type) {
+		if(!fieldInfo.contains("=")) {
+			String textError = "The fields does not contains value " + fieldInfo;
+			logger.error(textError);
+			throw new EntityParserException(textError);
+		}
 		int startDescription = fieldInfo.indexOf("=");
 		String name = fieldInfo.substring(0, startDescription);
 		checkName(name);
