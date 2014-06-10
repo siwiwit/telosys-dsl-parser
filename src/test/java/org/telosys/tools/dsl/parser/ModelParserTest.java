@@ -71,7 +71,7 @@ public class ModelParserTest {
 	@Test
 	public void testParseModelWithAnEnum() throws Exception {
 		File folder = new File(
-				"src/test/resources/model_test/valid/model_withAnEnum/model_WithAnEnum.model");
+				"src/test/resources/model_test/valid/model_withAnEnum");
 		DomainModelParser parser = new DomainModelParser();
 		DomainModel model = parser.parse(folder);
 		DomainModel modelToCompare = new DomainModel("ModelWithAnEnum");
@@ -87,7 +87,7 @@ public class ModelParserTest {
 	@Test
 	public void testParseModelWithAnEnumAndAnEntity() throws Exception {
 		File folder = new File(
-				"src/test/resources/model_test/valid/model_WithAnEnumAndAnEntity/");
+				"src/test/resources/model_test/valid/model_withAnEnumAndAnEntity/");
 		DomainModelParser parser = new DomainModelParser();
 		DomainModel model = parser.parse(folder);
 		DomainModel modelToCompare = new DomainModel("ModelWithAnEnumAndAnEntity");
