@@ -1,15 +1,11 @@
 package org.telosys.tools.dsl.parser;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.EntityParserException;
-import org.telosys.tools.dsl.parser.model.DomainEntityField;
-import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
-import org.telosys.tools.dsl.parser.model.DomainModel;
-import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
-import org.telosys.tools.dsl.parser.model.DomainType;
+import org.telosys.tools.dsl.parser.model.*;
+
+import java.util.List;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -26,14 +22,15 @@ public class FieldParser {
      * Logger for tracing all events
      */
     private Logger logger;
-    
+
     /**
      * Curent Model
      */
-	private DomainModel model;
+    private DomainModel model;
 
     /**
      * Constructor with context as a DomainModel
+     *
      * @param model Context of the current field to parse
      */
     public FieldParser(DomainModel model) {
@@ -44,6 +41,7 @@ public class FieldParser {
 
     /**
      * Parse a single field with its own informations
+     *
      * @param fieldInfo String
      * @return The parsed field
      */
@@ -71,23 +69,22 @@ public class FieldParser {
             end = fieldInfo.length();
         }
 
-        String typeName = fieldInfo.substring(startDescription+1, end);
-        int cardinality = 1 ;
+        String typeName = fieldInfo.substring(startDescription + 1, end);
+        int cardinality = 1;
 
-        if (isTypeArray(typeName)){
+        if (isTypeArray(typeName)) {
             int startArray = typeName.lastIndexOf("[");
             int endArray = typeName.lastIndexOf("]");
-            System.out.println(typeName);
-            if  (endArray-startArray == 1){
+            if (endArray - startArray == 1) {
                 cardinality = -1;
-                typeName = typeName.substring(0,startArray);
-            }else{
+                typeName = typeName.substring(0, startArray);
+            } else {
 
-                String figure = typeName.substring(startArray+1, endArray);
-                try{
+                String figure = typeName.substring(startArray + 1, endArray);
+                try {
                     cardinality = Integer.parseInt(figure);
-                    typeName = typeName.substring(0,startArray);
-                }catch (Exception e){
+                    typeName = typeName.substring(0, startArray);
+                } catch (Exception e) {
                     String errorMessage = "The cardinality for " + typeName + " is not correct";
                     this.logger.error(errorMessage);
                     throw new EntityParserException(errorMessage);
@@ -109,18 +106,18 @@ public class FieldParser {
                 this.logger.error(errorMessage);
                 throw new EntityParserException(errorMessage);
             } else {
-            	type = this.model.getEnumeration(typeName.substring(1));
+                type = this.model.getEnumeration(typeName.substring(1));
             }
-        } else if(DomainNeutralTypes.exists(typeName)){
+        } else if (DomainNeutralTypes.exists(typeName)) {
             type = DomainNeutralTypes.getType(typeName);
         } else {
-        	if(!model.getEntityNames().contains(typeName)) {
-        		String errorMessage = "The type of the field is incorrect";
-        		this.logger.error(errorMessage);
-        		throw new EntityParserException(errorMessage);
-        	} else {
-        		type = model.getEntity(typeName);
-        	}
+            if (!model.getEntityNames().contains(typeName)) {
+                String errorMessage = "The type of the field is incorrect";
+                this.logger.error(errorMessage);
+                throw new EntityParserException(errorMessage);
+            } else {
+                type = model.getEntity(typeName);
+            }
         }
 
         DomainEntityField field = new DomainEntityField(name, type, cardinality);
@@ -132,6 +129,7 @@ public class FieldParser {
 
     /**
      * Check if the given param is an enum with the specific char
+     *
      * @param type The type of the field
      * @return bool - true if it's an enum
      */
@@ -141,6 +139,7 @@ public class FieldParser {
 
     /**
      * Check if the given param is an array of oject
+     *
      * @param type The type of the field
      * @return bool - true if it's an array
      */

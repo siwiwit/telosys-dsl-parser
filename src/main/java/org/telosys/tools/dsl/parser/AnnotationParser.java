@@ -1,13 +1,13 @@
 package org.telosys.tools.dsl.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
 import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -44,8 +44,8 @@ public class AnnotationParser {
         if (bodyEnd < 0 && bodyStart < 0) {
             return list;
         }
-
-        fieldInfo = fieldInfo.substring(bodyStart+1, bodyEnd);
+    bodyStart++;
+        fieldInfo = fieldInfo.substring(bodyStart, bodyEnd);
 
         // list of annotation found
         String[] annotationList = fieldInfo.split(",");
@@ -58,7 +58,7 @@ public class AnnotationParser {
 
         // extract annotations
         for (String annotationString : annotationList) {
-        	DomainEntityFieldAnnotation annotation = this.parseSingleAnnotation(annotationString);
+            DomainEntityFieldAnnotation annotation = this.parseSingleAnnotation(annotationString);
             list.add(annotation);
         }
 
@@ -85,7 +85,7 @@ public class AnnotationParser {
         String param = "";
         if (annotationString.contains("(")) {
             end = annotationString.indexOf("(");
-            param = annotationString.substring(end+1, annotationString.length() - 1);
+            param = annotationString.substring(end + 1, annotationString.length() - 1);
             if (param.equals("")) {
                 String errorMessage = "A parameter is required for this annotation : " + annotationString;
                 this.logger.error(errorMessage);

@@ -15,6 +15,7 @@ import java.util.List;
 public class DomainEntity extends DomainType {
 
     private final Hashtable<String, DomainEntityField> fields;
+    public static final int THIRTY_ONE = 31; // TODO rename
 
     public DomainEntity(String name) {
         super(name, DomainTypeNature.ENTITY);
@@ -60,16 +61,22 @@ public class DomainEntity extends DomainType {
             return false;
         }
         DomainEntity otherEntity = (DomainEntity) other;
-        if (!otherEntity.getName().equals(this.getName())) return false;
-        if (otherEntity.fields.size() != fields.size()) return false;
-        if (!otherEntity.fields.equals(fields)) return false;
+        if (!otherEntity.getName().equals(this.getName())) {
+            return false;
+        }
+        if (otherEntity.fields.size() != fields.size()) {
+            return false;
+        }
+        if (!otherEntity.fields.equals(fields)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public int hashCode() {
         int result = this.getName() != null ? this.getName().hashCode() : 0;
-        result = 31 * result + (fields != null ? fields.hashCode() : 0);
+        result = THIRTY_ONE * result + (fields != null ? fields.hashCode() : 0);
         return result;
     }
 

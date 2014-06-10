@@ -1,150 +1,146 @@
 package org.telosys.tools.dsl.parser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+
 public class DomainModelParser {
 
-	private final static String DOT_MODEL = ".model";
-	private final static String DOT_ENTITY = ".entity";
-	private final static String DOT_ENUM = ".enum";
-	private Logger logger = LoggerFactory.getLogger(EntityParser.class);
-	/**
-	 * Parse the given model
-	 * 
-	 * @param file
-	 *            the ".model" file or a directory containing a ".model" file
-	 * @return
-	 */
-	public final DomainModel parse(File file) {
+    private static final String DOT_MODEL = ".model";
+    private static final String DOT_ENTITY = ".entity";
+    private static final String DOT_ENUM = ".enum";
+    private Logger logger = LoggerFactory.getLogger(EntityParser.class);
 
-		if (!file.exists()) {
-			String textError = "Cannot parse model : file '"
-					+ file.toString() + "' doesn't exist";
-			logger.error(textError);
-			throw new EntityParserException(textError);
-		}
-		if (file.isFile()) {
-			if (file.getName().endsWith(DOT_MODEL)) {
-				return parseModelFile(file);
-			} else {
-				String textError = "Cannot parse model : file '"
-						+ file.toString() + "' is not a model";
-				logger.error(textError);
-				throw new EntityParserException(textError);
-			}
-		} else if (file.isDirectory()) {
-			File[] files = file.listFiles();
-			for (File f : files) {
-				if (f.isFile() && f.getName().endsWith(DOT_MODEL)) {
-					return parseModelFile(f);
-				}
-			}
-			String textError = "Cannot parse model : no model file in '" + file.toString()
-					+ "'";
-			logger.error(textError);
-			throw new EntityParserException(textError);
-		} else {
-			String textError = "Cannot parse model : '"
-					+ file.toString() + "' is not a file or directory";
-			logger.error(textError);
-			throw new EntityParserException(textError);
-		}
-	}
+    /**
+     * Parse the given model
+     *
+     * @param file the ".model" file or a directory containing a ".model" file
+     * @return
+     */
+    public final DomainModel parse(File file) {
 
-	private final DomainModel parseModelFile(File file) {
+        if (!file.exists()) {
+            String textError = "Cannot parse model : file '"
+                    + file.toString() + "' doesn't exist";
+            logger.error(textError);
+            throw new EntityParserException(textError);
+        }
+        if (file.isFile()) {
+            if (file.getName().endsWith(DOT_MODEL)) {
+                return parseModelFile(file);
+            } else {
+                String textError = "Cannot parse model : file '"
+                        + file.toString() + "' is not a model";
+                logger.error(textError);
+                throw new EntityParserException(textError);
+            }
+        } else if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                if (f.isFile() && f.getName().endsWith(DOT_MODEL)) {
+                    return parseModelFile(f);
+                }
+            }
+            String textError = "Cannot parse model : no model file in '" + file.toString()
+                    + "'";
+            logger.error(textError);
+            throw new EntityParserException(textError);
+        } else {
+            String textError = "Cannot parse model : '"
+                    + file.toString() + "' is not a file or directory";
+            logger.error(textError);
+            throw new EntityParserException(textError);
+        }
+    }
 
-		Properties p = loadProperties(file);
-		String modelName = p.getProperty("name");
-		if (modelName == null || modelName.trim().length() == 0) {
-			// use the file name as default name
-			String fileName = file.getName();
-			int i = fileName.indexOf(DOT_MODEL);
-			modelName = fileName.substring(0, i);
-		}
+    private final DomainModel parseModelFile(File file) {
 
-		File folder = file.getParentFile();
-		Map<String, List<String>> files = getMapFiles(folder);
-		DomainModel model = new DomainModel(modelName);
-		List<String> enumerations = files.get(DOT_ENUM);
+        Properties p = loadProperties(file);
+        String modelName = p.getProperty("name");
+        if (modelName == null || modelName.trim().length() == 0) {
+            // use the file name as default name
+            String fileName = file.getName();
+            int i = fileName.indexOf(DOT_MODEL);
+            modelName = fileName.substring(0, i);
+        }
 
-		EnumerationParser enumParser = new EnumerationParser();
-		for (String enumeration : enumerations) {
-			model.addEnumeration(enumParser.parse(new File(enumeration)));
-		}
+        File folder = file.getParentFile();
+        Map<String, List<String>> files = getMapFiles(folder);
+        DomainModel model = new DomainModel(modelName);
+        List<String> enumerations = files.get(DOT_ENUM);
 
-		List<String> entities = files.get(DOT_ENTITY);
-		for (String entity : entities) {
-			File entityFile = new File(entity);
-			model.addEntity(new DomainEntity(entityFile.getName().substring(0,
-					entityFile.getName().lastIndexOf("."))));
-		}
+        EnumerationParser enumParser = new EnumerationParser();
+        for (String enumeration : enumerations) {
+            model.addEnumeration(enumParser.parse(new File(enumeration)));
+        }
 
-		EntityParser entityParser = new EntityParser(model);
-		for (String entity : entities) {
-			model.putEntity(entityParser.parse(entity));
-		}
-		return model;
-	}
+        List<String> entities = files.get(DOT_ENTITY);
+        for (String entity : entities) {
+            File entityFile = new File(entity);
+            model.addEntity(new DomainEntity(entityFile.getName().substring(0,
+                    entityFile.getName().lastIndexOf("."))));
+        }
 
-	private Properties loadProperties(File propFile) {
-		Properties props = new Properties();
-		FileInputStream fis = null;
+        EntityParser entityParser = new EntityParser(model);
+        for (String entity : entities) {
+            model.putEntity(entityParser.parse(entity));
+        }
+        return model;
+    }
 
-		try {
-			fis = new FileInputStream(propFile);
-			props.load(fis);
-		} catch (IOException ioe) {
-			String textError = "Cannot load properties from file "
-					+ propFile;
-			logger.error(textError);
-			throw new EntityParserException(textError);
-		} finally {
+    private Properties loadProperties(File propFile) {
+        Properties props = new Properties();
+        FileInputStream fis = null;
 
-			try {
-				if (fis != null) {
-					fis.close();
-				}
-			} catch (IOException e) {
-				// NOTHING TO DO
-			}
-		}
-		return props;
-	}
+        try {
+            fis = new FileInputStream(propFile);
+            props.load(fis);
+        } catch (IOException ioe) {
+            String textError = "Cannot load properties from file "
+                    + propFile;
+            logger.error(textError);
+            throw new EntityParserException(textError);
+        } finally {
 
-	/**
-	 * Get all files name and their associate class from a foledr
-	 * 
-	 * @param folder
-	 * @return
-	 */
-	private Map<String, List<String>> getMapFiles(File folder) {
-		HashMap<String, List<String>> files = new HashMap<String, List<String>>();
-		files.put(DOT_ENTITY, new ArrayList<String>());
-		files.put(DOT_ENUM, new ArrayList<String>());
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                // NOTHING TO DO
+            }
+        }
+        return props;
+    }
 
-		String[] allFiles = folder.list();
-		for (String fileName : allFiles) {
-			String extension = fileName.substring(fileName.lastIndexOf("."));
-			if (files.containsKey(extension)) {
-				List<String> current = files.get(extension);
-				current.add(folder.getAbsolutePath() + "/" + fileName);
-				files.put(extension, current);
-			}
-		}
-		return files;
-	}
+    /**
+     * Get all files name and their associate class from a foledr
+     *
+     * @param folder
+     * @return
+     */
+    private Map<String, List<String>> getMapFiles(File folder) {
+        HashMap<String, List<String>> files = new HashMap<String, List<String>>();
+        files.put(DOT_ENTITY, new ArrayList<String>());
+        files.put(DOT_ENUM, new ArrayList<String>());
+
+        String[] allFiles = folder.list();
+        for (String fileName : allFiles) {
+            String extension = fileName.substring(fileName.lastIndexOf("."));
+            if (files.containsKey(extension)) {
+                List<String> current = files.get(extension);
+                current.add(folder.getAbsolutePath() + "/" + fileName);
+                files.put(extension, current);
+            }
+        }
+        return files;
+    }
 
 }

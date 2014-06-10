@@ -10,20 +10,20 @@ import java.util.List;
 public class DomainNeutralTypes {
 
     // Neutral type list of predefined names
-    public final static String STRING = "string";
-    public final static String INTEGER = "integer";
-    public final static String DECIMAL = "decimal";
-    public final static String BOOLEAN = "boolean";
-    public final static String DATE = "date";
-    public final static String TIME = "time";
-    public final static String TIMESTAMP = "timestamp";
-    public final static String BLOB = "blob";
-    public final static String CLOB = "clob";
+    public static final String STRING = "string";
+    public static final String INTEGER = "integer";
+    public static final String DECIMAL = "decimal";
+    public static final String BOOLEAN = "boolean";
+    public static final String DATE = "date";
+    public static final String TIME = "time";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String BLOB = "blob";
+    public static final String CLOB = "clob";
 
 
-    private final static String[] names = {STRING, INTEGER, DECIMAL, BOOLEAN, DATE, TIME, TIMESTAMP, BLOB, CLOB};
+    private static final String[] names = {STRING, INTEGER, DECIMAL, BOOLEAN, DATE, TIME, TIMESTAMP, BLOB, CLOB};
 
-    private final static Hashtable<String, DomainNeutralType> neutralTypes = new Hashtable<String, DomainNeutralType>();
+    private static final Hashtable<String, DomainNeutralType> neutralTypes = new Hashtable<String, DomainNeutralType>();
 
     //	private final static void define(DomainNeutralType type) {
 //		neutralTypes.put(type.getName(), type);
@@ -46,11 +46,11 @@ public class DomainNeutralTypes {
         }
     }
 
-    public final static boolean exists(String typeName) {
+    public static final boolean exists(String typeName) {
         return neutralTypes.containsKey(typeName);
     }
 
-    public final static DomainNeutralType getType(String typeName) {
+    public static final DomainNeutralType getType(String typeName) {
         if (neutralTypes.containsKey(typeName)) {
             return neutralTypes.get(typeName);
         } else {
@@ -58,11 +58,11 @@ public class DomainNeutralTypes {
         }
     }
 
-    public final static List<String> getNames() {
+    public static final List<String> getNames() {
         return new LinkedList<String>(neutralTypes.keySet());
     }
 
-    public final static List<String> getSortedNames() {
+    public static final List<String> getSortedNames() {
         List<String> list = getNames();
         Collections.sort(list);
         return list;

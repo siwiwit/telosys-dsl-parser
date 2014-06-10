@@ -12,6 +12,7 @@ public class DomainEntityField {
     private final String name;
     private final DomainType type;
     private final int cardinality;
+    public static final int THIRTY_ONE = 31; // TODO rename
 
     // TODO : Hashtable (each annotation is unique for a field)
     //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
@@ -110,8 +111,8 @@ public class DomainEntityField {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (annotations != null ? annotations.hashCode() : 0);
+        result = THIRTY_ONE * result + (type != null ? type.hashCode() : 0);
+        result = THIRTY_ONE * result + (annotations != null ? annotations.hashCode() : 0);
         return result;
     }
 

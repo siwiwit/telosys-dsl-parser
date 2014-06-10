@@ -1,11 +1,5 @@
 package org.telosys.tools.dsl.parser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.StringTokenizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.EntityParserException;
@@ -15,6 +9,12 @@ import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 import org.telosys.tools.dsl.parser.utils.StringUtils;
 import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.StringTokenizer;
 
 /**
  * First entry point for the telosys entity parser
@@ -90,7 +90,7 @@ public class EntityParser {
         int indexPoint = file.getName().lastIndexOf(".");
         if (indexPoint >= 0) {
             DomainEntity entity = parseFlattenContent(file.getName().substring(0, indexPoint));
-        	return entity;
+            return entity;
         } else {
             throw new EntityParserException("The filename has no extension");
         }
@@ -188,8 +188,9 @@ public class EntityParser {
 
     /**
      * Check if the main structure of the file correspond to the specifications
+     *
      * @param bodyStart first bracket index
-     * @param bodyEnd last bracket index
+     * @param bodyEnd   last bracket index
      */
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
@@ -209,28 +210,30 @@ public class EntityParser {
 
     /**
      * Verify the sructure of an entity
+     *
      * @param entity
      * @throws EntityParserException
      */
     public void verifyEntityStructure(DomainEntity entity) throws EntityParserException {
-    	DomainEntityField fieldWithId = null;
-    	for(DomainEntityField tmp : entity.getFields()){
-    		if(tmp.getAnnotationNames().contains("Id")) {
-    			if(fieldWithId != null) {
-    				throw new EntityParserException("The Id is defined more than once in the entity "+ entity.getName());
-    			} 
-    			if(tmp.getCardinality() != 1) {
-    				throw new EntityParserException("The Id can't be in an array in the entity "+ entity.getName());
-    			} 
-    			if(tmp.isNeutralType()){
-    				if(tmp.getTypeName().equals(DomainNeutralTypes.BLOB) || tmp.getTypeName().equals(DomainNeutralTypes.CLOB)) {
-    					throw new EntityParserException("The Id can't be a blob ou a clob in the entity "+ entity.getName());
-    				}
-    			}
-    			fieldWithId = tmp;
-    		}
-    	}
+        DomainEntityField fieldWithId = null;
+        for (DomainEntityField tmp : entity.getFields()) {
+            if (tmp.getAnnotationNames().contains("Id")) {
+                if (fieldWithId != null) {
+                    throw new EntityParserException("The Id is defined more than once in the entity " + entity.getName());
+                }
+                if (tmp.getCardinality() != 1) {
+                    throw new EntityParserException("The Id can't be in an array in the entity " + entity.getName());
+                }
+                if (tmp.isNeutralType()) {
+                    if (tmp.getTypeName().equals(DomainNeutralTypes.BLOB) || tmp.getTypeName().equals(DomainNeutralTypes.CLOB)) {
+                        throw new EntityParserException("The Id can't be a blob ou a clob in the entity " + entity.getName());
+                    }
+                }
+                fieldWithId = tmp;
+            }
+        }
     }
+
     public String getFormattedContent() {
         return formattedContent;
     }

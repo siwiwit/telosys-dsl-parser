@@ -10,6 +10,7 @@ public class DomainEntityFieldAnnotation {
     private String name;
     private String parameter;
     private boolean hasParameter;
+    public static final int THIRTY_ONE = 31; // TODO rename
 
     public DomainEntityFieldAnnotation(String name) {
         this.name = name;
@@ -38,13 +39,21 @@ public class DomainEntityFieldAnnotation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         DomainEntityFieldAnnotation that = (DomainEntityFieldAnnotation) o;
 
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (parameter != null ? !parameter.equals(that.parameter) : that.parameter != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) {
+            return false;
+        }
+        if (parameter != null ? !parameter.equals(that.parameter) : that.parameter != null) {
+            return false;
+        }
 
         return true;
     }
@@ -52,8 +61,8 @@ public class DomainEntityFieldAnnotation {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (parameter != null ? parameter.hashCode() : 0);
-        result = 31 * result + (hasParameter ? 1 : 0);
+        result = THIRTY_ONE * result + (parameter != null ? parameter.hashCode() : 0);
+        result = THIRTY_ONE * result + (hasParameter ? 1 : 0);
         return result;
     }
 
