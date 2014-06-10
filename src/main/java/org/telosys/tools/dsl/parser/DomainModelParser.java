@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 
@@ -17,7 +19,7 @@ public class DomainModelParser {
 	private final static String DOT_MODEL = ".model";
 	private final static String DOT_ENTITY = ".entity";
 	private final static String DOT_ENUM = ".enum";
-
+	private Logger logger = LoggerFactory.getLogger(EntityParser.class);
 	/**
 	 * Parse the given model
 	 * 
@@ -28,15 +30,19 @@ public class DomainModelParser {
 	public final DomainModel parse(File file) {
 
 		if (!file.exists()) {
-			throw new EntityParserException("Cannot parse model : file '"
-					+ file.toString() + "' doesn't exist");
+			String textError = "Cannot parse model : file '"
+					+ file.toString() + "' doesn't exist";
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		}
 		if (file.isFile()) {
 			if (file.getName().endsWith(DOT_MODEL)) {
 				return parseModelFile(file);
 			} else {
-				throw new EntityParserException("Cannot parse model : file '"
-						+ file.toString() + "' is not a model");
+				String textError = "Cannot parse model : file '"
+						+ file.toString() + "' is not a model";
+				logger.error(textError);
+				throw new EntityParserException(textError);
 			}
 		} else if (file.isDirectory()) {
 			File[] files = file.listFiles();
@@ -45,12 +51,15 @@ public class DomainModelParser {
 					return parseModelFile(f);
 				}
 			}
-			throw new EntityParserException(
-					"Cannot parse model : no model file in '" + file.toString()
-							+ "'");
+			String textError = "Cannot parse model : no model file in '" + file.toString()
+					+ "'";
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		} else {
-			throw new EntityParserException("Cannot parse model : '"
-					+ file.toString() + "' is not a file or directory");
+			String textError = "Cannot parse model : '"
+					+ file.toString() + "' is not a file or directory";
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		}
 	}
 
@@ -97,8 +106,10 @@ public class DomainModelParser {
 			fis = new FileInputStream(propFile);
 			props.load(fis);
 		} catch (IOException ioe) {
-			throw new EntityParserException("Cannot load properties from file "
-					+ propFile);
+			String textError = "Cannot load properties from file "
+					+ propFile;
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		} finally {
 
 			try {

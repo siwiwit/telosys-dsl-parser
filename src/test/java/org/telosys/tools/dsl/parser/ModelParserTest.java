@@ -23,9 +23,6 @@ public class ModelParserTest {
 
 	@Test
 	public void testParseModelWithAndEntity() throws Exception {
-
-		File folderBis = new File(
-				"src/test/resources/model_test/valid");
 		File folder = new File(
 				"src/test/resources/model_test/valid/model_withAnEntity");
 		DomainModelParser parser = new DomainModelParser();
