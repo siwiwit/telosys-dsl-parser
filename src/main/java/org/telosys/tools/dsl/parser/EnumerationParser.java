@@ -54,8 +54,7 @@ public class EnumerationParser {
             InputStream io = new FileInputStream(file);
             return this.parse(io, file.getAbsolutePath());
         } catch (FileNotFoundException e) {
-            throw new EntityParserException("File Not found : "
-                    + file.getAbsolutePath());
+            throw new EntityParserException("File Not found : " + file.getAbsolutePath());
         }
 
     }
@@ -68,8 +67,7 @@ public class EnumerationParser {
 
         formattedContent = StringUtils.readStream(is);
         flattenContent = computeFlattenContent();
-        DomainEnumeration<?> res = parseFlattenContent(file.getName()
-                .substring(0, file.getName().lastIndexOf(".")));
+        DomainEnumeration<?> res = parseFlattenContent(file.getName().substring(0, file.getName().lastIndexOf(".")));
         return res;
     }
 
@@ -81,9 +79,9 @@ public class EnumerationParser {
         checkStructure(bodyStart, bodyEnd);
 
         // body required
-        if (bodyEnd - bodyStart == 1)
+        if (bodyEnd - bodyStart == 1) {
             throw new EntityParserException("A field is required");
-
+        }
         String enumName = flattenContent.substring(0, bodyStart).trim();
         TypeEnum type = TypeEnum.INTEGER;
 
@@ -104,24 +102,21 @@ public class EnumerationParser {
         } else if (split.length == 1) { // If no type is defined it's an integer
             type = TypeEnum.INTEGER;
         } else {
-            throw new EntityParserException(
-                    "There is something wrong with the head of the enum");
+            throw new EntityParserException("There is something wrong with the head of the enum");
         }
 
-        if (!enumName.equals(filename))
-            throw new EntityParserException(
-                    "The name of the file does not match with the enum name");
-
+        if (!enumName.equals(filename)) {
+            throw new EntityParserException("The name of the file does not match with the enum name");
+        }
         // the first later of an entity must be upper case
-        if (!Character.isUpperCase(flattenContent.charAt(0)))
-            throw new EntityParserException(
-                    "The name of the entity must start with an upper case");
+        if (!Character.isUpperCase(flattenContent.charAt(0))) {
+            throw new EntityParserException("The name of the entity must start with an upper case");
+        }
 
         // only simple chars are allowed
-        if (!enumName.matches("^[A-Z][\\w]*$"))
-            throw new EntityParserException(
-                    "The name must not contains special char" + enumName);
-
+        if (!enumName.matches("^[A-Z][\\w]*$")) {
+            throw new EntityParserException("The name must not contains special char" + enumName);
+        }
         // create object
         DomainEnumeration<?> enumeration = null;
         if (type == TypeEnum.INTEGER) {
@@ -159,14 +154,14 @@ public class EnumerationParser {
 
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
-        if (bodyStart < 0)
-            throw new EntityParserException(
-                    "There's something wrong with the beginning of the body");
+        if (bodyStart < 0){
+            throw new EntityParserException("There's something wrong with the beginning of the body");
+        }
 
         // end of body required
-        if (bodyEnd < 1)
-            throw new EntityParserException(
-                    "There's something wrong with the end of the body");
+        if (bodyEnd < 1){
+            throw new EntityParserException("There's something wrong with the end of the body");
+        }
     }
 
     public String computeFlattenContent() {

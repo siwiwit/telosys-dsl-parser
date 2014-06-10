@@ -1,10 +1,9 @@
 package org.telosys.tools.dsl.parser.model;
 
 /**
- *
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
- * @date 2014-05-22
  * @version 1.0
+ * @date 2014-05-22
  */
 public class DomainEntityFieldAnnotation {
 
@@ -12,19 +11,21 @@ public class DomainEntityFieldAnnotation {
     private String parameter;
     private boolean hasParameter;
 
-    public DomainEntityFieldAnnotation(String name){
+    public DomainEntityFieldAnnotation(String name) {
         this.name = name;
         this.parameter = "";
         this.hasParameter = false;
     }
 
-    public DomainEntityFieldAnnotation(String name, String param){
+    public DomainEntityFieldAnnotation(String name, String param) {
         this.name = name;
         this.parameter = param;
         this.hasParameter = true;
     }
 
-    boolean hasParameter() {return this.hasParameter;}
+    boolean hasParameter() {
+        return this.hasParameter;
+    }
 
 
     public String getName() {

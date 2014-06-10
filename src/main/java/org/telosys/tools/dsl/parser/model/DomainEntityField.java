@@ -1,77 +1,78 @@
 package org.telosys.tools.dsl.parser.model;
 
-import java.util.ArrayList;
+import org.telosys.tools.dsl.parser.EntityParserException;
+
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.telosys.tools.dsl.parser.EntityParserException;
-
 public class DomainEntityField {
 
-    private final String     name ;
-    private final DomainType type ;
-    private final int        cardinality ;
-    
+    private final String name;
+    private final DomainType type;
+    private final int cardinality;
+
     // TODO : Hashtable (each annotation is unique for a field)
-  //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
+    //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
 
-    private final Hashtable<String,DomainEntityFieldAnnotation> annotations  = new Hashtable<String,DomainEntityFieldAnnotation>() ;
+    private final Hashtable<String, DomainEntityFieldAnnotation> annotations = new Hashtable<String, DomainEntityFieldAnnotation>();
 
-	public DomainEntityField(String name, DomainType type){
+    public DomainEntityField(String name, DomainType type) {
         this.name = name;
         this.type = type;
-        this.cardinality = 1 ;
+        this.cardinality = 1;
 //        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
-    public DomainEntityField(String name, DomainType type, int cardinality ){
+    public DomainEntityField(String name, DomainType type, int cardinality) {
         this.name = name;
         this.type = type;
-        this.cardinality = cardinality ;
-    //    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        this.cardinality = cardinality;
+        //    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
     public void setAnnotationList(List<DomainEntityFieldAnnotation> annotationList) {
-        for(DomainEntityFieldAnnotation annotation : annotationList){
-        	addAnnotation(annotation);
+        for (DomainEntityFieldAnnotation annotation : annotationList) {
+            addAnnotation(annotation);
         }
     }
+
     public void addAnnotation(DomainEntityFieldAnnotation annotation) {
-    	if(!annotations.containsKey(annotation.getName())) {
-    		annotations.put(annotation.getName(), annotation);
-    	} else {
-    		throw new EntityParserException("The annotation " + annotation.getName() +" is already define in the field "+this.getName());
-    	}
+        if (!annotations.containsKey(annotation.getName())) {
+            annotations.put(annotation.getName(), annotation);
+        } else {
+            throw new EntityParserException("The annotation " + annotation.getName() + " is already define in the field " + this.getName());
+        }
     }
-	public final String getName() {
-		return name ;
-	}	
-    
-	public final DomainType getType() {
-		return type ;
-	}	
-	
-	public final int getCardinality() {
-		return cardinality ;
-	}	
-	
-	public final String getTypeName() {
-		return type.getName() ;
-	}	
-        
-	public final boolean isNeutralType() {
-		return type.isNeutralType() ;
-	}
-	
-	public final boolean isEntity() {
-		return type.isEntity() ;
-	}
-	
-	public final boolean isEnumeration() {
-		return type.isEnumeration() ;
-	}
+
+    public final String getName() {
+        return name;
+    }
+
+    public final DomainType getType() {
+        return type;
+    }
+
+    public final int getCardinality() {
+        return cardinality;
+    }
+
+    public final String getTypeName() {
+        return type.getName();
+    }
+
+    public final boolean isNeutralType() {
+        return type.isNeutralType();
+    }
+
+    public final boolean isEntity() {
+        return type.isEntity();
+    }
+
+    public final boolean isEnumeration() {
+        return type.isEnumeration();
+    }
 
     @Override
     public String toString() {
@@ -103,13 +104,15 @@ public class DomainEntityField {
         result = 31 * result + (annotations != null ? annotations.hashCode() : 0);
         return result;
     }
+
     /**
-	 * Returns all the annotation names (in alphabetical order)
-	 * @return
-	 */
-	public final List<String> getAnnotationNames() {
-		List<String> names = new LinkedList<String>( annotations.keySet() ) ;
-		Collections.sort(names);
-		return names ;
-	}
+     * Returns all the annotation names (in alphabetical order)
+     *
+     * @return
+     */
+    public final List<String> getAnnotationNames() {
+        List<String> names = new LinkedList<String>(annotations.keySet());
+        Collections.sort(names);
+        return names;
+    }
 }
