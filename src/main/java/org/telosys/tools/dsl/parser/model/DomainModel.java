@@ -1,11 +1,8 @@
 package org.telosys.tools.dsl.parser.model;
 
-import org.telosys.tools.dsl.parser.EntityParserException;
+import org.telosys.tools.dsl.EntityParserException;
 
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Root class for a Domain Model built after Domain Specific Language text file parsing
@@ -18,12 +15,9 @@ public class DomainModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((entities == null) ? 0 : entities.hashCode());
-        result = prime * result
-                + ((enumerations == null) ? 0 : enumerations.hashCode());
-        result = prime * result
-                + ((modelName == null) ? 0 : modelName.hashCode());
+        result = prime * result + ((entities == null) ? 0 : entities.hashCode());
+        result = prime * result + ((enumerations == null) ? 0 : enumerations.hashCode());
+        result = prime * result + ((modelName == null) ? 0 : modelName.hashCode());
         return result;
     }
 
@@ -40,35 +34,43 @@ public class DomainModel {
         }
         DomainModel other = (DomainModel) obj;
         if (entities == null) {
-            if (other.entities != null)
+            if (other.entities != null) {
                 return false;
-        } else if (!entities.equals(other.entities))
+            }
+        } else if (!entities.equals(other.entities)) {
             return false;
+        }
         if (enumerations == null) {
-            if (other.enumerations != null)
+            if (other.enumerations != null) {
                 return false;
-        } else if (!enumerations.equals(other.enumerations))
+            }
+        } else if (!enumerations.equals(other.enumerations)) {
             return false;
+        }
         if (modelName == null) {
-            if (other.modelName != null)
+            if (other.modelName != null) {
                 return false;
-        } else if (!modelName.equals(other.modelName))
+            }
+        } else if (!modelName.equals(other.modelName)) {
             return false;
+        }
         return true;
     }
 
     private final String modelName;
 
-//	private final String modelVersion ; 
-//	
-//	private final String modelDescription ;  
+/*
+private final String modelVersion ;
+private final String modelDescription ;
+*/
 
-    // NB :
-    // Do not accept an entity and an enumeration with the same name /!\
-    //
-    private final Hashtable<String, DomainEntity> entities = new Hashtable<String, DomainEntity>();
+    /*
+    NB :
+        Do not accept an entity and an enumeration with the same name /!\
+     */
+    private final Map<String, DomainEntity> entities = new Hashtable<String, DomainEntity>();
 
-    private final Hashtable<String, DomainEnumeration<?>> enumerations = new Hashtable<String, DomainEnumeration<?>>();
+    private final Map<String, DomainEnumeration<?>> enumerations = new Hashtable<String, DomainEnumeration<?>>();
 
 
     /**
@@ -78,7 +80,8 @@ public class DomainModel {
      */
     public DomainModel(String modelName) {
         super();
-        this.modelName = modelName; // Just store the name of the folder containing the DSL files (.entity and .enum)
+        // Just store the name of the folder containing the DSL files (.entity and .enum)
+        this.modelName = modelName;
     }
 
     /**
@@ -105,9 +108,9 @@ public class DomainModel {
         }
     }
 
-    //------------------------------------------------------------------------------------------
-    // ENTITIES
-    //------------------------------------------------------------------------------------------
+    /*------------------------------------------------------------------------------------------
+     ENTITIES
+    ------------------------------------------------------------------------------------------*/
 
     /**
      * Stores a new entity <br>
@@ -150,9 +153,9 @@ public class DomainModel {
         return names;
     }
 
-    //------------------------------------------------------------------------------------------
-    // ENUMERATION
-    //------------------------------------------------------------------------------------------
+    /*------------------------------------------------------------------------------------------
+     ENUMERATION
+    ------------------------------------------------------------------------------------------*/
 
     /**
      * Stores a new enumeration <br>
@@ -195,23 +198,9 @@ public class DomainModel {
         return names;
     }
 
-    //------------------------------------------------------------------------------------------
-    // ALL
-    //------------------------------------------------------------------------------------------
-
-    /**
-     * Returns all the defined names, entities and enumerations (in alphabetical order)
-     *
-     * @return
-     */
-    public final List<String> getAllNames() {
-        //List<String> names = new LinkedList<String>( enumerations.keySet() ) ;
-//		
-//		Collections.sort(names);
-//		return names ;
-        // TODO
-        throw new RuntimeException("NOT IMPLEMENTED");
-    }
+    /*------------------------------------------------------------------------------------------
+     ALL
+    ------------------------------------------------------------------------------------------*/
 
     /**
      * Put all the fields of the entity into an entity from the list of the fields of the model which has the same name
@@ -224,8 +213,7 @@ public class DomainModel {
 
     @Override
     public String toString() {
-        return "DomainModel [modelName=" + modelName + ", entities=" + entities
-                + ", enumerations=" + enumerations + "]";
+        return "DomainModel [modelName=" + modelName + ", entities=" + entities + ", enumerations=" + enumerations + "]";
     }
 
 

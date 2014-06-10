@@ -85,14 +85,24 @@ public class DomainEntityField {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         DomainEntityField field = (DomainEntityField) o;
 
-        if (!annotations.equals(field.annotations)) return false;
-        if (!name.equals(field.name)) return false;
-        if (!type.equals(field.type)) return false;
+        if (!annotations.equals(field.annotations)) {
+            return false;
+        }
+        if (!name.equals(field.name)) {
+            return false;
+        }
+        if (!type.equals(field.type)) {
+            return false;
+        }
 
         return true;
     }
