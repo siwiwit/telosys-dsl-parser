@@ -23,6 +23,12 @@ public class ModelParserTest {
 
 	@Test
 	public void testParseModelWithAndEntity() throws Exception {
+
+		File folderBis = new File(
+				"src/test/resources/model_test/valid");
+		for(String file : folderBis.list()) {
+			System.out.println(file);
+		}
 		File folder = new File(
 				"src/test/resources/model_test/valid/model_WithAnEntity");
 		DomainModelParser parser = new DomainModelParser();
