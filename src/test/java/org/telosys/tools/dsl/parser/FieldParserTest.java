@@ -123,5 +123,23 @@ public class FieldParserTest {
         fieldParser.parseField(fieldInfo);
     }
 
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldWithUnknownEnum() {
+        String fieldInfo = "id:#Gender";
 
+        DomainModel model = new DomainModel("model");
+
+        FieldParser fieldParser = new FieldParser(model);
+        fieldParser.parseField(fieldInfo);
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldWithUnknown() {
+        String fieldInfo = "id:Country";
+
+        DomainModel model = new DomainModel("model");
+
+        FieldParser fieldParser = new FieldParser(model);
+        fieldParser.parseField(fieldInfo);
+    }
 }
