@@ -9,10 +9,13 @@ public class DomainEntityField {
     private final String name;
     private final DomainType type;
     private final int cardinality;
-    public static final int THIRTY_ONE = 31; // TODO rename
+    public static final int THIRTY_ONE = 31;
 
-    // TODO : Hashtable (each annotation is unique for a field)
-    //  private List<DomainEntityFieldAnnotation> annotationList; // TODO : final
+    /*
+      TODO : Hashtable (each annotation is unique for a field)
+      private List<DomainEntityFieldAnnotation> annotationList;
+      TODO : final
+      */
 
     private final Map<String, DomainEntityFieldAnnotation> annotations = new Hashtable<String, DomainEntityFieldAnnotation>();
 
@@ -20,14 +23,14 @@ public class DomainEntityField {
         this.name = name;
         this.type = type;
         this.cardinality = 1;
-//        this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        /* this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();*/
     }
 
     public DomainEntityField(String name, DomainType type, int cardinality) {
         this.name = name;
         this.type = type;
         this.cardinality = cardinality;
-        //    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
+        /*    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();*/
     }
 
     public void setAnnotationList(List<DomainEntityFieldAnnotation> annotationList) {

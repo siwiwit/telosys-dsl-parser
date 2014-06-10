@@ -40,7 +40,7 @@ public class FieldEnumParser<T> {
 
         int end = fieldInfo.length();
 
-        String value = fieldInfo.substring(startDescription++, end);
+        String value = fieldInfo.substring(++startDescription, end);
         if (value.length() == 0) {
             String textError = "The value of the field is missing";
             logger.error(textError);
@@ -59,7 +59,6 @@ public class FieldEnumParser<T> {
     }
 
     public Object getValue(String value, TypeEnum type) {
-
         switch (type) {
             case INTEGER:
                 try {

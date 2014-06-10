@@ -72,14 +72,16 @@ public class FieldParser {
         String typeName = fieldInfo.substring(startDescription + 1, end);
         int cardinality = 1;
 
+        // if multiple cardinality is allowed
         if (isTypeArray(typeName)) {
             int startArray = typeName.lastIndexOf('[');
             int endArray = typeName.lastIndexOf(']');
+            // * cardinality
             if (endArray - startArray == 1) {
                 cardinality = -1;
                 typeName = typeName.substring(0, startArray);
+            // specific cardinality
             } else {
-
                 String figure = typeName.substring(startArray + 1, endArray);
                 try {
                     cardinality = Integer.parseInt(figure);
@@ -100,6 +102,7 @@ public class FieldParser {
         }
 
         DomainType type;
+        // enum
         if (this.isTypeEnum(typeName)) {
             if (!this.model.getEnumerationNames().contains(typeName.substring(1))) {
                 String errorMessage = "The enumeration " + typeName.substring(1) + " does not exist";
@@ -108,8 +111,11 @@ public class FieldParser {
             } else {
                 type = this.model.getEnumeration(typeName.substring(1));
             }
+        // other simple type
         } else if (DomainNeutralTypes.exists(typeName)) {
             type = DomainNeutralTypes.getType(typeName);
+
+        // from other entity
         } else {
             if (!model.getEntityNames().contains(typeName)) {
                 String errorMessage = "The type of the field is incorrect";
@@ -120,6 +126,7 @@ public class FieldParser {
             }
         }
 
+        // create with previous informations
         DomainEntityField field = new DomainEntityField(name, type, cardinality);
         List<DomainEntityFieldAnnotation> annotations = this.annotationParser.parseAnnotations(fieldInfo);
         field.setAnnotationList(annotations);

@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class StringUtils {
+public final class StringUtils {
 
-    private  StringUtils(){}
     /**
      * Read content from a file
      *

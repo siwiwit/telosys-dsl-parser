@@ -75,7 +75,6 @@ public class EnumerationParser {
         // get index of first and last open brackets
         int bodyStart = flattenContent.indexOf('{');
         int bodyEnd = flattenContent.lastIndexOf('}');
-
         checkStructure(bodyStart, bodyEnd);
 
         // body required
@@ -85,10 +84,13 @@ public class EnumerationParser {
         String enumName = flattenContent.substring(0, bodyStart).trim();
         TypeEnum type = TypeEnum.INTEGER;
 
+        // read field infos
         String[] split = enumName.split(":");
         if (split.length == 2) {
             enumName = split[0];
             String enumType = split[1];
+
+            // simple enum types
             if (enumType.equals("integer")) {
                 type = TypeEnum.INTEGER;
             } else if (enumType.equals("string")) {
@@ -96,9 +98,9 @@ public class EnumerationParser {
             } else if (enumType.equals("decimal")) {
                 type = TypeEnum.DECIMAL;
             } else {
-                throw new EntityParserException(
-                        "The type of the Enum have to be int, string or decimal and nothing else");
+                throw new EntityParserException("The type of the Enum have to be int, string or decimal and nothing else");
             }
+       // autoincrement enum type
         } else if (split.length == 1) { // If no type is defined it's an integer
             type = TypeEnum.INTEGER;
         } else {
@@ -108,6 +110,7 @@ public class EnumerationParser {
         if (!enumName.equals(filename)) {
             throw new EntityParserException("The name of the file does not match with the enum name");
         }
+
         // the first later of an entity must be upper case
         if (!Character.isUpperCase(flattenContent.charAt(0))) {
             throw new EntityParserException("The name of the entity must start with an upper case");
@@ -133,13 +136,12 @@ public class EnumerationParser {
         String[] fieldEnumList = body.split(",");
         // at least 1 field is required
         if (fieldEnumList.length < 1) {
-            throw new EntityParserException(
-                    "This enum must contains at least one field");
+            throw new EntityParserException("This enum must contains at least one field");
         }
 
         // extract fields
         if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
-            BigInteger previousValue = new BigInteger("1");
+            BigInteger previousValue = new BigInteger("0");
             for (String field : fieldEnumList) {
                 enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
                 previousValue = previousValue.add(new BigInteger("1"));

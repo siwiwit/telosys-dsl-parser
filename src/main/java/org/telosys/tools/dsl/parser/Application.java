@@ -9,8 +9,7 @@ import java.io.File;
  * @version 1.0
  * @date 2014-05-22
  */
-public class Application {
-    private  Application(){}
+public final class Application {
     /**
      * Call parser from cli
      *

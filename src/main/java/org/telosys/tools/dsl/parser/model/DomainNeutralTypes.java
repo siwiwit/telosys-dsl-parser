@@ -22,20 +22,6 @@ public class DomainNeutralTypes {
 
     private static final Map<String, DomainNeutralType> NEUTRAL_TYPES = new Hashtable<String, DomainNeutralType>();
 
-    //	private final static void define(DomainNeutralType type) {
-//		neutralTypes.put(type.getName(), type);
-//	}
-//	static {
-//		define(new DomainNeutralType("string"));
-//		define(new DomainNeutralType("integer"));
-//		define(new DomainNeutralType("decimal"));
-//		define(new DomainNeutralType("boolean"));
-//		define(new DomainNeutralType("date"));
-//		define(new DomainNeutralType("time"));
-//		define(new DomainNeutralType("timestamp"));
-//		define(new DomainNeutralType("blob"));
-//		define(new DomainNeutralType("clob"));
-//	}
     static {
         for (String name : NAMES) {
             DomainNeutralType type = new DomainNeutralType(name);
