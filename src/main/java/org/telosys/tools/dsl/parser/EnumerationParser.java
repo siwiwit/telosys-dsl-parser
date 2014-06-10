@@ -139,10 +139,10 @@ public class EnumerationParser {
 
         // extract fields
         if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
-            BigInteger previousValue = BigInteger.ONE   ;
+            BigInteger previousValue = new BigInteger("1");
             for (String field : fieldEnumList) {
                 enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
-                previousValue = previousValue.add(BigInteger.ONE);
+                previousValue = previousValue.add(new BigInteger("1"));
             }
         } else {
             for (String field : fieldEnumList) {
