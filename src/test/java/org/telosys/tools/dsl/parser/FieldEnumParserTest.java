@@ -74,4 +74,32 @@ public class FieldEnumParserTest {
         parser.parseField(testInvalid, TypeEnum.STRING);
 	}
 
+    @Test
+    public void testIsItemWithoutValue() {
+        FieldEnumParser parser = new FieldEnumParser();
+
+        String testWithValue = "TEST=3";
+        Assert.assertFalse(parser.isItemWithoutValue(testWithValue));
+
+        String testWithoutValue = "TEST";
+        Assert.assertTrue(parser.isItemWithoutValue(testWithoutValue));
+    }
+
+    @Test
+    public void testParseFieldIncrementation() {
+        String testWithoutValue = "TEST";
+
+        DomainEnumerationItem<BigInteger> compareTo = new DomainEnumerationItem<BigInteger>("TEST", new BigInteger("2"));
+
+        FieldEnumParser parser = new FieldEnumParser();
+        Assert.assertEquals(compareTo, parser.parseField(testWithoutValue, new BigInteger("1")));
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseFieldIncrementationInvalid() {
+        String testWithoutValue = "TEST=2";
+
+        FieldEnumParser parser = new FieldEnumParser();
+        parser.parseField(testWithoutValue, new BigInteger("1"));
+    }
 }

@@ -146,8 +146,7 @@ public class EnumerationParser {
         if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
             BigInteger previousValue = new BigInteger("0");
             for (String field : fieldEnumList) {
-                enumeration.addItem(fieldEnumParser.parseField(field, type,
-                        previousValue));
+                enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
                 previousValue = previousValue.add(new BigInteger("1"));
             }
         } else {

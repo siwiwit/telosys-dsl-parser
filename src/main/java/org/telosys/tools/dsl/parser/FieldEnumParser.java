@@ -12,7 +12,7 @@ import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
  */
 public class FieldEnumParser<T> {
 
-	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type, BigInteger value) {
+	DomainEnumerationItem<?> parseField(String fieldInfo, BigInteger value) {
 		if(!isItemWithoutValue(fieldInfo)){
 			throw new EntityParserException("this item has to be without value : "+ fieldInfo);
 		}
