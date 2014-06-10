@@ -148,4 +148,54 @@ public class EnumerationParserTest {
 
 		Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
 	}
+
+    @Test
+    public void testParseIntegerWithoutValue() {
+        String test = "EnumTest:integer{ONE,TWO,THREE}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        DomainEnumeration<BigInteger> toCompare = new DomainEnumerationForInteger("EnumTest");
+        toCompare.addItem(new DomainEnumerationItem<BigInteger>("ONE", new BigInteger("1")));
+        toCompare.addItem(new DomainEnumerationItem<BigInteger>("TWO", new BigInteger("2")));
+        toCompare.addItem(new DomainEnumerationItem<BigInteger>("THREE", new BigInteger("3")));
+
+        Assert.assertEquals(toCompare, parser.parseFlattenContent("EnumTest"));
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseIntegerWithoutValueInvalid() {
+        String test = "EnumTest:integer{ONE,TWO=2,THREE}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        parser.parseFlattenContent("EnumTest");
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseInvalidHead() {
+        String test = "EnumTest:integer:false{ONE,TWO=2,THREE}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        parser.parseFlattenContent("EnumTest");
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testNameWithIllegalCharacters() {
+        String test = "EnumTest#_é:integer{ONE=1}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        parser.parseFlattenContent("EnumTest#_é");
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testDifferentName() {
+        String test = "EnumTest:integer{ONE=1}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        parser.parseFlattenContent("EnumTestDifferent");
+    }
 }
