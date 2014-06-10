@@ -1,16 +1,17 @@
 package org.telosys.tools.dsl.parser.utils;
 
+import org.telosys.tools.dsl.EntityParserException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.telosys.tools.dsl.parser.EntityParserException;
-
 public class StringUtils {
 
     /**
      * Read content from a file
+     *
      * @param inputStream
      * @return The content
      */
@@ -20,8 +21,8 @@ public class StringUtils {
         StringBuilder ret = new StringBuilder();
 
         try {
-        	while ((line = bufferedReader.readLine()) != null) {
-                ret.append(line+ "\n");
+            while ((line = bufferedReader.readLine()) != null) {
+                ret.append(line + "\n");
             }
         } catch (IOException e) {
             throw new EntityParserException("Error while reading the stream : " + e.getMessage());
@@ -32,7 +33,7 @@ public class StringUtils {
                 throw new EntityParserException("Error while closing the stream : " + e.getMessage());
             }
         }
-      
+
         return ret.toString();
     }
 }
