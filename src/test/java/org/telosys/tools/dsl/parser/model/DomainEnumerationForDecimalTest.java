@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.EntityParserException;
+import org.telosys.tools.dsl.EntityParserException;
 
 public class DomainEnumerationForDecimalTest {
 

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.EntityParserException;
+import org.telosys.tools.dsl.EntityParserException;
 
 public class DomainEntityTest {
 

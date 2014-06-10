@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.telosys.tools.dsl.parser.EntityParserException;
+import org.telosys.tools.dsl.EntityParserException;
 
 public class DomainEnumerationForStringTest {
 

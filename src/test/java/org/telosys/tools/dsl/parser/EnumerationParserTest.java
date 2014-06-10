@@ -5,6 +5,7 @@ import java.math.BigInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForDecimal;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationForInteger;
