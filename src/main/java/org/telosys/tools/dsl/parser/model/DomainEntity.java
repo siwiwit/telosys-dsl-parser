@@ -55,9 +55,6 @@ public class DomainEntity extends DomainType {
         DomainEntity otherEntity = (DomainEntity)other;
         if(!otherEntity.getName().equals(this.getName())) return false;
         if(otherEntity.fields.size() != fields.size()) return false;
-//        for (int i = 0; i < fields.size(); i++) {
-//			if(!otherEntity.getFields().get(i).equals(getFields().get(i))) return false;
-//		}
         if(!otherEntity.fields.equals(fields)) return false;
     	return true;
     }

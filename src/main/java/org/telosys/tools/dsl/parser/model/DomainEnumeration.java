@@ -17,20 +17,13 @@ public abstract class DomainEnumeration<T> extends DomainType {
 	public enum TypeEnum {
 		INTEGER, STRING, DECIMAL
 	};
-//    private final Class<?>  itemClass;
     private final Map<String,DomainEnumerationItem<T>> items;
 
-//    public DomainEnumeration(String name, Class<?> itemClass) {
     public DomainEnumeration(String name) {
     	super(name, DomainTypeNature.ENUMERATION);
-//    	this.itemClass = itemClass ;
         this.items = new Hashtable<String,DomainEnumerationItem<T>>();
     }
 
-//    protected Class<?> getType() {
-//    	return itemClass ;
-//    }
-    
     public int getNumberOfItems() {
     	return items.size() ;
     }

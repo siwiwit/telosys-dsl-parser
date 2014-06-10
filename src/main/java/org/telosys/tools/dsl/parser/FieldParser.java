@@ -94,6 +94,7 @@ public class FieldParser {
             }
         }
 
+        // the type is required
         if (typeName.length() == 0) {
             String errorMessage = "The type of the field is missing";
             this.logger.error(errorMessage);
@@ -102,7 +103,6 @@ public class FieldParser {
 
         DomainType type;
         if (this.isTypeEnum(typeName)) {
-        	
             if (!this.model.getEnumerationNames().contains(typeName.substring(1))) {
                 String errorMessage = "The enumeration " + typeName.substring(1) + " does not exist";
                 this.logger.error(errorMessage);

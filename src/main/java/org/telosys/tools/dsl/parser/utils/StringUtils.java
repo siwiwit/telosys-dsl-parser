@@ -10,8 +10,9 @@ import org.telosys.tools.dsl.parser.EntityParserException;
 public class StringUtils {
 
     /**
+     * Read content from a file
      * @param inputStream
-     * @return
+     * @return The content
      */
     public static String readStream(InputStream inputStream) {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

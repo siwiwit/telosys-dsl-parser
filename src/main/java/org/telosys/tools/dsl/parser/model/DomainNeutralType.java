@@ -9,8 +9,7 @@ public class DomainNeutralType extends DomainType {
 
 	@Override
 	public String toString() {
-		return "DomainNeutralType [getName()=" + getName() + ", getNature()="
-				+ getNature() +  "]";
+		return "DomainNeutralType [getName()=" + getName() + ", getNature()="+ getNature() +  "]";
 	}
 
     

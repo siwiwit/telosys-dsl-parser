@@ -126,4 +126,5 @@ public class AnnotationParser {
         this.logger.error(errorMessage);
         throw new EntityParserException(errorMessage);
     }
+
 }
