@@ -13,11 +13,17 @@ import org.telosys.tools.dsl.parser.model.DomainType;
 /**
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
  * @version 1.0
- * @date 2014-05-13
  */
 public class FieldParser {
+
+    /**
+     * Single parser for all annotations
+     */
     private AnnotationParser annotationParser;
 
+    /**
+     * Logger for tracing all events
+     */
     private Logger logger;
     
     /**
@@ -25,6 +31,10 @@ public class FieldParser {
      */
 	private DomainModel model;
 
+    /**
+     * Constructor with context as a DomainModel
+     * @param model Context of the current field to parse
+     */
     public FieldParser(DomainModel model) {
         this.annotationParser = new AnnotationParser();
         this.logger = LoggerFactory.getLogger(FieldParser.class);
@@ -32,12 +42,15 @@ public class FieldParser {
     }
 
     /**
-     * @param fieldInfo
-     * @return
+     * Parse a single field with its own informations
+     * @param fieldInfo String
+     * @return The parsed field
      */
     DomainEntityField parseField(String fieldInfo) {
         int startDescription = fieldInfo.indexOf(":");
         String name = fieldInfo.substring(0, startDescription);
+
+        // description and field is required
         if (!name.matches("^[\\w]*$")) {
             String errorMessage = "The name of the fields must not contains special char " + name;
             this.logger.error(errorMessage);
@@ -49,6 +62,7 @@ public class FieldParser {
             throw new EntityParserException(errorMessage);
         }
 
+        // find end of descritpion
         int end;
         if (fieldInfo.contains("{")) {
             end = fieldInfo.indexOf("{");
@@ -57,7 +71,6 @@ public class FieldParser {
         }
 
         String typeName = fieldInfo.substring(startDescription+1, end);
-
         int cardinality = 1 ;
 
         if (isTypeArray(typeName)){
@@ -116,10 +129,20 @@ public class FieldParser {
         return field;
     }
 
+    /**
+     * Check if the given param is an enum with the specific char
+     * @param type The type of the field
+     * @return bool - true if it's an enum
+     */
     private boolean isTypeEnum(String type) {
         return type.startsWith("#");
     }
 
+    /**
+     * Check if the given param is an array of oject
+     * @param type The type of the field
+     * @return bool - true if it's an array
+     */
     private boolean isTypeArray(String type) {
         return type.contains("[") && type.contains("]");
     }

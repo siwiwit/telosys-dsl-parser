@@ -1,16 +1,14 @@
 package org.telosys.tools.dsl.parser;
 
+import org.telosys.tools.dsl.parser.model.DomainEntity;
+import org.telosys.tools.dsl.parser.model.DomainModel;
+import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
-import org.telosys.tools.dsl.parser.model.DomainEntity;
-import org.telosys.tools.dsl.parser.model.DomainModel;
 
 public class DomainModelParser {
 
@@ -51,8 +49,8 @@ public class DomainModelParser {
 	}
 	
 	private final DomainModel parseModelFile(File file) {
-		
-		Properties p = loadProperties(file) ;
+
+        TelosysDSLProperties p = TelosysDSLProperties.getProperties();
 		String modelName = p.getProperty("name") ;
 		if ( modelName == null || modelName.trim().length() == 0 ) {
 			// use the file name as default name
@@ -84,29 +82,13 @@ public class DomainModelParser {
         }
         return model;
 	}
-	
-	private Properties loadProperties( File propFile ) 
-	{
-		Properties props = new Properties();
-		FileInputStream fis = null ;
-		try {
-			fis = new FileInputStream(propFile);
-			props.load(fis);
-		} catch (IOException ioe) {
-			throw new EntityParserException("Cannot load properties from file " + propFile );
-		} finally {
-			try {
-				if ( fis != null ) {
-					fis.close();
-				}
-			} catch (IOException e) {
-				// NOTHING TO DO
-			}
-		}
-		return props;
-	}
-	
 
+
+    /**
+     * Get all files name and their associate class from a foledr
+     * @param folder
+     * @return
+     */
     private Map<String, List<String>>  getMapFiles(File folder) {
     	HashMap<String, List<String>> files = new HashMap<String, List<String>>();
     	files.put(DOT_ENTITY, new ArrayList<String>());

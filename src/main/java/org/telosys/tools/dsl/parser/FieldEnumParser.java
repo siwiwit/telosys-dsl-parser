@@ -6,6 +6,10 @@ import java.math.BigInteger;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration.TypeEnum;
 import org.telosys.tools.dsl.parser.model.DomainEnumerationItem;
 
+/**
+ *
+ * @param <T>
+ */
 public class FieldEnumParser<T> {
 
 	DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type, BigInteger value) {
@@ -52,8 +56,8 @@ public class FieldEnumParser<T> {
 		switch (type) {
 		case INTEGER:
 			try {
-				BigInteger integer = new BigInteger(value);
-				return integer;
+				return new BigInteger(value);
+
 			} catch (NumberFormatException e) {
 				throw new EntityParserException("the value : " + value
 						+ " must be a Big Integer");
@@ -61,8 +65,7 @@ public class FieldEnumParser<T> {
 
 		case DECIMAL:
 			try {
-				BigDecimal decimal = new BigDecimal(value);
-				return decimal;
+				return new BigDecimal(value);
 			} catch (NumberFormatException e) {
 				throw new EntityParserException("the value : " + value
 						+ " must be a Big Decimal");

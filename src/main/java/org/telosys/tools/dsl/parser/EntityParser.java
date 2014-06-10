@@ -20,7 +20,6 @@ import org.telosys.tools.dsl.parser.utils.TelosysDSLProperties;
  *
  * @author Jonathan Goncalves, Mathieu Herbert, Thomas Legendre
  * @version 1.0
- * @date 2014-05-13
  */
 public class EntityParser {
 
