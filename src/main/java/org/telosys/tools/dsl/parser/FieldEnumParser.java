@@ -41,7 +41,9 @@ public class FieldEnumParser<T> {
 
 		String value = fieldInfo.substring(startDescription + 1, end);
 		if (value.length() == 0) {
-			throw new EntityParserException("The value of the field is missing");
+			String textError  = "The value of the field is missing";
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		}
 
 		DomainEnumerationItem<?> field = null;
@@ -66,16 +68,20 @@ public class FieldEnumParser<T> {
 				return new BigInteger(value);
 
 			} catch (NumberFormatException e) {
-				throw new EntityParserException("the value : " + value
-						+ " must be a Big Integer");
+				String textError  = "the value : " + value
+						+ " must be a Big Integer";
+				logger.error(textError);
+				throw new EntityParserException(textError);
 			}
 
 		case DECIMAL:
 			try {
 				return new BigDecimal(value);
 			} catch (NumberFormatException e) {
-				throw new EntityParserException("the value : " + value
-						+ " must be a Big Decimal");
+				String textError  = "the value : " + value
+						+ " must be a Big Decimal";
+				logger.error(textError);
+				throw new EntityParserException(textError);
 			}
 
 		case STRING:
@@ -84,8 +90,10 @@ public class FieldEnumParser<T> {
 					&& value.charAt(value.length() - 1) == '"') {
 				return value.substring(1, value.length() - 1);
 			} else {
-				throw new EntityParserException("the value : " + value
-						+ " must be a String");
+				String textError  = "the value : " + value
+						+ " must be a String";
+				logger.error(textError);
+				throw new EntityParserException(textError);
 			}
 
 		}
@@ -94,12 +102,17 @@ public class FieldEnumParser<T> {
 	}
 	
 	private void checkName(String name) {
-		if (!name.matches("^[A-Z]*$"))
+		if (!name.matches("^[A-Z]*$")) {
+			String textError  = "The name of the fields must contains only uppercase "
+					+ name;
+			logger.error(textError);
 			throw new EntityParserException(
-					"The name of the fields must contains only uppercase "
-							+ name);
+					textError);
+		}
 		if (name.length() == 0) {
-			throw new EntityParserException("The name of the field is missing");
+			String textError  = "The name of the field is missing";
+			logger.error(textError);
+			throw new EntityParserException(textError);
 		}
 	}
 	 
