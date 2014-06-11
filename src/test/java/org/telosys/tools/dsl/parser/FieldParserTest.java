@@ -143,4 +143,24 @@ public class FieldParserTest {
         FieldParser fieldParser = new FieldParser(model);
         fieldParser.parseField(fieldInfo);
     }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseWithWrongTypeSeparator() {
+        String fieldInfo = "id=integer";
+
+        DomainModel model = new DomainModel("model");
+
+        FieldParser fieldParser = new FieldParser(model);
+        fieldParser.parseField(fieldInfo);
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseWithoutTypeSeparator() {
+        String fieldInfo = "idinteger";
+
+        DomainModel model = new DomainModel("model");
+
+        FieldParser fieldParser = new FieldParser(model);
+        fieldParser.parseField(fieldInfo);
+    }
 }
