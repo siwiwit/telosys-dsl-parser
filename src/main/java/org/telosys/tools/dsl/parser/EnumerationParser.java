@@ -107,17 +107,22 @@ public class EnumerationParser {
             throw new EntityParserException("There is something wrong with the head of the enum");
         }
 
+        if (enumName.indexOf(" ") != -1) {
+            throw new EntityParserException("The name must not contains whitespace : '" + enumName + "'");
+        }
+
+        if (!Character.isUpperCase(flattenContent.charAt(0))) {
+            throw new EntityParserException("The enumeration name must start with an upper case");
+        }
+        
+        if (!enumName.matches("^[A-Z][\\w]*$")) {
+            throw new EntityParserException("The name must not contains special characters : '" + enumName + "'");
+        }
+
         if (!enumName.equals(filename)) {
-            throw new EntityParserException("The name of the file does not match with the enum name");
-        } 
-        // the first later of an entity must be upper case
-        else if (!Character.isUpperCase(flattenContent.charAt(0))) {
-            throw new EntityParserException("The name of the entity must start with an upper case");
+            throw new EntityParserException("The file name '"+filename+"' does not match with the enum name '"+enumName+"'");
         }
-        // only simple chars are allowed
-        else if (!enumName.matches("^[A-Z][\\w]*$")) {
-            throw new EntityParserException("The name must not contains special char" + enumName);
-        }
+    	
         // create object
         DomainEnumeration<?> enumeration = null;
         if (type == TypeEnum.INTEGER) {

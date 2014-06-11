@@ -17,6 +17,19 @@ public class FieldEnumParserTest {
 	}
 
 	@Test
+	public void testParseInvalidSign() {
+        String testInvalid = "TEST:\"string1\"";
+        FieldEnumParser parser = new FieldEnumParser();
+        Exception exception = null;
+        try {
+        	parser.parseField(testInvalid, TypeEnum.STRING);
+        } catch(Exception e) {
+        	exception = e;
+        }
+        Assert.assertEquals("The enumeration value must be followed by an equal sign '=' : "+testInvalid, exception.getMessage());
+	}
+	
+	@Test
 	public void testParseValidString() {
         String testValid = "TEST=\"string1\"";
         FieldEnumParser parser = new FieldEnumParser();

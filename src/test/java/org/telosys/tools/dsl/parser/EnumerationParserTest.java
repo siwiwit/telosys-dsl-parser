@@ -188,16 +188,40 @@ public class EnumerationParserTest {
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(test);
 
-        parser.parseFlattenContent("EnumTest#_é");
+        try {
+	        parser.parseFlattenContent("EnumTest#_é");
+	    } catch(EntityParserException e) {
+	    	Assert.assertEquals("The name must not contains special characters : 'EnumTest#_é'", e.getMessage());
+	    	throw e;
+	    }
     }
 
     @Test(expected = EntityParserException.class)
-    public void testDifferentName() {
+    public void testNameWithWhitespace() throws EntityParserException {
+        String test = "Enum Test:integer{ONE=1}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+        
+        try {
+        	parser.parseFlattenContent("Enum Test");
+        } catch(EntityParserException e) {
+        	Assert.assertEquals("The name must not contains whitespace : 'Enum Test'", e.getMessage());
+        	throw e;
+        }
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testDifferentName() throws EntityParserException {
         String test = "EnumTest:integer{ONE=1}";
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(test);
-
-        parser.parseFlattenContent("EnumTestDifferent");
+        
+        try {
+	        parser.parseFlattenContent("EnumTestDifferent");
+	    } catch(EntityParserException e) {
+	    	Assert.assertEquals("The file name 'EnumTestDifferent' does not match with the enum name 'EnumTest'", e.getMessage());
+	    	throw e;
+	    }
     }
 
     @Test(expected = EntityParserException.class)
@@ -206,6 +230,11 @@ public class EnumerationParserTest {
         EnumerationParser parser = new EnumerationParser();
         parser.setFlattenContent(test);
 
-        parser.parseFlattenContent("enumTest");
+        try {
+        	parser.parseFlattenContent("enumTest");
+        } catch(EntityParserException e) {
+	    	Assert.assertEquals("The enumeration name must start with an upper case", e.getMessage());
+	    	throw e;
+	    }
     }
 }

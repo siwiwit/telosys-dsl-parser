@@ -29,8 +29,8 @@ public class FieldEnumParser<T> {
      * @return
      */
     DomainEnumerationItem<?> parseField(String fieldInfo, TypeEnum type) {
-        if (!fieldInfo.contains("=")) {
-            String textError = "The fields does not contains value " + fieldInfo;
+    	if (!fieldInfo.contains("=")) {
+            String textError = "The enumeration value must be followed by an equal sign '=' : " + fieldInfo;
             logger.error(textError);
             throw new EntityParserException(textError);
         }
