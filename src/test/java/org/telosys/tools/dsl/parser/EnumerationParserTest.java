@@ -199,4 +199,13 @@ public class EnumerationParserTest {
 
         parser.parseFlattenContent("EnumTestDifferent");
     }
+
+    @Test(expected = EntityParserException.class)
+    public void testWithoutUcFirst() {
+        String test = "enumTest:integer{ONE=1}";
+        EnumerationParser parser = new EnumerationParser();
+        parser.setFlattenContent(test);
+
+        parser.parseFlattenContent("enumTest");
+    }
 }

@@ -74,7 +74,7 @@ public class EntityParserTest {
 
         EntityParser parser = new EntityParser(new DomainModel("model"));
         parser.setFlattenContent(testEntityNameIllegalCharacters);
-        parser.parseFlattenContent("Entity");
+        parser.parseFlattenContent("E#n_tité");
     }
 
     @Test(expected = EntityParserException.class)
@@ -169,5 +169,14 @@ public class EntityParserTest {
         toCompare.addField(fieldId);
         Assert.assertEquals(toCompare, entity);
         
+    }
+
+    @Test(expected = EntityParserException.class)
+    public void testParseWithoutUcFirst() {
+        String testMissingLastBracket = "entity{id:integer{@Id};};";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testMissingLastBracket);
+        parser.parseFlattenContent("entity");
     }
 }

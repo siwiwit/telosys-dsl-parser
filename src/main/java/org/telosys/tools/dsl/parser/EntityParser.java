@@ -168,12 +168,6 @@ public class EntityParser {
         }
 
         String[] fieldList = body.split(";");
-        // at least 1 field is required
-        if (fieldList.length < 1) {
-            String errorMessage = "This entity must contains at least one field";
-            this.logger.error(errorMessage);
-            throw new EntityParserException(errorMessage);
-        }
 
         // extract fields
         for (String field : fieldList) {
