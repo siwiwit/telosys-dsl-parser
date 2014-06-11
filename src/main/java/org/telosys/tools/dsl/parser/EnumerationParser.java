@@ -115,7 +115,7 @@ public class EnumerationParser {
             throw new EntityParserException("The name of the entity must start with an upper case");
         }
         // only simple chars are allowed
-        else if (!enumName.matches("^[A-Z][\\w|\\s]*$")) {
+        else if (!enumName.matches("^[A-Z][\\w]*$")) {
             throw new EntityParserException("The name must not contains special char" + enumName);
         }
         // create object

@@ -1,6 +1,6 @@
 Employee {
 	id :                                       integer {@Id}; // the id
-	first Name : string ;
-	birth Date : date ;
+	firstName : string ;
+	birthDate : date ;
 	country : #Pays;
 }

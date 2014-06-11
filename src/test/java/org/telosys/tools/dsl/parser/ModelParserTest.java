@@ -109,7 +109,7 @@ public class ModelParserTest {
 		DomainModel model = parser.parse(folder);
 		DomainModel modelToCompare = new DomainModel("ModelWithSpaces");
 		DomainEnumeration<String> enumeration = new DomainEnumerationForString("Pays");
-		enumeration.addItem(new DomainEnumerationItem<String>("F R", "Fra     nce"));
+		enumeration.addItem(new DomainEnumerationItem<String>("FR", "Fra     nce"));
 		enumeration.addItem(new DomainEnumerationItem<String>("EN", "Angleterre"));
 		enumeration.addItem(new DomainEnumerationItem<String>("ES", "Espagne    "));
 		
@@ -117,8 +117,8 @@ public class ModelParserTest {
 		DomainEntityField id = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
 		id.addAnnotation(new DomainEntityFieldAnnotation("Id"));
 		employee.addField(id);
-		employee.addField(new DomainEntityField("first Name", DomainNeutralTypes.getType("string")));
-		employee.addField(new DomainEntityField("birth Date", DomainNeutralTypes.getType("date")));
+		employee.addField(new DomainEntityField("firstName", DomainNeutralTypes.getType("string")));
+		employee.addField(new DomainEntityField("birthDate", DomainNeutralTypes.getType("date")));
 		DomainEntityField countryField = new DomainEntityField("country", enumeration );
 		employee.addField(countryField);
 		modelToCompare.addEntity(employee);

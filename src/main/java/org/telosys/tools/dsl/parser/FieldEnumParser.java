@@ -96,7 +96,7 @@ public class FieldEnumParser<T> {
     }
 
     private void checkName(String name) {
-        if (!name.matches("^[A-Z|\\s]*$")) {
+        if (!name.matches("^[A-Z]*$")) {
             String textError = "The name of the fields must contains only uppercase "
                     + name;
             logger.error(textError);
