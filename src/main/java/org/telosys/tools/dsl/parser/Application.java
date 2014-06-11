@@ -1,8 +1,11 @@
 package org.telosys.tools.dsl.parser;
 
-import org.telosys.tools.dsl.EntityParserException;
-
 import java.io.File;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.telosys.tools.dsl.EntityParserException;
+import org.telosys.tools.dsl.parser.model.DomainModel;
 
 /**
  * @author Jonhathan Goncalves, Mathieu Herbert, Thomas Legendre
@@ -10,6 +13,7 @@ import java.io.File;
  * @date 2014-05-22
  */
 public final class Application {
+	static Logger logger = LoggerFactory.getLogger(Application.class);
     /**
      * Call parser from cli
      *
@@ -24,9 +28,10 @@ public final class Application {
         if (args.length != 1) {
             throw new EntityParserException("A single parameter is required");
         }
-
+        logger.error("ok");
         // call parser tool
         DomainModelParser dm = new DomainModelParser();
-        dm.parse(new File(args[0]));
+        DomainModel model = dm.parse(new File(args[0]));
+        System.out.println(model);
     }
 }

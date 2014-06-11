@@ -16,7 +16,7 @@ public class DomainModelParser {
     private static final String DOT_MODEL = ".model";
     private static final String DOT_ENTITY = ".entity";
     private static final String DOT_ENUM = ".enum";
-    private Logger logger = LoggerFactory.getLogger(EntityParser.class);
+    private Logger logger = LoggerFactory.getLogger(DomainModelParser.class);
 
     /**
      * Parse the given model
