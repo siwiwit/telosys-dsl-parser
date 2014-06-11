@@ -1,8 +1,8 @@
 //the author entity
 Author {
     id : integer {@Id}; // the id
-    firstName : string ;
-    lastName : string;
-    birthDate : date ;
+    firstName : string {@NotNull};
+    lastName : string {@NotNull};
+    birthDate : date;
     country : #Country;
 }
