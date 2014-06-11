@@ -47,6 +47,11 @@ public class FieldParser {
      */
     DomainEntityField parseField(String fieldInfo) {
         int startDescription = fieldInfo.indexOf(':');
+        if (startDescription == -1) {
+            String errorMessage = "You must specify the type of the field. The separator between the name of the field and its type is ':'";
+            this.logger.error(errorMessage);
+            throw new EntityParserException(errorMessage);
+        }
         String name = fieldInfo.substring(0, startDescription);
 
         // description and field is required
