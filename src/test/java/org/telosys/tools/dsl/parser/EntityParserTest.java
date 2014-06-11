@@ -41,6 +41,21 @@ public class EntityParserTest {
         Assert.assertEquals(compareTo, flattenContent);
     }
 
+    @Test
+    public void testComputeFlattenWithSpaces() {
+        String formattedContent = "Employee {\n" +
+                "\tid : id {@te st}; // the id\n" +
+                "\tfirst Name : string ;\n" +
+                "\tbirthDate : da te ;\n" +
+                "}\n";
+
+        EntityParser parser = new EntityParser(formattedContent, new DomainModel("model"));
+        String flattenContent = parser.computeFlattenContent();
+
+        String compareTo = "Employee{id:id{@te st};first Name:string;birthDate:da te;}";
+        Assert.assertEquals(compareTo, flattenContent);
+    }
+
     @Test(expected = EntityParserException.class)
     public void testParseMissingBracket() {
         String testMissingBracket = "Entityid:integer;";
