@@ -78,6 +78,15 @@ public class EntityParserTest {
     }
 
     @Test(expected = EntityParserException.class)
+    public void testParseEntityWithWhitespace() {
+        String testEntityNameIllegalCharacters = "Ent ite{id:integer;}";
+
+        EntityParser parser = new EntityParser(new DomainModel("model"));
+        parser.setFlattenContent(testEntityNameIllegalCharacters);
+        parser.parseFlattenContent("Ent ite");
+    }
+
+    @Test(expected = EntityParserException.class)
     public void testParseFieldWithIllegalCharacters() {
         String testEntityFieldIllegalCharacters = "Entity{ié#_:integer;}";
 

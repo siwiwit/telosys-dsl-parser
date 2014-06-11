@@ -1,11 +1,12 @@
 package org.telosys.tools.dsl.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.telosys.tools.dsl.EntityParserException;
 import org.telosys.tools.dsl.parser.model.DomainEntity;
 import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainEntityFieldAnnotation;
@@ -190,4 +191,15 @@ public class ModelParserTest {
 		modelToCompare.addEnumeration(gender);
 		assertEquals(modelToCompare,model);
 	}
+	
+
+	@Test(expected=EntityParserException.class)
+	public void testParseModelWithTwoEnumAndTwoEntityWhitespaces() throws Exception {
+		File folder = new File("src/test/resources/model_test/valid/model_withTwoEnumAndTwoEntity_whitespaces/");
+		DomainModelParser parser = new DomainModelParser();
+		DomainModel model = parser.parse(folder);
+		DomainModel modelToCompare = new DomainModel("ModelWithTwoEnumAndTwoEntityWhitespaces");
+		
+	}
+
 }

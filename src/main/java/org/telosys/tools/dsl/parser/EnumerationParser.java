@@ -108,7 +108,7 @@ public class EnumerationParser {
         }
 
         if (enumName.indexOf(" ") != -1) {
-            throw new EntityParserException("The name must not contains whitespace : '" + enumName + "'");
+            throw new EntityParserException("The enumeration name must not contains whitespace : '" + enumName + "'");
         }
 
         if (!Character.isUpperCase(flattenContent.charAt(0))) {
