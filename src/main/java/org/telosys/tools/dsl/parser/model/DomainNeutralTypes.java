@@ -4,7 +4,9 @@ import org.telosys.tools.dsl.EntityParserException;
 
 import java.util.*;
 
-public class DomainNeutralTypes {
+public final class DomainNeutralTypes {
+
+    private DomainNeutralTypes(){}
 
     // Neutral type list of predefined names
     public static final String STRING = "string";

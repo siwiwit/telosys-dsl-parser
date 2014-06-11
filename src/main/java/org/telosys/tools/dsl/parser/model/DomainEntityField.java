@@ -20,17 +20,17 @@ public class DomainEntityField {
     private final Map<String, DomainEntityFieldAnnotation> annotations = new Hashtable<String, DomainEntityFieldAnnotation>();
 
     public DomainEntityField(String name, DomainType type) {
+        // this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
         this.name = name;
         this.type = type;
         this.cardinality = 1;
-        /* this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();*/
     }
 
     public DomainEntityField(String name, DomainType type, int cardinality) {
         this.name = name;
         this.type = type;
         this.cardinality = cardinality;
-        /*    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();*/
+        //    this.annotationList = new ArrayList<DomainEntityFieldAnnotation>();
     }
 
     public void setAnnotationList(List<DomainEntityFieldAnnotation> annotationList) {

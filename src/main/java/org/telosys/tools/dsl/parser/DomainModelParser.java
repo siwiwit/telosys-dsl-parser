@@ -27,8 +27,7 @@ public class DomainModelParser {
     public final DomainModel parse(File file) {
 
         if (!file.exists()) {
-            String textError = "Cannot parse model : file '"
-                    + file.toString() + "' doesn't exist";
+            String textError = "Cannot parse model : file '" + file.toString() + "' doesn't exist";
             logger.error(textError);
             throw new EntityParserException(textError);
         }
@@ -36,8 +35,7 @@ public class DomainModelParser {
             if (file.getName().endsWith(DOT_MODEL)) {
                 return parseModelFile(file);
             } else {
-                String textError = "Cannot parse model : file '"
-                        + file.toString() + "' is not a model";
+                String textError = "Cannot parse model : file '" + file.toString() + "' is not a model";
                 logger.error(textError);
                 throw new EntityParserException(textError);
             }
@@ -48,13 +46,11 @@ public class DomainModelParser {
                     return parseModelFile(f);
                 }
             }
-            String textError = "Cannot parse model : no model file in '" + file.toString()
-                    + "'";
+            String textError = "Cannot parse model : no model file in '" + file.toString() + "'";
             logger.error(textError);
             throw new EntityParserException(textError);
         } else {
-            String textError = "Cannot parse model : '"
-                    + file.toString() + "' is not a file or directory";
+            String textError = "Cannot parse model : '" + file.toString() + "' is not a file or directory";
             logger.error(textError);
             throw new EntityParserException(textError);
         }
@@ -84,8 +80,7 @@ public class DomainModelParser {
         List<String> entities = files.get(DOT_ENTITY);
         for (String entity : entities) {
             File entityFile = new File(entity);
-            model.addEntity(new DomainEntity(entityFile.getName().substring(0,
-                    entityFile.getName().lastIndexOf('.'))));
+            model.addEntity(new DomainEntity(entityFile.getName().substring(0,entityFile.getName().lastIndexOf('.'))));
         }
 
         EntityParser entityParser = new EntityParser(model);
@@ -103,10 +98,9 @@ public class DomainModelParser {
             fis = new FileInputStream(propFile);
             props.load(fis);
         } catch (IOException ioe) {
-            String textError = "Cannot load properties from file "
-                    + propFile;
+            String textError = "Cannot load properties from file "+ propFile;
             logger.error(textError);
-            throw new EntityParserException(textError);
+            throw new EntityParserException(textError + "\n Documentation : " +ioe);
         } finally {
 
             try {
@@ -127,7 +121,7 @@ public class DomainModelParser {
      * @return
      */
     private Map<String, List<String>> getMapFiles(File folder) {
-        HashMap<String, List<String>> files = new HashMap<String, List<String>>();
+        Map<String, List<String>> files = new HashMap<String, List<String>>();
         files.put(DOT_ENTITY, new ArrayList<String>());
         files.put(DOT_ENUM, new ArrayList<String>());
 

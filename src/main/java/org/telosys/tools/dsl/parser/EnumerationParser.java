@@ -55,7 +55,7 @@ public class EnumerationParser {
             InputStream io = new FileInputStream(file);
             return this.parse(io, file.getAbsolutePath());
         } catch (FileNotFoundException e) {
-            throw new EntityParserException("File Not found : " + file.getAbsolutePath());
+            throw new EntityParserException("File Not found : " + file.getAbsolutePath() + "\n Documentation : " + e);
         }
 
     }
@@ -100,7 +100,7 @@ public class EnumerationParser {
             } else {
                 throw new EntityParserException("The type of the Enum have to be int, string or decimal and nothing else");
             }
-       // autoincrement enum type
+            // autoincrement enum type
         } else if (split.length == 1) { // If no type is defined it's an integer
             type = TypeEnum.INTEGER;
         } else {

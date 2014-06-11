@@ -80,7 +80,7 @@ public class FieldParser {
             if (endArray - startArray == 1) {
                 cardinality = -1;
                 typeName = typeName.substring(0, startArray);
-            // specific cardinality
+                // specific cardinality
             } else {
                 String figure = typeName.substring(startArray + 1, endArray);
                 try {
@@ -89,7 +89,7 @@ public class FieldParser {
                 } catch (Exception e) {
                     String errorMessage = "The cardinality for " + typeName + " is not correct";
                     this.logger.error(errorMessage);
-                    throw new EntityParserException(errorMessage);
+                    throw new EntityParserException(errorMessage + "\n Documentation : " + e);
                 }
             }
         }
@@ -111,11 +111,11 @@ public class FieldParser {
             } else {
                 type = this.model.getEnumeration(typeName.substring(1));
             }
-        // other simple type
+            // other simple type
         } else if (DomainNeutralTypes.exists(typeName)) {
             type = DomainNeutralTypes.getType(typeName);
 
-        // from other entity
+            // from other entity
         } else {
             if (!model.getEntityNames().contains(typeName)) {
                 String errorMessage = "The type of the field is incorrect";

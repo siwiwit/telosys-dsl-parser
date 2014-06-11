@@ -83,9 +83,9 @@ public class DomainEntity extends DomainType {
      * @param intoCopy the destination
      */
     public void copyIn(DomainEntity intoCopy) {
-        Enumeration<DomainEntityField> e = ((Hashtable) fields).elements();
-        while (e.hasMoreElements()) {
-            intoCopy.addField(e.nextElement());
+        Collection<DomainEntityField> e = fields.values();
+        for (DomainEntityField entity : e) {
+            intoCopy.addField(entity);
         }
     }
 }

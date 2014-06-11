@@ -13,6 +13,8 @@ import org.telosys.tools.dsl.parser.model.DomainModel;
  * @date 2014-05-22
  */
 public final class Application {
+
+    private Application(){}
 	static Logger logger = LoggerFactory.getLogger(Application.class);
     /**
      * Call parser from cli
