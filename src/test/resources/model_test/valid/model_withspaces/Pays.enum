@@ -1,0 +1,5 @@
+Pays : string {
+	F R = "Fra     nce",
+	EN = "Angleterre",
+	ES = "Espagne    "
+}

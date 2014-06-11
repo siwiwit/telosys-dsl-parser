@@ -102,7 +102,29 @@ public class ModelParserTest {
 		assertEquals(modelToCompare,model);
 	}
 	
-
+	@Test
+	public void testParseModelWithSpaces() throws Exception {
+		File folder = new File("src/test/resources/model_test/valid/model_withspaces/");
+		DomainModelParser parser = new DomainModelParser();
+		DomainModel model = parser.parse(folder);
+		DomainModel modelToCompare = new DomainModel("ModelWithSpaces");
+		DomainEnumeration<String> enumeration = new DomainEnumerationForString("Pays");
+		enumeration.addItem(new DomainEnumerationItem<String>("F R", "Fra     nce"));
+		enumeration.addItem(new DomainEnumerationItem<String>("EN", "Angleterre"));
+		enumeration.addItem(new DomainEnumerationItem<String>("ES", "Espagne    "));
+		
+		DomainEntity employee = new DomainEntity("Employee");
+		DomainEntityField id = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
+		id.addAnnotation(new DomainEntityFieldAnnotation("Id"));
+		employee.addField(id);
+		employee.addField(new DomainEntityField("first Name", DomainNeutralTypes.getType("string")));
+		employee.addField(new DomainEntityField("birth Date", DomainNeutralTypes.getType("date")));
+		DomainEntityField countryField = new DomainEntityField("country", enumeration );
+		employee.addField(countryField);
+		modelToCompare.addEntity(employee);
+		modelToCompare.addEnumeration(enumeration);
+		assertEquals(modelToCompare,model);
+	}
 	@Test
 	public void testParseModelWithTwoEnumAndTwoEntity() throws Exception {
 		File folder = new File("src/test/resources/model_test/valid/model_withTwoEnumAndTwoEntity/");

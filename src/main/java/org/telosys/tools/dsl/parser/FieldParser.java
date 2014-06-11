@@ -55,7 +55,7 @@ public class FieldParser {
         String name = fieldInfo.substring(0, startDescription);
 
         // description and field is required
-        if (!name.matches("^[\\w]*$")) {
+        if (!name.matches("^[\\w|\\s]*$")) {
             String errorMessage = "The name of the fields must not contains special char " + name;
             this.logger.error(errorMessage);
             throw new EntityParserException(errorMessage);
