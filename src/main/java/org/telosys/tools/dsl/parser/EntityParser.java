@@ -98,7 +98,7 @@ public class EntityParser {
         StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
         StringBuilder stringBuilder = new StringBuilder();
         while (content.hasMoreElements()) {
-            String line = content.nextElement().toString().trim();
+            String line = content.nextElement().toString();
 
             if (line.contains(TelosysDSLProperties.getProperties().getProperty("start_comment"))) {
                 line = line.substring(0,
@@ -106,7 +106,7 @@ public class EntityParser {
             }
 
             if (line.length() > 0) {
-                stringBuilder.append(line.replace(" ", ""));
+                stringBuilder.append(line.replaceAll("\\s*([;,=:{}])\\s*", "$1").trim());
             }
         }
         return stringBuilder.toString();
