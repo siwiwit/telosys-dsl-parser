@@ -124,7 +124,7 @@ public class ModelParserTest {
 		employeeId.addAnnotation(new DomainEntityFieldAnnotation("Id"));
 		employeeId.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
 		employee.addField(employeeId);
-		DomainEntityField employeePoste = new DomainEntityField("poste", DomainNeutralTypes.getType("string"));
+		DomainEntityField employeePoste = new DomainEntityField("poste", DomainNeutralTypes.getType("string"), -1);
 		employee.addField(employeePoste);
 		employeePoste.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
 		
