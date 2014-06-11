@@ -109,15 +109,13 @@ public class EnumerationParser {
 
         if (!enumName.equals(filename)) {
             throw new EntityParserException("The name of the file does not match with the enum name");
-        }
-
+        } 
         // the first later of an entity must be upper case
-        if (!Character.isUpperCase(flattenContent.charAt(0))) {
+        else if (!Character.isUpperCase(flattenContent.charAt(0))) {
             throw new EntityParserException("The name of the entity must start with an upper case");
         }
-
         // only simple chars are allowed
-        if (!enumName.matches("^[A-Z][\\w]*$")) {
+        else if (!enumName.matches("^[A-Z][\\w]*$")) {
             throw new EntityParserException("The name must not contains special char" + enumName);
         }
         // create object
@@ -138,9 +136,8 @@ public class EnumerationParser {
         if (fieldEnumList.length < 1) {
             throw new EntityParserException("This enum must contains at least one field");
         }
-
         // extract fields
-        if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
+        else if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
             BigInteger previousValue = new BigInteger("0");
             for (String field : fieldEnumList) {
                 enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
@@ -159,9 +156,8 @@ public class EnumerationParser {
         if (bodyStart < 0) {
             throw new EntityParserException("There's something wrong with the beginning of the body");
         }
-
         // end of body required
-        if (bodyEnd < 1) {
+        else if (bodyEnd < 1) {
             throw new EntityParserException("There's something wrong with the end of the body");
         }
     }
