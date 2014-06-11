@@ -77,10 +77,35 @@ public class DomainEntityField {
 
     @Override
     public String toString() {
-        return "Field{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", annotationList=" + annotations +
+    	
+    	String fieldString= "'"+name+"'";
+    	if(isEntity()){
+    		fieldString += ": Entity";
+    	} else if(isEnumeration()){
+    		fieldString += ": Enumeration";
+    	} else {
+    		fieldString += ": ";
+    	}
+    	
+    	fieldString += "("+type.getName()+")";
+    	if(cardinality != 1) {
+    		if(cardinality == -1){
+    			fieldString+="[]";
+    		} else {
+    			fieldString+="["+cardinality+"]";
+    		}
+    	}
+    	String annotationsString= "";
+    	
+    	for (String mapKey : annotations.keySet()) {
+    		String parameter = "";
+    		if(annotations.get(mapKey).hasParameter()){
+    			parameter = "("+ annotations.get(mapKey).getParameter() +")";
+    		}
+    		annotationsString += "\n\t\t\t\t" + annotations.get(mapKey).getName()+parameter;
+    	}
+        return  fieldString + '{' +
+                 	annotationsString +
                 '}';
     }
 

@@ -30,10 +30,9 @@ public final class Application {
         if (args.length != 1) {
             throw new EntityParserException("A single parameter is required");
         }
-        logger.error("ok");
         // call parser tool
         DomainModelParser dm = new DomainModelParser();
         DomainModel model = dm.parse(new File(args[0]));
-        System.out.println(model);
+        logger.info("\n"+model.toString());
     }
 }

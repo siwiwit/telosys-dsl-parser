@@ -213,7 +213,20 @@ private final String modelDescription ;
 
     @Override
     public String toString() {
-        return "DomainModel [modelName=" + modelName + ", entities=" + entities + ", enumerations=" + enumerations + "]";
+    	String enumerationsString= "";
+    	
+    	for (String mapKey : enumerations.keySet()) {
+    		enumerationsString += "\n\t "+mapKey + enumerations.get(mapKey);
+    	}
+    	
+    	String entitiesString= "";
+    	
+    	for (String mapKey : entities.keySet()) {
+    		entitiesString += "\n\t" + entities.get(mapKey);
+    	}
+        return modelName+"[\n"
+        				+ "entities=" + entitiesString + ","
+        						+ "\n enumerations=" + enumerationsString + "]";
     }
 
 

@@ -12,7 +12,7 @@ import java.util.*;
 public class DomainEntity extends DomainType {
 
     private final Map<String, DomainEntityField> fields;
-    public static final int THIRTY_ONE = 31; // TODO rename
+    public static final int THIRTY_ONE_HASH_CODE = 31; // TODO rename
 
     public DomainEntity(String name) {
         super(name, DomainTypeNature.ENTITY);
@@ -41,9 +41,9 @@ public class DomainEntity extends DomainType {
     public String toString() {
         String fieldRet = "";
         for (DomainEntityField f : fields.values()) {
-            fieldRet += f.toString() + " | ";
+            fieldRet += "\n\t\t"+f.toString();
         }
-        return this.getName() + " [" + fieldRet + "]";
+        return this.getName() + " {" + fieldRet + "}";
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DomainEntity extends DomainType {
     @Override
     public int hashCode() {
         int result = this.getName() != null ? this.getName().hashCode() : 0;
-        result = THIRTY_ONE * result + (fields != null ? fields.hashCode() : 0);
+        result = THIRTY_ONE_HASH_CODE * result + (fields != null ? fields.hashCode() : 0);
         return result;
     }
 

@@ -32,7 +32,11 @@ public abstract class DomainEnumeration<T> extends DomainType {
 
     @Override
     public String toString() {
-        return "DomainEnumeration [items=" + items + "]";
+    	String itemsString = "\n";
+    	for (DomainEnumerationItem<T> item : getItems()) {
+    		itemsString += "\t\t"+item.toString()+"\n";
+    	}
+        return "{"+itemsString+"}";
     }
 
     public void addItem(String name, T value) {

@@ -13,4 +13,10 @@ public class DomainEnumerationForDecimal extends DomainEnumeration<BigDecimal> {
         super(name);
     }
 
+	@Override
+	public String toString() {
+		return getName() +" : decimal "+ super.toString();
+	}
+    
+    
 }
