@@ -13,7 +13,7 @@ public class DomainEnumerationItem<T> {
 
     @Override
     public String toString() {
-        return "DomainEnumerationItem [name=" + name + ", value=" + value + "]";
+        return "'"+name +"' : '"+value+"'";
     }
 
     @Override
