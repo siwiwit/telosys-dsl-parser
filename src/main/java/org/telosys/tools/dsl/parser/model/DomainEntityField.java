@@ -129,6 +129,9 @@ public class DomainEntityField {
         if (!type.equals(field.type)) {
             return false;
         }
+        if (cardinality != (field.cardinality)) {
+        	return false;
+        }
 
         return true;
     }
