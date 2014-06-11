@@ -150,7 +150,11 @@ public class EnumerationParser {
         }
         return enumeration;
     }
-
+    /**
+     * check the structure of the enumeration
+     * @param bodyStart the first index
+     * @param bodyEnd the last index
+     */
     private void checkStructure(int bodyStart, int bodyEnd) {
         // name required before body
         if (bodyStart < 0) {
@@ -161,7 +165,10 @@ public class EnumerationParser {
             throw new EntityParserException("There's something wrong with the end of the body");
         }
     }
-
+    /**
+     * 
+     * @return the flatten content without any comments
+     */
     public String computeFlattenContent() {
         StringTokenizer content = new StringTokenizer(formattedContent, "\r\n");
         StringBuilder stringBuilder = new StringBuilder();
@@ -179,7 +186,11 @@ public class EnumerationParser {
         }
         return stringBuilder.toString();
     }
-
+    
+    /**
+     * 
+     * @return the actual flatten content
+     */
     public String getFlattenContent() {
         return flattenContent;
     }
