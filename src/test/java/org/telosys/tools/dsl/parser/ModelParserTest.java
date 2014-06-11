@@ -135,7 +135,7 @@ public class ModelParserTest {
 		person.addField(new DomainEntityField("firstName", DomainNeutralTypes.getType("string")));
 		person.addField(new DomainEntityField("lastName", DomainNeutralTypes.getType("string")));
 		person.addField(new DomainEntityField("birthDate", DomainNeutralTypes.getType("date")));
-		DomainEntityField countryField = new DomainEntityField("country", country );
+		DomainEntityField countryField = new DomainEntityField("country", country, 999 );
 		person.addField(countryField);
 		DomainEntityField genderField = new DomainEntityField("gender", gender );
 		person.addField(genderField);
@@ -168,7 +168,7 @@ public class ModelParserTest {
 		employeeId.addAnnotation(new DomainEntityFieldAnnotation("Id"));
 		employeeId.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
 		employee.addField(employeeId);
-		DomainEntityField employeePoste = new DomainEntityField("poste", DomainNeutralTypes.getType("string"));
+		DomainEntityField employeePoste = new DomainEntityField("poste", DomainNeutralTypes.getType("string"), -1);
 		employee.addField(employeePoste);
 		employeePoste.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
 		
@@ -179,7 +179,7 @@ public class ModelParserTest {
 		person.addField(new DomainEntityField("firstName", DomainNeutralTypes.getType("string")));
 		person.addField(new DomainEntityField("lastName", DomainNeutralTypes.getType("string")));
 		person.addField(new DomainEntityField("birthDate", DomainNeutralTypes.getType("date")));
-		DomainEntityField countryField = new DomainEntityField("country", country );
+		DomainEntityField countryField = new DomainEntityField("country", country, 998 );
 		person.addField(countryField);
 		DomainEntityField genderField = new DomainEntityField("gender", gender );
 		person.addField(genderField);

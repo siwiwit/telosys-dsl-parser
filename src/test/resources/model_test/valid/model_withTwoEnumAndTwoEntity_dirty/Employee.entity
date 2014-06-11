@@ -15,6 +15,10 @@ Employee
 	poste  // Test
 	:  // Test
 	string  // Test
+	// Test
+	[ // Test
+	// Test
+	] // Test
 	{ // Test
 	@NotNull
 	 // Test

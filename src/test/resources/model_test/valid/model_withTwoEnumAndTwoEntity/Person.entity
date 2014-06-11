@@ -3,6 +3,6 @@ Person {
 	firstName : string ;
 	lastName : string;
 	birthDate : date ;
-	country : #Country; 
+	country : #Country[999]; 
 	gender : #Gender;
 }
