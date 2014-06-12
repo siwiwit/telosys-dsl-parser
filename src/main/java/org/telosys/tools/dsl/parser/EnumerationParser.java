@@ -81,14 +81,14 @@ public class EnumerationParser {
         if (bodyEnd - bodyStart == 1) {
             throw new EntityParserException("A field is required");
         }
-        String enumName = flattenContent.substring(0, bodyStart).trim();
+        String enumName = flattenContent.substring(0, bodyStart);
         TypeEnum type = TypeEnum.INTEGER;
 
         // read field infos
         String[] split = enumName.split(":");
         if (split.length == 2) {
-            enumName = split[0];
-            String enumType = split[1];
+            enumName = split[0].trim();
+            String enumType = split[1].trim();
 
             // simple enum types
             if (enumType.equals("integer")) {
@@ -140,12 +140,12 @@ public class EnumerationParser {
         else if (type == TypeEnum.INTEGER && fieldEnumParser.isItemWithoutValue(fieldEnumList[0])) {
             BigInteger previousValue = new BigInteger("0");
             for (String field : fieldEnumList) {
-                enumeration.addItem(fieldEnumParser.parseField(field, previousValue));
+                enumeration.addItem(fieldEnumParser.parseField(field.trim(), previousValue));
                 previousValue = previousValue.add(new BigInteger("1"));
             }
         } else {
             for (String field : fieldEnumList) {
-                enumeration.addItem(fieldEnumParser.parseField(field, type));
+                enumeration.addItem(fieldEnumParser.parseField(field.trim(), type));
             }
         }
         return enumeration;
@@ -181,7 +181,7 @@ public class EnumerationParser {
             }
 
             if (line.length() > 0) {
-                stringBuilder.append(line.replaceAll("\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)", "").trim());
+                stringBuilder.append(line.trim());
             }
         }
         return stringBuilder.toString();

@@ -37,7 +37,7 @@ public class EntityParserTest {
         EntityParser parser = new EntityParser(formattedContent, new DomainModel("model"));
         String flattenContent = parser.computeFlattenContent();
 
-        String compareTo = "Employee{id:id{@test};firstName:string;birthDate:date;}";
+        String compareTo = "Employee {id : id {@test};firstName : string ;birthDate : date ;}";
         Assert.assertEquals(compareTo, flattenContent);
     }
 
@@ -52,7 +52,7 @@ public class EntityParserTest {
         EntityParser parser = new EntityParser(formattedContent, new DomainModel("model"));
         String flattenContent = parser.computeFlattenContent();
 
-        String compareTo = "Employee{id:id{@te st};first Name:string;birthDate:da te;}";
+        String compareTo = "Employee {id : id {@te st};first Name : string ;birthDate : da te ;}";
         Assert.assertEquals(compareTo, flattenContent);
     }
 

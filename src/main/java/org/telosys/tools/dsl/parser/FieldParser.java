@@ -52,7 +52,7 @@ public class FieldParser {
             this.logger.error(errorMessage);
             throw new EntityParserException(errorMessage);
         }
-        String name = fieldInfo.substring(0, startDescription);
+        String name = fieldInfo.substring(0, startDescription).trim();
 
         // description and field is required
         if (!name.matches("^[\\w]*$")) {
@@ -74,7 +74,7 @@ public class FieldParser {
             end = fieldInfo.length();
         }
 
-        String typeName = fieldInfo.substring(startDescription + 1, end);
+        String typeName = fieldInfo.substring(startDescription + 1, end).trim();
         int cardinality = 1;
 
         // if multiple cardinality is allowed

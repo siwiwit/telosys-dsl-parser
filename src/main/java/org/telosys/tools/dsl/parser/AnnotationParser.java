@@ -45,7 +45,7 @@ public class AnnotationParser {
             return list;
         }
         bodyStart++;
-        fieldInfo = fieldInfo.substring(bodyStart, bodyEnd);
+        fieldInfo = fieldInfo.substring(bodyStart, bodyEnd).trim();
 
         // list of annotation found
         String[] annotationList = fieldInfo.split(",");
@@ -58,7 +58,7 @@ public class AnnotationParser {
 
         // extract annotations
         for (String annotationString : annotationList) {
-            DomainEntityFieldAnnotation annotation = this.parseSingleAnnotation(annotationString);
+            DomainEntityFieldAnnotation annotation = this.parseSingleAnnotation(annotationString.trim());
             list.add(annotation);
         }
 
@@ -87,7 +87,7 @@ public class AnnotationParser {
             end = annotationString.indexOf('(');
             int endLess = end + 1 ;
             int endMore = annotationString.length() - 1 ;
-            param = annotationString.substring(endLess, endMore);
+            param = annotationString.substring(endLess, endMore).trim();
             if (param.equals("")) {
                 String errorMessage = "A parameter is required for this annotation : " + annotationString;
                 this.logger.error(errorMessage);
@@ -97,7 +97,7 @@ public class AnnotationParser {
         }
 
 
-        String givenAnnotation = annotationString.substring(1, end);
+        String givenAnnotation = annotationString.substring(1, end).trim();
 
         // check annotation exist
         String annotationAllowed = TelosysDSLProperties.getProperties().getProperty("annotations");

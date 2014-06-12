@@ -35,12 +35,12 @@ public class FieldEnumParser<T> {
             throw new EntityParserException(textError);
         }
         int startDescription = fieldInfo.indexOf('=');
-        String name = fieldInfo.substring(0, startDescription);
+        String name = fieldInfo.substring(0, startDescription).trim();
         checkName(name);
 
         int end = fieldInfo.length();
 
-        String value = fieldInfo.substring(++startDescription, end);
+        String value = fieldInfo.substring(++startDescription, end).trim();
         if (value.length() == 0) {
             String textError = "The value of the field is missing";
             logger.error(textError);

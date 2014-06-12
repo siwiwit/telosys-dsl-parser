@@ -106,7 +106,7 @@ public class EntityParser {
             }
 
             if (line.length() > 0) {
-                stringBuilder.append(line.replaceAll("\\s*([;,=:{}])\\s*", "$1").trim());
+                stringBuilder.append(line.trim());
             }
         }
         return stringBuilder.toString();
@@ -171,7 +171,7 @@ public class EntityParser {
 
         // extract fields
         for (String field : fieldList) {
-            DomainEntityField f = fieldParser.parseField(field);
+            DomainEntityField f = fieldParser.parseField(field.trim());
             table.addField(f);
         }
         verifyEntityStructure(table);
