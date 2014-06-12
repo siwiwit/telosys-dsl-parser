@@ -36,7 +36,7 @@ public class AnnotationParser {
 
         // no annotation found
         if ((bodyEnd < 0 && bodyStart >= 0) || (bodyEnd >= 0 && bodyStart < 0)) {
-            String errorMessage = "There is a problem with the bracket. There's one missing";
+            String errorMessage = "There is a problem with the bracket. There's one missing in the field : "+fieldInfo;
             this.logger.error(errorMessage);
             throw new EntityParserException(errorMessage);
         }

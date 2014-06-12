@@ -82,15 +82,15 @@ public class FieldParser {
             int startArray = typeName.lastIndexOf('[');
             int endArray = typeName.lastIndexOf(']');
             // * cardinality
-            if (endArray - startArray == 1) {
+            String figure = typeName.substring(startArray + 1, endArray).trim();
+            if (figure.equals("")) {
                 cardinality = -1;
-                typeName = typeName.substring(0, startArray);
+                typeName = typeName.substring(0, startArray).trim();
                 // specific cardinality
             } else {
-                String figure = typeName.substring(startArray + 1, endArray);
                 try {
-                    cardinality = Integer.parseInt(figure);
-                    typeName = typeName.substring(0, startArray);
+                    cardinality = Integer.parseInt(figure.trim());
+                    typeName = typeName.substring(0, startArray).trim();
                 } catch (Exception e) {
                     String errorMessage = "The cardinality for " + typeName + " is not correct";
                     this.logger.error(errorMessage);
@@ -123,7 +123,7 @@ public class FieldParser {
             // from other entity
         } else {
             if (!model.getEntityNames().contains(typeName)) {
-                String errorMessage = "The type of the field is incorrect";
+                String errorMessage = "The type of the field is incorrect "+typeName;
                 this.logger.error(errorMessage);
                 throw new EntityParserException(errorMessage);
             } else {

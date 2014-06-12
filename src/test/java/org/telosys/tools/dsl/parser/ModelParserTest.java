@@ -212,4 +212,51 @@ public class ModelParserTest {
 		modelToCompare.addEnumeration(gender);
 		assertEquals(modelToCompare,model);
 	}
+	
+	
+	@Test
+    public void testParseModelWithTwoEnumAndTwoEntitySpaces() throws Exception {
+        File folder = new File("src/test/resources/model_test/valid/model_withTwoEnumAndTwoEntity_spaces/");
+        DomainModelParser parser = new DomainModelParser();
+        DomainModel model = parser.parse(folder);
+        DomainModel modelToCompare = new DomainModel("ModelWithTwoEnumAndTwoEntitySpaces");
+        
+        DomainEnumeration<String> country = new DomainEnumerationForString("Country");
+        country.addItem(new DomainEnumerationItem<String>("FR", "  France"));
+        country.addItem(new DomainEnumerationItem<String>("EN", "Angleterre  "));
+        country.addItem(new DomainEnumerationItem<String>("ES", "Esp  agne"));
+
+        DomainEnumeration<String> gender = new DomainEnumerationForString("Gender");
+        gender.addItem(new DomainEnumerationItem<String>("H", " Homme"));
+        gender.addItem(new DomainEnumerationItem<String>("F", "Fem me "));
+        
+        DomainEntity employee = new DomainEntity("Employee");
+        DomainEntityField employeeId = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
+        employeeId.addAnnotation(new DomainEntityFieldAnnotation("Id"));
+        employeeId.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
+        employee.addField(employeeId);
+        DomainEntityField employeePoste = new DomainEntityField("poste", DomainNeutralTypes.getType("string"), 4);
+        employee.addField(employeePoste);
+        employeePoste.addAnnotation(new DomainEntityFieldAnnotation("NotNull"));
+        
+        DomainEntity person = new DomainEntity("Person");
+        DomainEntityField personId = new DomainEntityField("id", DomainNeutralTypes.getType("integer"));
+        personId.addAnnotation(new DomainEntityFieldAnnotation("Id"));
+        person.addField(personId);
+        DomainEntityField firstName =new DomainEntityField("firstName", DomainNeutralTypes.getType("string"));
+        firstName.addAnnotation(new DomainEntityFieldAnnotation("SizeMax", "3"));
+        person.addField(firstName);
+        person.addField(new DomainEntityField("lastName", DomainNeutralTypes.getType("string")));
+        person.addField(new DomainEntityField("birthDate", DomainNeutralTypes.getType("date")));
+        DomainEntityField countryField = new DomainEntityField("country", country, 999 );
+        person.addField(countryField);
+        DomainEntityField genderField = new DomainEntityField("gender", gender );
+        person.addField(genderField);
+        
+        modelToCompare.addEntity(employee);
+        modelToCompare.addEntity(person);
+        modelToCompare.addEnumeration(country);
+        modelToCompare.addEnumeration(gender);
+        assertEquals(modelToCompare,model);
+    }
 }
