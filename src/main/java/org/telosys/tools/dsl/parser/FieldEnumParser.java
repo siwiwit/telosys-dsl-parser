@@ -13,7 +13,7 @@ import java.math.BigInteger;
  * @param <T>
  */
 public class FieldEnumParser<T> {
-    private Logger logger = LoggerFactory.getLogger(EntityParser.class);
+    private Logger logger = LoggerFactory.getLogger(FieldEnumParser.class);
 
     DomainEnumerationItem<?> parseField(String fieldInfo, BigInteger value) {
         if (!isItemWithoutValue(fieldInfo)) {
