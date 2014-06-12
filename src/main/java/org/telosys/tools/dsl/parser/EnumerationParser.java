@@ -181,7 +181,7 @@ public class EnumerationParser {
             }
 
             if (line.length() > 0) {
-                stringBuilder.append(line.replaceAll("\\s*([;,:={}])\\s*", "$1").trim());
+                stringBuilder.append(line.replaceAll("\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)", "").trim());
             }
         }
         return stringBuilder.toString();
