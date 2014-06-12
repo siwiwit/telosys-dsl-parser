@@ -42,7 +42,21 @@ public class AnnotationParser {
         }
 
         if (bodyEnd < 0 && bodyStart < 0) {
+            if(fieldInfo.indexOf("]") > 0 && fieldInfo.indexOf("]")!= fieldInfo.length()-1 ) {
+                if(!fieldInfo.substring(fieldInfo.indexOf("]")+1).trim().equals("")){
+                    String errorMessage = "There is a problem with the semilicon : "+fieldInfo;
+                    this.logger.error(errorMessage);
+                    throw new EntityParserException(errorMessage);
+                }
+            }
             return list;
+        } else {
+            
+            if(!fieldInfo.substring(bodyEnd+1).trim().equals("") &&  !fieldInfo.substring(bodyEnd+1).trim().equals(";")) {
+                String errorMessage = "There is a problem with the semilicon : "+fieldInfo;
+                this.logger.error(errorMessage);
+                throw new EntityParserException(errorMessage);
+            }
         }
         bodyStart++;
         fieldInfo = fieldInfo.substring(bodyStart, bodyEnd).trim();
