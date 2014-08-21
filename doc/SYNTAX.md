@@ -2,7 +2,7 @@ Syntax
 ======
 
 Syntax of entities
-------------------
+==================
 
 ```
 <Entity> {
@@ -21,10 +21,14 @@ with :
 ```<Entity>``` : Entity name
 ----------------------------
 
-It is the name of the entity and of the file too without the extension '.entity'.
+Replace ```<Entity>``` by the name of the entity.
+
+The Entity name must be the name of the entity file without the extension '.entity'.
 
 ```<field>``` : Field name
-----------------------------
+--------------------------
+
+Replace ```<field>``` by the name of the field.
 
 The entity fields are separated by a comma ','.
 
@@ -33,7 +37,8 @@ A field has only one type ```<Type>``` and can have none or many annotations ```
 ```<Type>``` : Field types
 --------------------------
 
-Field type can be :
+Replace ```<Type>``` by the field type which can be :
+
   - an **array** of values : ```<Type>[]```
     - ```<Type>``` can be one of these following types in this list
   - a **basic type** : ```Integer```, ```String```, etc.
@@ -45,13 +50,14 @@ Field type can be :
 ```@<Annotation>``` : Field annotations
 ---------------------------------------
 
+Replace ```@<Annotation>``` by the annotation name to define on the field.
+
 The Annotations permit to specify field properties.
-  - the annotations are separated by a comma ','
 
-
+The annotations are separated by a comma ','
 
 Syntax of enumerations
-----------------------
+======================
 
 ```
 <Enumeration> {
