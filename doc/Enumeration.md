@@ -18,7 +18,7 @@ with :
 
 Replace ```<Enumeration>``` by the name of the enumeration.
 
-The file name of this enumeration must be the name of this enumeration + file extension ```.enum```
+The file name of the enumeration must be the name of this enumeration + the file extension ```.enum```
 
 ### ```<Type>``` : Field value ###
 
