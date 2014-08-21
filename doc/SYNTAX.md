@@ -6,7 +6,7 @@ Syntax of entities
 
 ```
 <Entity> {
-    <field> : <Type> {@<Annotation>},
+    <field> : <Type> {@<Annotation>, ... },
     ...
 }
 ```
@@ -15,7 +15,7 @@ with :
 - ```<Entity>``` : Entity name
 - ```<field>``` : Field name
 - ```<Type>``` : Field type
-- ```@<Annotation>``` : Annotations of the field
+- ```{@<Annotation>, ...}``` : Annotations of the field
 
 ```<Entity>``` : Entity name
 ----------------------------
