@@ -27,7 +27,7 @@ Replace ```<Type>``` by the type of values, which can be :
 - ```decimal``` : Decimal values
 - ```integer``` : Integer values
 
-The type is not mandatory. If missing, the default type is ```integer```.
+**The type is not mandatory. If missing, the default type is ```integer```.**
 
 ### ```<field>``` : Field name ###
 
