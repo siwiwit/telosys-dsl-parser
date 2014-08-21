@@ -18,10 +18,10 @@ with :
 - ```@<Annotation>``` : Annotations to specify field properties
   - the annotations are separated by a comma ','
 
-Field types
------------
+```<Type>``` : Field types
+--------------------------
 
-```<Type>``` : Field type can be :
+Field type can be :
   - an **array** of values : ```<Type>[]```
     - ```<Type>``` can be one of these following types in this list
   - a **basic type** : ```Integer```, ```String```, etc.
