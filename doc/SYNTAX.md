@@ -15,7 +15,7 @@ with :
 - ```<Entity>``` : Entity name
 - ```<field>``` : Field name
 - ```<Type>``` : Field type
-- ```@<Annotation>``` : Annotations on the field
+- ```@<Annotation>``` : Annotations of the field
 
 ```<Entity>``` : Entity name
 ----------------------------
