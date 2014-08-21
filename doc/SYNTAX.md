@@ -14,7 +14,11 @@ Syntax of entities
 with :
 - ```<Entity>``` : Entity name
 - ```<field>``` : Field name
-- ```<Type>``` : Field type, which can be :
+- ```<Type>``` : Field type
+- ```@<Annotation>``` : **Annotations** to specify field properties
+  - the annotations are separated by a comma ','
+
+```<Type>``` : Field type can be :
   - an **array** of values : ```<Type>[]```
     - ```<Type>``` can be one of these following types in this list
   - a **basic type** : ```Integer```, ```String```, etc.
@@ -22,8 +26,7 @@ with :
     - name of this linked entity
   - an **enumeration** : ```#<Enumeration>``` 
     - symbol ```#``` + the name of the enumeration
-- ```@<Annotation>``` : **Annotations** to specify field properties
-  - the annotations are separated by a comma ','
+
 
 Syntax of enumerations
 ----------------------
