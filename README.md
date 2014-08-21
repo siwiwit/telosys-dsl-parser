@@ -30,7 +30,7 @@ The name of the entity must be the same as the file and start with an upper case
 * An enumeration (starts with a #)
 * An array of value (using [])
 
-=> Syntax : [Entity syntax](doc/SYNTAX.md)
+=> Syntax : [Entity syntax](doc/Entity.md)
 
 Defining an enumeration
 ------------------------------------
@@ -50,7 +50,7 @@ The name of the enumeration must be the same as the file and start with an upper
 
 If no type is defined the default type is integer.
 
-=> Syntax : [Enumeration syntax](doc/SYNTAX.md)
+=> Syntax : [Enumeration syntax](doc/Enumeration.md)
 
 List of annotations
 ==================
