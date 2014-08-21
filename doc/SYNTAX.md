@@ -38,13 +38,10 @@ A field has only one type ```<Type>``` and can have none or many annotations ```
 
 Replace ```<Type>``` by the field type which can be :
 
-  - an **array** of values : ```<Type>[]```
-    - ```<Type>``` can be one of these following types in this list
-  - a **basic type** : ```Integer```, ```String```, etc.
-  - **link** to an another entity : ```<Entity>```
-    - name of this linked entity
-  - an **enumeration** : ```#<Enumeration>``` 
-    - symbol ```#``` + the name of the enumeration
+  - **array** of values : ```<Type>[]``` : with ```<Type>``` which can be one of the following types of this list
+  - **basic type** : ```Integer```, ```String```, etc.
+  - **link** to an another entity : ```<Entity>``` : name of this linked entity
+  - **enumeration** : ```#<Enumeration>``` : symbol ```#``` + the name of the enumeration
 
 ```@<Annotation>``` : Field annotations
 ---------------------------------------
