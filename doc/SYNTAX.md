@@ -13,10 +13,9 @@ Syntax of entities
 
 with :
 - ```<Entity>``` : Entity name
-- ```<field>``` : Field name (each fields are separated by a comma ',')
-- ```<Type>``` : Field type (only one type by field)
-- ```@<Annotation>``` : Annotations to specify field properties
-  - the annotations are separated by a comma ','
+- ```<field>``` : Field name
+- ```<Type>``` : Field type
+- ```@<Annotation>``` : Annotations on the field
 
 ```<Entity>``` : Entity name
 ----------------------------
