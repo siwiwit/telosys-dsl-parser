@@ -35,7 +35,7 @@ Replace ```<Type>``` by the field type which can be :
 
   - **array** of values : ```<Type>[]``` : with ```<Type>``` which can be one of the following types of this list
   - **basic type** : ```Integer```, ```String```, etc.
-  - **link** to an another entity : ```<Entity>``` : name of this linked entity
+  - **link** to an another entity : ```<Entity>``` : name of the linked entity
   - **enumeration** : ```#<Enumeration>``` : symbol ```#``` + the name of the enumeration
 
 ### ```@<Annotation>``` : Field annotations ###
