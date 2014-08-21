@@ -12,11 +12,14 @@ Syntax of entities
 ```
 
 with :
-- ```<Entity>``` : Entity name
-- ```<field>``` : Field name
-- ```<Type>``` : Field type
-- ```@<Annotation>``` : **Annotations** to specify field properties
+- ```<Entity>``` : Entity name (it is the name of the file without '.entity')
+- ```<field>``` : Field name (each fields are separated by a comma ',')
+- ```<Type>``` : Field type (only one type by field)
+- ```@<Annotation>``` : Annotations to specify field properties
   - the annotations are separated by a comma ','
+
+Field types
+-----------
 
 ```<Type>``` : Field type can be :
   - an **array** of values : ```<Type>[]```
@@ -26,6 +29,10 @@ with :
     - name of this linked entity
   - an **enumeration** : ```#<Enumeration>``` 
     - symbol ```#``` + the name of the enumeration
+
+Field annotations
+-----------------
+
 
 
 Syntax of enumerations
