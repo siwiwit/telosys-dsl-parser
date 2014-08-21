@@ -18,6 +18,12 @@ with :
 - ```@<Annotation>``` : Annotations to specify field properties
   - the annotations are separated by a comma ','
 
+```<Entity>``` : Entity name
+----------------------------
+
+It is the name of the entity and of the file too without the extension '.entity'.
+
+
 ```<Type>``` : Field types
 --------------------------
 
