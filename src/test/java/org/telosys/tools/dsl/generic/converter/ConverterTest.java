@@ -76,18 +76,14 @@ public class ConverterTest {
 		DomainEntity domainEntity_1 = new DomainEntity("domainEntity_1");
 
 		domainModel.addEntity(domainEntity_1);
-		DomainEntityField domainEntityField_1_1 = new DomainEntityField("field_1_1", DomainNeutralTypes.getType(DomainNeutralTypes.BLOB));
 		DomainEntityField domainEntityField_1_2 = new DomainEntityField("field_1_2", DomainNeutralTypes.getType(DomainNeutralTypes.BOOLEAN));
-		DomainEntityField domainEntityField_1_3 = new DomainEntityField("field_1_3", DomainNeutralTypes.getType(DomainNeutralTypes.CLOB));
 		DomainEntityField domainEntityField_1_4 = new DomainEntityField("field_1_4", DomainNeutralTypes.getType(DomainNeutralTypes.DATE));
 		DomainEntityField domainEntityField_1_5 = new DomainEntityField("field_1_5", DomainNeutralTypes.getType(DomainNeutralTypes.DECIMAL));
 		DomainEntityField domainEntityField_1_6 = new DomainEntityField("field_1_6", DomainNeutralTypes.getType(DomainNeutralTypes.INTEGER));
 		DomainEntityField domainEntityField_1_7 = new DomainEntityField("field_1_7", DomainNeutralTypes.getType(DomainNeutralTypes.STRING));
 		DomainEntityField domainEntityField_1_8 = new DomainEntityField("field_1_8", DomainNeutralTypes.getType(DomainNeutralTypes.TIME));
 		DomainEntityField domainEntityField_1_9 = new DomainEntityField("field_1_9", DomainNeutralTypes.getType(DomainNeutralTypes.TIMESTAMP));
-		domainEntity_1.addField(domainEntityField_1_1);
 		domainEntity_1.addField(domainEntityField_1_2);
-		domainEntity_1.addField(domainEntityField_1_3);
 		domainEntity_1.addField(domainEntityField_1_4);
 		domainEntity_1.addField(domainEntityField_1_5);
 		domainEntity_1.addField(domainEntityField_1_6);
@@ -110,17 +106,15 @@ public class ConverterTest {
 		assertEquals("domainEntity_1", entity_1.getName());
 		
 		// attributes of entity 1
-		assertEquals(9, entity_1.getAttributes().size());
+		assertEquals(7, entity_1.getAttributes().size());
 		
-		assertEquals("blob", getAttributeByName(entity_1, "field_1_1").getType());
-		assertEquals("boolean", getAttributeByName(entity_1, "field_1_2").getType());
-		assertEquals("clob", getAttributeByName(entity_1, "field_1_3").getType());
-		assertEquals("date", getAttributeByName(entity_1, "field_1_4").getType());
-		assertEquals("decimal", getAttributeByName(entity_1, "field_1_5").getType());
-		assertEquals("integer", getAttributeByName(entity_1, "field_1_6").getType());
-		assertEquals("string", getAttributeByName(entity_1, "field_1_7").getType());
-		assertEquals("time", getAttributeByName(entity_1, "field_1_8").getType());
-		assertEquals("timestamp", getAttributeByName(entity_1, "field_1_9").getType());
+		assertEquals("java.lang.Boolean", getAttributeByName(entity_1, "field_1_2").getType());
+		assertEquals("java.util.Date", getAttributeByName(entity_1, "field_1_4").getType());
+		assertEquals("java.math.BigDecimal", getAttributeByName(entity_1, "field_1_5").getType());
+		assertEquals("java.lang.Integer", getAttributeByName(entity_1, "field_1_6").getType());
+		assertEquals("java.lang.String", getAttributeByName(entity_1, "field_1_7").getType());
+		assertEquals("java.util.Date", getAttributeByName(entity_1, "field_1_8").getType());
+		assertEquals("java.util.Date", getAttributeByName(entity_1, "field_1_9").getType());
 		
 		// entity 2
 		Entity entity_2 = getEntityByName(model, "domainEntity_2");

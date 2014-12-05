@@ -1,5 +1,10 @@
 package org.telosys.tools.dsl.generic.converter;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.telosys.tools.dsl.generic.model.GenericAttribute;
 import org.telosys.tools.dsl.generic.model.GenericEntity;
 import org.telosys.tools.dsl.generic.model.GenericModel;
@@ -8,6 +13,7 @@ import org.telosys.tools.dsl.parser.model.DomainEntityField;
 import org.telosys.tools.dsl.parser.model.DomainEnumeration;
 import org.telosys.tools.dsl.parser.model.DomainModel;
 import org.telosys.tools.dsl.parser.model.DomainNeutralType;
+import org.telosys.tools.dsl.parser.model.DomainNeutralTypes;
 import org.telosys.tools.dsl.parser.model.DomainType;
 import org.telosys.tools.generic.model.Entity;
 import org.telosys.tools.generic.model.Model;
@@ -89,6 +95,17 @@ public class Converter {
 			}
 		}
 	}
+	
+	private static final Map<String, String> mapTypeConversion = new HashMap<String, String>();
+	static {
+		mapTypeConversion.put(DomainNeutralTypes.BOOLEAN, Boolean.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.DATE, Date.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.DECIMAL, BigDecimal.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.INTEGER, Integer.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.STRING, String.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.TIME, Date.class.getName());
+		mapTypeConversion.put(DomainNeutralTypes.TIMESTAMP, Date.class.getName());
+	}
 
 	/**
 	 * Convert DSL types (string, integer, etc.) to Generic model types.
@@ -96,11 +113,12 @@ public class Converter {
 	 * @param defaultValue Default generic model type
 	 * @return Generic model type
 	 */
-	private String convertNeutralType(DomainNeutralType value, String defaultValue) {
-		if(value == null) {
+	private String convertNeutralType(DomainNeutralType domainNeutralType, String defaultValue) {
+		if(domainNeutralType == null) {
 			return defaultValue;
 		}
-		return value.getName();
+		String genericModelType = mapTypeConversion.get(domainNeutralType.getName());
+		return genericModelType;
 	}
 
 	/**
